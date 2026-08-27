@@ -8,35 +8,40 @@ import EmailSubscription from '@/components/EmailSubscription';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ProjectEstimator from '@/components/ProjectEstimator';
 import logoCreatorii from '@/assets/logo-creatorii.png';
-import { ChevronDown, Star, ExternalLink, ArrowRight } from 'lucide-react';
+import { ChevronDown, Star, ExternalLink, ArrowRight, Plus, Minus } from 'lucide-react';
+import CustomCursor from '@/components/CustomCursor';
+import CreatoriiVectorRobot from '@/components/CreatoriiVectorRobot';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [navVisible, setNavVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [navVisible, setNavVisible] = useState(true);
+    const [activeTab, setActiveTab] = useState<'studio' | 'equipe'>('studio');
+    const [openCard, setOpenCard] = useState<'natasha' | 'emmyly' | null>(null);
+    const [expanded, setExpanded] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+    useEffect(() => {
+      const handleScroll = () => {
+        const currentScrollY = window.scrollY;
       
-      if (currentScrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+        if (currentScrollY > 50) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setNavVisible(false);
-      } else {
-        setNavVisible(true);
-      }
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setNavVisible(false);
+        } else {
+          setNavVisible(true);
+        }
       
-      setLastScrollY(currentScrollY);
-    };
+        setLastScrollY(currentScrollY);
+      };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]);
 
   // Animation observer
   useEffect(() => {
@@ -53,9 +58,8 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] text-white selection:bg-[#7F77DD]/30 selection:text-white cursor-none">
-      <ModernCursor />
-      <WaterRippleEffect />
+      <div className="relative min-h-screen bg-[#0a0a0f] text-white selection:bg-[#7F77DD]/30 selection:text-white cursor-none">
+        <CustomCursor />
       
       
       <WhatsAppButton 
@@ -97,131 +101,206 @@ const Index = () => {
       </nav>
 
       <main className="relative z-10">
-        {/* HERO */}
-        <section className="min-h-screen flex flex-col items-stretch justify-center text-left px-6 pt-20 w-full max-w-[100vw] overflow-hidden">
-          <div className="reveal flex flex-col items-stretch w-full">
-            
-            <h1 className="text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9] w-full uppercase text-white text-center break-words">
-              MARCAS FORTES NÃO DISPUTAM ATENÇÃO. ELAS ATRAEM.
-            </h1>
+        {/* CONTAINER STACKING PAI */}
+        <div className="relative">
+          {/* HERO */}
+          <section className="sticky top-0 h-screen flex flex-col items-stretch justify-center text-left px-6 w-full overflow-hidden bg-[#0a0a0f]">
+            <div className="reveal flex flex-col items-stretch w-full">
+              
+              <h1 className="text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9] w-full uppercase text-white text-center break-words">
+                MARCAS FORTES NÃO DISPUTAM ATENÇÃO. ELAS ATRAEM.
+              </h1>
 
             </div>
-          </div>
-        </section>
+                      </section>
 
+<section id="transforme" className="sticky top-0 h-screen flex flex-col justify-center py-24 px-6 w-full text-white overflow-hidden bg-[#0a0a0f]">
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" style={{ backgroundImage: 'url(/bg-sessao2.jpg)' }} />
+            <div className="relative z-10">
+              <div className="flex flex-col items-center text-center reveal">
+                <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tight leading-relaxed mb-10 text-center">
+                  <span className="block font-poppins text-white">
+                    Construímos presença digital para empresas que querem ser
+                  </span>
+                  <span className="block font-poppins font-bold text-[#FF6B35] typewriter-effect">
+                    reconhecidas, lembradas e escolhidas.
+                  </span>
+                </h2>
 
-
-        {/* NOVA SESSÃO - CTA */}
-        <section id="transforme" className="py-24 px-6 container mx-auto text-white">
-<div className="flex flex-col items-center text-center reveal">
-<h2 className="text-2xl md:text-4xl font-extrabold tracking-tight leading-tight max-w-3xl mb-10 uppercase text-white">
-CONSTRUÍMOS PRESENÇA DIGITAL PARA EMPRESAS QUE QUEREM SER RECONHECIDAS, LEMBRADAS E ESCOLHIDAS.
-</h2>
-<div className="flex gap-4 mb-16">
-<button className="px-8 py-4 bg-white text-black font-bold uppercase rounded-full">Quero transformar meu negócio</button>
-<button className="px-8 py-4 border border-white text-white font-bold uppercase rounded-full">Ver serviços</button>
-</div>
-          <div className="flex flex-col items-center text-center reveal">
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight max-w-3xl mb-10 uppercase">
-              Construímos presença digital para empresas que querem ser reconhecidas, lembradas e escolhidas.
-            </h2>
-
-            <div className="flex flex-col sm:flex-row gap-4 mb-16">
-              <a 
-                href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20mais%20informações."
-                className="px-8 py-4 bg-[#7F77DD] hover:bg-[#6a62c4] text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
-              >
-                Quero transformar meu negócio
-              </a>
-              <a 
-                href="#portfolio"
-                className="px-8 py-4 bg-transparent border border-white/20 hover:border-white/50 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
-              >
-                Ver serviços
-              </a>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-4xl p-8 rounded-2xl bg-[#111118] border border-white/5 reveal">
-              {[
-                { label: 'Projetos', value: '200+' },
-                { label: 'Satisfação', value: '98%' },
-                { label: 'Seguidores', value: '581' },
-                { label: 'Anos', value: '5+' },
-              ].map((m) => (
-                <div key={m.label} className="flex flex-col">
-                  <span className="text-3xl font-bold text-[#7F77DD]">{m.value}</span>
-                  <span className="text-xs text-gray-500 uppercase tracking-widest font-semibold">{m.label}</span>
+                <div className="flex flex-col sm:flex-row gap-4 mb-16 justify-center">
+                  <a 
+                    href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20mais%20informações."
+                    className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
+                  >
+                    Quero transformar meu negócio
+                  </a>
+                  <a 
+                    href="#portfolio"
+                    className="px-8 py-4 bg-transparent backdrop-blur-md border border-white/30 hover:border-white/50 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
+                  >
+                    Ver serviços
+                  </a>
                 </div>
-              ))}
+              </div>
             </div>
+          </section>
+
+          {/* SERVICE SHOWCASE */}
+          <div className="sticky top-0 bg-[#0a0a0f]">
+            <ServiceShowcase />
           </div>
-        </section>
+        </div>
 
         {/* CARROSSEL ESTILO APPLE */}
         <AppleStyleCarousel />
-
-        {/* SERVICE SHOWCASE ESTILO APPLE - ABAS NA ESQUERDA */}
-        <ServiceShowcase />
 
         <ProjectEstimator />
 
         {/* SOBRE */}
         <section id="sobre" className="py-24 px-6 container mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center reveal">
-            <div className="relative">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-[#7F77DD]/20 to-transparent border border-white/5 flex flex-col items-center justify-center p-8">
-                <div className="w-[120px] h-[120px] bg-[#7F77DD] rounded-full flex items-center justify-center text-white text-4xl font-bold mb-6">
-                  NQ
-                </div>
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-1 text-white">Natasha Queiroz</h3>
-                  <p className="text-[#7F77DD] font-semibold mb-4">Founder & Lead Designer</p>
-                  <p className="text-sm text-gray-500">Disponível para freelance · São Paulo, SP</p>
-                </div>
-              </div>
+          <div className="max-w-4xl mx-auto rounded-3xl bg-[#111118]/80 border border-white/10 backdrop-blur-md overflow-hidden reveal">
+            {/* Nav Tabs */}
+            <div className="flex border-b border-white/10">
+              <button
+                onClick={() => setActiveTab('studio')}
+                className={`flex-1 py-6 text-center text-sm font-bold tracking-widest uppercase transition-all duration-300 ${activeTab === 'studio' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
+              >
+                A Creatorii Studio
+              </button>
+              <button
+                onClick={() => setActiveTab('equipe')}
+                className={`flex-1 py-6 text-center text-sm font-bold tracking-widest uppercase transition-all duration-300 ${activeTab === 'equipe' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
+              >
+                Quem Somos Nós
+              </button>
             </div>
-            <div>
-              <span className="text-[#7F77DD] text-xs font-bold tracking-widest uppercase">A Fundadora</span>
-              <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">Sobre a Natasha e a Creatorii</h2>
-              <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                Designer há mais de 7 anos, comecei minha jornada criativa aos 15. Formada em Design, fundei a Creatorii para criar sem me encaixar em padrões — cada projeto é uma história contada visualmente. Já entregamos mais de 200 projetos espalhados pelo Brasil e crescendo.
-              </p>
-              <div className="flex gap-4">
-                <a href="#contato" className="text-[#7F77DD] font-bold flex items-center gap-2 hover:gap-3 transition-all">
-                  Vamos criar algo juntos? <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
+
+            {/* Conteúdo Dinâmico */}
+            <div className="p-8 md:p-12">
+              {/* TAB: STUDIO */}
+              {activeTab === 'studio' && (
+                <div className="animate-in fade-in zoom-in-95 duration-500">
+                  <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">Marcas fortes não acontecem por acaso.</h2>
+                  <div className="space-y-6 text-gray-400 text-lg leading-relaxed font-poppins">
+                    <p>A Creatorii Studio nasceu em 2020 com um propósito claro: transformar presença digital em posicionamento.</p>
+                    <p>Somos um estúdio criativo formado por profissionais de design, marketing, conteúdo e desenvolvimento, unidos pela mesma visão: marcas não precisam disputar atenção quando possuem uma comunicação capaz de despertar interesse, criar conexão e permanecer na memória.</p>
+                    <p>Cada projeto parte de uma compreensão profunda da marca, do seu público e dos seus objetivos. A partir disso, estratégia, criatividade e design se encontram para construir uma presença digital coerente, relevante e autêntica.</p>
+                    <p className="text-white font-semibold">Mais do que criar conteúdos, desenvolvemos experiências que ajudam empresas a comunicar seu valor, fortalecer sua identidade e ocupar um espaço único na mente de quem importa.</p>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB: EQUIPE */}
+              {activeTab === 'equipe' && (
+                <div className="animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center">
+                  <img 
+                    src="/images/team_photo.jpg" 
+                    alt="Equipe Creatorii" 
+                    className="w-48 h-48 rounded-full object-cover border-4 border-[#7F77DD]/30 shadow-2xl mb-10"
+                  />
+                  
+                  <div className="w-full space-y-4">
+                    {/* Card Natasha */}
+                    <div 
+                      className={`border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-all duration-300 cursor-pointer ${openCard === 'natasha' ? 'ring-1 ring-[#7F77DD]/50' : 'hover:bg-white/10'}`}
+                      onClick={() => setOpenCard(openCard === 'natasha' ? null : 'natasha')}
+                    >
+                      <div className="flex justify-between items-center p-6">
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Natasha Queiroz</h3>
+                          <p className="text-[#7F77DD] text-sm font-semibold">Reconhecimento & Liderança</p>
+                        </div>
+                        {openCard === 'natasha' ? <Minus className="text-white" /> : <Plus className="text-white" />}
+                      </div>
+                      
+                      {openCard === 'natasha' && (
+                        <div className="px-6 pb-6 text-gray-400 leading-relaxed font-poppins animate-in slide-in-from-top-4 duration-300">
+                          Com mais de 7 anos de experiência em design, Natasha iniciou sua trajetória criativa aos 15 anos e, desde então, transformou sua paixão por comunicação visual em profissão. Formada em Design, fundou a Creatorii com o propósito de criar marcas que não apenas seguem tendências, mas constroem uma identidade própria. À frente de mais de 200 projetos realizados em todo o Brasil, une estratégia, estética e criatividade para transformar ideias em experiências visuais que geram reconhecimento.
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Card Emmyly */}
+                    <div 
+                      className={`border border-white/10 rounded-2xl bg-white/5 overflow-hidden transition-all duration-300 cursor-pointer ${openCard === 'emmyly' ? 'ring-1 ring-[#7F77DD]/50' : 'hover:bg-white/10'}`}
+                      onClick={() => setOpenCard(openCard === 'emmyly' ? null : 'emmyly')}
+                    >
+                      <div className="flex justify-between items-center p-6">
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Emmyly Queiroz</h3>
+                          <p className="text-[#7F77DD] text-sm font-semibold">Social Media & Estrategista de Conteúdo</p>
+                        </div>
+                        {openCard === 'emmyly' ? <Minus className="text-white" /> : <Plus className="text-white" />}
+                      </div>
+                      
+                      {openCard === 'emmyly' && (
+                        <div className="px-6 pb-6 text-gray-400 leading-relaxed font-poppins animate-in slide-in-from-top-4 duration-300">
+                          Com 6 anos de experiência em comunicação e mídias sociais, Emmyly atua na construção de estratégias que transformam presença digital em conexão. Seu trabalho une planejamento, criatividade e olhar estratégico para desenvolver conteúdos que representam a essência de cada marca e conversam com o público certo. Na Creatorii, transforma objetivos de negócio em comunicação relevante, consistente e capaz de gerar relacionamento e posicionamento.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
 
         {/* PROCESSO */}
-        <section id="processo" className="py-24 bg-[#0a0a0f] border-y border-white/5">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16 reveal">
-              <span className="text-[#7F77DD] text-xs font-bold tracking-widest uppercase">Fluxo</span>
-              <h2 className="text-4xl md:text-5xl font-bold mt-4">Nosso Processo</h2>
-            </div>
+                <section id="processo" className="py-24 bg-[#0a0a0f] border-y border-white/5">
+                  <div className="container mx-auto px-6">
+                    <div className="text-center mb-16 reveal">
+                      <span className="text-[#7F77DD] text-xs font-bold tracking-widest uppercase">Fluxo</span>
+                      <h2 className="text-4xl md:text-5xl font-bold mt-4">Nosso Processo</h2>
+                    </div>
 
-            <div className="grid md:grid-cols-4 gap-8 relative">
-              <div className="hidden md:block absolute top-12 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#7F77DD]/30 to-transparent"></div>
-              {[
-                { step: '01', title: 'Diagnóstico', desc: 'Análise profunda do negócio e mercado.' },
-                { step: '02', title: 'Estratégia', desc: 'Planejamento tático e criativo.' },
-                { step: '03', title: 'Criação', desc: 'Design e prototipagem interativa.' },
-                { step: '04', title: 'Entrega', desc: 'Desenvolvimento e lançamento oficial.' },
-              ].map((p) => (
-                <div key={p.step} className="relative flex flex-col items-center text-center reveal">
-                  <div className="w-12 h-12 bg-[#0a0a0f] border border-[#7F77DD] text-[#7F77DD] font-bold rounded-full flex items-center justify-center mb-6 z-10">
-                    {p.step}
+                    <div className="grid md:grid-cols-4 gap-8 relative">
+                      <div className="hidden md:block absolute top-12 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#7F77DD]/30 to-transparent"></div>
+                      {[
+                        { 
+                          step: '01', 
+                          title: 'Estratégia', 
+                          desc: 'Antes de criar, é preciso entender. O primeiro passo é mergulhar na marca, no seu mercado, no público e nos seus objetivos. A partir dessas informações, são definidos direcionamentos estratégicos para que cada ação tenha propósito.' 
+                        },
+                        { 
+                          step: '02', 
+                          title: 'Criação', 
+                          desc: 'Estratégia que ganha forma. Com o direcionamento definido, começa a etapa criativa. Desenvolvemos conceitos, identidades, conteúdos e materiais visuais que traduzem a estratégia em uma comunicação clara, relevante e conectada.' 
+                        },
+                        { 
+                          step: '03', 
+                          title: 'Entrega', 
+                          desc: 'Tudo pronto para a marca acontecer. Após a criação, os materiais passam pelos ajustes necessários e são organizados para a entrega. Cada projeto é finalizado com atenção aos detalhes para garantir consistência.' 
+                        },
+                        { 
+                          step: '04', 
+                          title: 'Evolução', 
+                          desc: 'Porque uma marca forte nunca fica parada. A presença digital é construída continuamente. A partir dos resultados, novas oportunidades são identificadas para manter a comunicação relevante, estratégica e alinhada.' 
+                        },
+                      ].map((p) => (
+                        <div key={p.step} className="relative flex flex-col items-center text-center reveal">
+                          <div className="w-12 h-12 bg-[#0a0a0f] border border-[#7F77DD] text-[#7F77DD] font-bold rounded-full flex items-center justify-center mb-4 z-10">
+                            {p.step}
+                          </div>
+                          <h4 className="text-xl font-bold mb-2">{p.title}</h4>
+                  
+                          {/* Botão para ler mais */}
+                          <button 
+                            onClick={() => setExpanded(expanded === p.step ? null : p.step)}
+                            className="text-[#7F77DD] hover:text-white transition-colors text-xs font-semibold mb-3 flex items-center gap-1"
+                          >
+                            <span>{expanded === p.step ? 'Ver menos' : 'Ler mais'}</span>
+                            <span>{expanded === p.step ? '−' : '+'}</span>
+                          </button>
+
+                          <p className={`text-gray-400 text-sm px-4 leading-relaxed font-poppins transition-all duration-300 ease-in-out ${expanded === p.step ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                            {p.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <h4 className="text-xl font-bold mb-2">{p.title}</h4>
-                  <p className="text-gray-500 text-sm px-4">{p.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                </section>
 
         {/* PORTFOLIO */}
         <section id="portfolio" className="py-24 px-6 container mx-auto">
@@ -293,9 +372,6 @@ CONSTRUÍMOS PRESENÇA DIGITAL PARA EMPRESAS QUE QUEREM SER RECONHECIDAS, LEMBRA
           </div>
         </section>
 
-        {/* EFEITO APPLE SCROLL */}
-        <MacBookNeoScroll />
-
         {/* DEPOIMENTOS */}
         <section className="py-24 bg-[#111118]/50">
           <div className="container mx-auto px-6">
@@ -364,6 +440,11 @@ CONSTRUÍMOS PRESENÇA DIGITAL PARA EMPRESAS QUE QUEREM SER RECONHECIDAS, LEMBRA
           </div>
         </section>
 
+        {/* MASCOTE ROBÔ VETORIAL */}
+        <section className="reveal">
+          <CreatoriiVectorRobot />
+        </section>
+
         {/* CTA FINAL */}
         <section id="contato" className="py-24 px-6">
           <div className="container mx-auto max-w-5xl bg-[#111118] border border-white/5 p-12 md:p-20 rounded-[40px] text-center reveal">
@@ -399,34 +480,9 @@ CONSTRUÍMOS PRESENÇA DIGITAL PARA EMPRESAS QUE QUEREM SER RECONHECIDAS, LEMBRA
             <a href="https://instagram.com/creatoriistudio" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#7F77DD] text-sm transition-colors font-medium">
               Instagram
             </a>
-            <a href="https://www.behance.net/natashaqueiroz" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#7F77DD] text-sm transition-colors font-medium">
-              Behance
-            </a>
-            <a href="mailto:contato@creatorii.com" className="text-gray-500 hover:text-[#7F77DD] text-sm transition-colors font-medium">
-              Email
-            </a>
           </div>
         </div>
       </footer>
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        .reveal {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        @keyframes infinite-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .animate-infinite-scroll {
-          animation: infinite-scroll 40s linear infinite;
-        }
-      `}} />
     </div>
   );
 };
