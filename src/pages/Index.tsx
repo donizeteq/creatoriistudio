@@ -186,6 +186,18 @@ const Index = () => {
               {/* TAB: STUDIO */}
               {activeTab === 'studio' && (
                 <div className="animate-in fade-in zoom-in-95 duration-500 space-y-10">
+                  {/* Banner de Capa Header com a Logo */}
+                  <div className="w-full py-8 px-6 bg-gradient-to-r from-white/10 via-white/5 to-white/10 border border-white/15 rounded-3xl backdrop-blur-md shadow-2xl flex justify-center items-center relative overflow-hidden group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-[#FF6B35]/20 via-transparent to-[#9B87B2]/20 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                    <img 
+                      src={logoCreatorii} 
+                      alt="Creatorii Studio - Design & Social Media" 
+                      title="Creatorii Studio - Design & Social Media"
+                      aria-label="Logo Creatorii Studio"
+                      className="h-20 md:h-28 lg:h-32 object-contain relative z-10 transition-transform duration-500 hover:scale-105 filter drop-shadow-[0_10px_30px_rgba(255,107,53,0.25)]" 
+                    />
+                  </div>
+
                   {/* Título de Topo em Linha Única / Toda a Largura */}
                   <div className="w-full border-b border-white/10 pb-6 text-center lg:text-left">
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
@@ -193,11 +205,11 @@ const Index = () => {
                     </h2>
                   </div>
 
-                  {/* Diagramação Editorial (Estilo Revista / Jornal com Logo Integrada) */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                  {/* Diagramação Editorial (Estilo Revista / Jornal em 2 Colunas) */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     {/* Bloco de Texto 1 (Esquerda) */}
-                    <div className="lg:col-span-5 space-y-6 text-gray-300 text-base md:text-lg leading-relaxed font-poppins">
-                      <p className="first-letter:text-4xl first-letter:font-bold first-letter:text-[#FF6B35] first-letter:mr-2 first-letter:float-left">
+                    <div className="lg:col-span-6 space-y-6 text-gray-300 text-base md:text-lg leading-relaxed font-poppins">
+                      <p className="first-letter:text-5xl first-letter:font-extrabold first-letter:text-[#FF6B35] first-letter:mr-3 first-letter:float-left">
                         A Creatorii Studio nasceu em 2020 com um propósito claro: transformar presença digital em posicionamento.
                       </p>
                       <p>
@@ -205,25 +217,12 @@ const Index = () => {
                       </p>
                     </div>
 
-                    {/* Logo Destaque Central Integrada (Meio) */}
-                    <div className="lg:col-span-3 flex justify-center items-center my-4 lg:my-0">
-                      <div className="w-full p-6 bg-gradient-to-b from-white/10 to-white/5 border border-white/15 rounded-3xl backdrop-blur-md shadow-2xl hover:border-[#FF6B35]/40 transition-all duration-500 text-center">
-                        <img 
-                          src={logoCreatorii} 
-                          alt="Creatorii Studio - Design & Social Media" 
-                          title="Creatorii Studio - Design & Social Media"
-                          aria-label="Logo Creatorii Studio"
-                          className="w-full max-w-[220px] lg:max-w-[260px] mx-auto h-auto object-contain transition-transform duration-500 hover:scale-105 filter drop-shadow-[0_10px_25px_rgba(255,107,53,0.2)]" 
-                        />
-                      </div>
-                    </div>
-
                     {/* Bloco de Texto 2 (Direita) */}
-                    <div className="lg:col-span-4 space-y-6 text-gray-300 text-base md:text-lg leading-relaxed font-poppins">
+                    <div className="lg:col-span-6 space-y-6 text-gray-300 text-base md:text-lg leading-relaxed font-poppins">
                       <p>
                         Cada projeto parte de uma compreensão profunda da marca, do seu público e dos seus objetivos. A partir disso, estratégia, criatividade e design se encontram para construir uma presença digital coerente, relevante e autêntica.
                       </p>
-                      <p className="text-white font-semibold bg-white/5 p-4 rounded-xl border-l-4 border-[#FF6B35]">
+                      <p className="text-white font-semibold bg-white/5 p-5 rounded-2xl border-l-4 border-[#FF6B35]">
                         Mais do que criar conteúdos, desenvolvemos experiências que ajudam empresas a comunicar seu valor, fortalecer sua identidade e ocupar um espaço único na mente de quem importa.
                       </p>
                     </div>
