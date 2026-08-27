@@ -186,6 +186,15 @@ const Index = () => {
               {/* TAB: STUDIO */}
               {activeTab === 'studio' && (
                 <div className="animate-in fade-in zoom-in-95 duration-500">
+                  <div className="mb-8 flex justify-start">
+                    <img 
+                      src={logoCreatorii} 
+                      alt="Creatorii Studio - Design & Social Media" 
+                      title="Creatorii Studio - Design & Social Media"
+                      aria-label="Logo Creatorii Studio"
+                      className="h-16 md:h-24 object-contain transition-transform duration-300 hover:scale-105" 
+                    />
+                  </div>
                   <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">Marcas fortes não acontecem por acaso.</h2>
                   <div className="space-y-6 text-gray-400 text-lg leading-relaxed font-poppins">
                     <p>A Creatorii Studio nasceu em 2020 com um propósito claro: transformar presença digital em posicionamento.</p>
