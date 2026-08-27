@@ -133,19 +133,34 @@ const Index = () => {
                   </span>
                 </h2>
 
-                <div className="flex flex-col sm:flex-row gap-4 mb-16 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 mb-12 justify-center">
                   <a 
                     href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20mais%20informações."
-                    className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
+                    className="px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
                   >
                     Quero transformar meu negócio
                   </a>
                   <a 
                     href="#portfolio"
-                    className="px-8 py-4 bg-transparent backdrop-blur-md border border-white/30 hover:border-white/50 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
+                    className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
                   >
                     Ver serviços
                   </a>
+                </div>
+
+                {/* CARD DE MÉTRICAS EM GLASSMORPHISM */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 w-full max-w-4xl p-6 md:p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl">
+                  {[
+                    { label: 'Projetos Entregues', value: '200+' },
+                    { label: 'Satisfação', value: '98%' },
+                    { label: 'Engajamento', value: '581k' },
+                    { label: 'Anos no Mercado', value: '5+' },
+                  ].map((m) => (
+                    <div key={m.label} className="flex flex-col items-center justify-center p-2">
+                      <span className="text-3xl md:text-4xl font-extrabold text-[#FF6B35] mb-1">{m.value}</span>
+                      <span className="text-xs text-gray-300 uppercase tracking-wider font-medium text-center">{m.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
