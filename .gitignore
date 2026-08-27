@@ -19,6 +19,7 @@ build/
 *.p12
 
 # System & Hermes Agent files
+.github/
 .hermes/
 .lovable/
 exports/

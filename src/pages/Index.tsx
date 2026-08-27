@@ -124,14 +124,14 @@ const Index = () => {
             <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" style={{ backgroundImage: 'url(/bg-sessao2.jpg)' }} />
             <div className="relative z-10">
               <div className="flex flex-col items-center text-center reveal">
-                <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tight leading-relaxed mb-10 text-center">
-                  <span className="block font-poppins text-white mb-2">
+                <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight leading-relaxed mb-8 md:mb-10 text-center max-w-5xl mx-auto px-2">
+                  <span className="block font-poppins text-white mb-1.5 md:mb-2">
                     Construímos presença digital para
                   </span>
-                  <span className="block font-poppins text-white mb-2">
+                  <span className="block font-poppins text-white mb-1.5 md:mb-2">
                     empresas que querem ser,
                   </span>
-                  <span className="block font-poppins font-bold text-[#FF6B35] typewriter-effect">
+                  <span className="inline-block font-poppins font-bold text-[#FF6B35] typewriter-effect max-w-full overflow-hidden">
                     reconhecidas, lembradas e escolhidas.
                   </span>
                 </h2>
