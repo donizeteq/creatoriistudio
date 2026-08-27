@@ -71,7 +71,7 @@ const Index = () => {
       <nav className={`fixed top-0 w-full z-[1000] transition-all duration-300 border-b border-white/5 ${navVisible ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'bg-[#0a0a0f]/85 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <a href="#" className="flex items-center">
-            <img src={logoCreatorii} alt="Creatorii" className="h-8 md:h-10" />
+            <img src={logoCreatorii} alt="Creatorii Studio" className="h-14 md:h-20 lg:h-24 object-contain transition-transform duration-300 hover:scale-105" />
           </a>
           
           <div className="hidden md:flex items-center gap-10">
@@ -471,7 +471,7 @@ const Index = () => {
       <footer className="py-12 border-t border-white/5 relative z-10 bg-[#0a0a0f]">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-center md:text-left">
-            <img src={logoCreatorii} alt="Creatorii" className="h-8 mb-4 mx-auto md:mx-0" />
+            <img src={logoCreatorii} alt="Creatorii Studio" className="h-12 md:h-16 mb-4 mx-auto md:mx-0 object-contain" />
             <p className="text-gray-600 text-sm">© 2026 Creatorii Studio. Todos os direitos reservados.</p>
             <p className="text-gray-700 text-[10px] mt-1 uppercase tracking-widest font-bold">Design & Technology</p>
           </div>
