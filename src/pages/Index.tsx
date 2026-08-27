@@ -185,27 +185,48 @@ const Index = () => {
             <div className="p-8 md:p-12">
               {/* TAB: STUDIO */}
               {activeTab === 'studio' && (
-                <div className="animate-in fade-in zoom-in-95 duration-500 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                  {/* Texto na Esquerda */}
-                  <div className="lg:col-span-7 space-y-6">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white leading-tight">Marcas fortes não acontecem por acaso.</h2>
-                    <div className="space-y-6 text-gray-400 text-lg leading-relaxed font-poppins">
-                      <p>A Creatorii Studio nasceu em 2020 com um propósito claro: transformar presença digital em posicionamento.</p>
-                      <p>Somos um estúdio criativo formado por profissionais de design, marketing, conteúdo e desenvolvimento, unidos pela mesma visão: marcas não precisam disputar atenção quando possuem uma comunicação capaz de despertar interesse, criar conexão e permanecer na memória.</p>
-                      <p>Cada projeto parte de uma compreensão profunda da marca, do seu público e dos seus objetivos. A partir disso, estratégia, criatividade e design se encontram para construir uma presença digital coerente, relevante e autêntica.</p>
-                      <p className="text-white font-semibold">Mais do que criar conteúdos, desenvolvemos experiências que ajudam empresas a comunicar seu valor, fortalecer sua identidade e ocupar um espaço único na mente de quem importa.</p>
-                    </div>
+                <div className="animate-in fade-in zoom-in-95 duration-500 space-y-10">
+                  {/* Título de Topo em Linha Única / Toda a Largura */}
+                  <div className="w-full border-b border-white/10 pb-6 text-center lg:text-left">
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                      Marcas fortes não acontecem por acaso.
+                    </h2>
                   </div>
 
-                  {/* Logo na Direita - Centralizado Verticalmente */}
-                  <div className="lg:col-span-5 flex justify-center items-center p-6 md:p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm shadow-2xl hover:border-[#FF6B35]/30 transition-all duration-500">
-                    <img 
-                      src={logoCreatorii} 
-                      alt="Creatorii Studio - Design & Social Media" 
-                      title="Creatorii Studio - Design & Social Media"
-                      aria-label="Logo Creatorii Studio"
-                      className="w-full max-w-[280px] md:max-w-[340px] h-auto object-contain transition-transform duration-500 hover:scale-105 filter drop-shadow-[0_10px_20px_rgba(255,107,53,0.15)]" 
-                    />
+                  {/* Diagramação Editorial (Estilo Revista / Jornal com Logo Integrada) */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                    {/* Bloco de Texto 1 (Esquerda) */}
+                    <div className="lg:col-span-5 space-y-6 text-gray-300 text-base md:text-lg leading-relaxed font-poppins">
+                      <p className="first-letter:text-4xl first-letter:font-bold first-letter:text-[#FF6B35] first-letter:mr-2 first-letter:float-left">
+                        A Creatorii Studio nasceu em 2020 com um propósito claro: transformar presença digital em posicionamento.
+                      </p>
+                      <p>
+                        Somos um estúdio criativo formado por profissionais de design, marketing, conteúdo e desenvolvimento, unidos pela mesma visão: marcas não precisam disputar atenção quando possuem uma comunicação capaz de despertar interesse, criar conexão e permanecer na memória.
+                      </p>
+                    </div>
+
+                    {/* Logo Destaque Central Integrada (Meio) */}
+                    <div className="lg:col-span-3 flex justify-center items-center my-4 lg:my-0">
+                      <div className="w-full p-6 bg-gradient-to-b from-white/10 to-white/5 border border-white/15 rounded-3xl backdrop-blur-md shadow-2xl hover:border-[#FF6B35]/40 transition-all duration-500 text-center">
+                        <img 
+                          src={logoCreatorii} 
+                          alt="Creatorii Studio - Design & Social Media" 
+                          title="Creatorii Studio - Design & Social Media"
+                          aria-label="Logo Creatorii Studio"
+                          className="w-full max-w-[220px] lg:max-w-[260px] mx-auto h-auto object-contain transition-transform duration-500 hover:scale-105 filter drop-shadow-[0_10px_25px_rgba(255,107,53,0.2)]" 
+                        />
+                      </div>
+                    </div>
+
+                    {/* Bloco de Texto 2 (Direita) */}
+                    <div className="lg:col-span-4 space-y-6 text-gray-300 text-base md:text-lg leading-relaxed font-poppins">
+                      <p>
+                        Cada projeto parte de uma compreensão profunda da marca, do seu público e dos seus objetivos. A partir disso, estratégia, criatividade e design se encontram para construir uma presença digital coerente, relevante e autêntica.
+                      </p>
+                      <p className="text-white font-semibold bg-white/5 p-4 rounded-xl border-l-4 border-[#FF6B35]">
+                        Mais do que criar conteúdos, desenvolvemos experiências que ajudam empresas a comunicar seu valor, fortalecer sua identidade e ocupar um espaço único na mente de quem importa.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
