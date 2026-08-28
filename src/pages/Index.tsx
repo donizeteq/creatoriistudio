@@ -114,7 +114,7 @@ const Index = () => {
           title="MARCAS FORTES NÃO DISPUTAM ATENÇÃO."
           tagline="ELAS ATRAEM."
           scrollHint="ROLE PARA EXPLORAR"
-          signature={{ name: "Natasha Rinoa • Creatorii Studio", url: "https://wa.me/5511958566518" }}
+          signature={false}
         />
       </section>
 
