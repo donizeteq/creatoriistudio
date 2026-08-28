@@ -236,8 +236,8 @@ const Index = () => {
             </a>
           </div>
 
-          {/* GRADE DE 6 CARDS SECUNDÁRIOS (LADO DIREITO - 7 COLUNAS LG EM 2 COLUNAS x 3 LINHAS) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+          {/* GRADE DE 6 CARDS SECUNDÁRIOS DO BEHANCE (LADO DIREITO - 7 COLUNAS LG EM 2 COLUNAS x 3 LINHAS) */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 h-full">
             {[
               {
                 name: 'Wagner Gonçalves — Attorneys',
@@ -252,57 +252,61 @@ const Index = () => {
                 link: 'https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza',
               },
               {
-                name: 'Majoris Joias & Acessórios',
-                cat: 'BRANDING & E-COMMERCE',
-                img: '/majoris-logo.png',
-                link: 'https://www.majorisjoias.com.br/',
+                name: 'Studio & Beauty Experience',
+                cat: 'ESTRUTURA DE MARCA',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ec4407195529925.Y3JvcCwxMDQwLDgxNCwyMjQsMA.jpg',
+                link: 'https://www.behance.net/natashaqueiroz',
               },
               {
-                name: 'DS Partners Construction',
-                cat: 'IDENTIDADE VISUAL',
-                img: '/ds-partners-logo.png',
-                link: 'https://dspartnersconstruction.com/',
+                name: 'Editorial & Social Content',
+                cat: 'DESIGN DE CONTEÚDO',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/eb792b234976285.Y3JvcCwxMDM1LDgxMCwyMDIsMA.jpg',
+                link: 'https://www.behance.net/natashaqueiroz',
               },
               {
-                name: 'Tech Flow Solutions',
-                cat: 'DESIGN SYSTEM',
-                img: logoCreatorii,
-                link: '#contato',
+                name: 'Estratégia & Visual Identity',
+                cat: 'POSICIONAMENTO PREMIUM',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/52c7bf250409905.Y3JvcCwxMDM1LDgxMCwyMDIsMA.jpg',
+                link: 'https://www.behance.net/natashaqueiroz',
               },
               {
-                name: 'Lux Living Imóveis',
-                cat: 'PRESENÇA DIGITAL',
-                img: logoCreatorii,
-                link: '#contato',
+                name: 'Embalagens & Design System',
+                cat: 'PACKAGING DESIGN',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/80aa22161697511.Y3JvcCwxMzcxLDEwNzMsMjc1LDA.png',
+                link: 'https://www.behance.net/natashaqueiroz',
               },
             ].map((item, idx) => (
               <a
                 key={idx}
                 href={item.link}
-                target={item.link.startsWith('http') ? '_blank' : '_self'}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 p-4 rounded-2xl bg-[#111118] border border-white/5 hover:border-[#FF6B35]/40 transition-all duration-300 hover:bg-white/5 reveal"
+                className="group overflow-hidden rounded-2xl bg-[#111118] border border-white/10 hover:border-[#FF6B35]/60 transition-all duration-300 flex flex-col justify-between reveal hover:shadow-lg hover:shadow-[#FF6B35]/5"
               >
-                {/* Miniatura / Container de Logo à Esquerda */}
-                <div className="w-20 h-20 shrink-0 rounded-xl bg-black/60 border border-white/10 overflow-hidden flex items-center justify-center p-2 group-hover:scale-105 transition-transform">
+                {/* Imagem do Projeto Ampliada */}
+                <div className="w-full h-[140px] md:h-[150px] relative overflow-hidden bg-black/40">
                   <img
                     src={item.img}
                     alt={item.name}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-60" />
                 </div>
 
-                {/* Texto do Projeto à Direita */}
-                <div className="flex-1 min-w-0">
-                  <span className="text-[9px] font-extrabold text-[#FF6B35] uppercase tracking-wider block mb-1">
-                    {item.cat}
-                  </span>
-                  <h4 className="text-sm font-bold text-white group-hover:text-[#FF6B35] transition-colors truncate">
-                    {item.name}
-                  </h4>
-                  <span className="text-[11px] text-gray-500 font-semibold group-hover:text-gray-300 transition-colors flex items-center gap-1 mt-1">
-                    Ver mais <ArrowRight className="w-3 h-3" />
-                  </span>
+                {/* Detalhes do Projeto */}
+                <div className="p-4 flex flex-col justify-between flex-1">
+                  <div>
+                    <span className="text-[9px] font-extrabold text-[#FF6B35] uppercase tracking-wider block mb-1">
+                      {item.cat}
+                    </span>
+                    <h4 className="text-sm font-bold text-white group-hover:text-[#FF6B35] transition-colors line-clamp-1">
+                      {item.name}
+                    </h4>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400 font-semibold group-hover:text-white transition-colors">
+                    <span>Ver no Behance</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#FF6B35] group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
               </a>
             ))}
