@@ -12,7 +12,7 @@ export interface MetroHeroProps {
   style?: React.CSSProperties
 }
 
-const DEFAULT_VIDEO = "https://raw.githubusercontent.com/gughigug/metro-hero-assets/main/Subway_doors_open_to_city_202608242331.mp4"
+const DEFAULT_VIDEO = "/metro-hero-video.mp4"
 
 function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v))
@@ -48,10 +48,16 @@ export default function MetroHero({
     const onLoadedData = () => {
       duration = video.duration || 0
       setReady(true)
+      try {
+        video.currentTime = 0.001
+      } catch (e) {}
     }
-    video.addEventListener("loadeddata", onLoadedData)
 
-    // Wheel event handler: immersive walk-in scroll sensitivity (1300 divisor)
+    video.addEventListener("loadeddata", onLoadedData)
+    video.addEventListener("loadedmetadata", onLoadedData)
+    video.addEventListener("canplaythrough", onLoadedData)
+
+    // Wheel event handler: silky walk-in scroll sensitivity (1300 divisor)
     const handleWheel = (e: WheelEvent) => {
       const atTop = window.scrollY <= 10
 
@@ -139,19 +145,20 @@ export default function MetroHero({
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      // Silky momentum lerp (0.10 factor) for natural weight
-      currentProgress += (targetProgress - currentProgress) * 0.10
+      // Silky momentum lerp (0.12 factor)
+      currentProgress += (targetProgress - currentProgress) * 0.12
 
-      // 1. Video Scrubbing & REAL 3D CAMERA PUSH-IN (stepping inside the doorway)
-      if (video && duration > 0) {
+      // 1. Local Video Zero-Latency Scrubbing & 3D Perspective Depth
+      if (video && (duration > 0 || video.duration > 0)) {
+        const dur = duration || video.duration
         const videoProgress = clamp(currentProgress / 0.65, 0, 1)
-        const targetTime = videoProgress * duration
+        const targetTime = videoProgress * dur
         
         if (Math.abs(video.currentTime - targetTime) > 0.01) {
           video.currentTime = targetTime
         }
 
-        // Camera Push-in Scale: 1.0 -> 1.18 creating realistic optical forward movement into the car
+        // Camera Push-in Scale: 1.0 -> 1.18 creating realistic optical forward movement
         const cameraPushScale = 1.0 + videoProgress * 0.18
         video.style.transform = `scale3d(${cameraPushScale}, ${cameraPushScale}, 1)`
       }
@@ -160,7 +167,7 @@ export default function MetroHero({
       if (titleRef.current) {
         const t = 1 - clamp(currentProgress / 0.28, 0, 1)
         const translateY = (1 - t) * -50
-        const scale = 1.0 + (1 - t) * 0.12 // Title grows slightly as you pass through it
+        const scale = 1.0 + (1 - t) * 0.12
         const blur = (1 - t) * 16
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
@@ -172,15 +179,16 @@ export default function MetroHero({
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Emerges smoothly from depth, holds, then blurs/dissolves out as Section 2 arrives
+      // 4. Tagline ("ELAS ATRAEM."): Emergence from depth after doors complete opening + Dissolve on exit
       if (taglineRef.current) {
-        const doorOpenness = video && duration > 0 ? clamp((video.currentTime / duration - 0.65) / 0.35, 0, 1) : 0
+        const dur = duration || (video ? video.duration : 0)
+        const doorOpenness = video && dur > 0 ? clamp((video.currentTime / dur - 0.60) / 0.35, 0, 1) : 0
         
-        // Emergence phase: 0.60 to 0.85 progress
-        const fadeIn = Math.min(clamp((currentProgress - 0.60) / 0.25, 0, 1), doorOpenness)
+        // Emergence phase: 0.65 to 0.88 progress
+        const fadeIn = Math.min(clamp((currentProgress - 0.65) / 0.23, 0, 1), doorOpenness)
         
-        // Dissolve/Blur out phase as user transitions into Section 2: 0.90 to 1.00 progress
-        const fadeOut = 1 - clamp((currentProgress - 0.90) / 0.10, 0, 1)
+        // Dissolve phase into Section 2: 0.92 to 1.00 progress
+        const fadeOut = 1 - clamp((currentProgress - 0.92) / 0.08, 0, 1)
         
         const opacity = fadeIn * fadeOut
         const translateY = (1 - fadeIn) * 45 + (1 - fadeOut) * -40
@@ -205,6 +213,8 @@ export default function MetroHero({
 
     return () => {
       video.removeEventListener("loadeddata", onLoadedData)
+      video.removeEventListener("loadedmetadata", onLoadedData)
+      video.removeEventListener("canplaythrough", onLoadedData)
       window.removeEventListener("wheel", handleWheel)
       window.removeEventListener("touchstart", handleTouchStart)
       window.removeEventListener("touchmove", handleTouchMove)
@@ -237,7 +247,7 @@ export default function MetroHero({
           </h1>
         </div>
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (EMERGÊNCIA REAL DO HORIZONTE APÓS ENTRAR NO VAGÃO) */}
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. */}
         <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none transition-transform duration-75 will-change-transform">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {tagline}
