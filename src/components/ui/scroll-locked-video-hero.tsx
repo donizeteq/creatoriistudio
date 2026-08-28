@@ -39,23 +39,35 @@ export default function MetroHero({
     const video = videoRef.current
     if (!video) return
 
-    let duration = 0
+    let duration = 2.4 // Default fallback video duration (2.4 seconds)
     let rafId = 0
     let currentProgress = 0
     let targetProgress = 0
     let isFinished = false
 
-    const onLoadedData = () => {
-      duration = video.duration || 0
+    // Initialize browser video decoder engine
+    const initVideoDecoder = () => {
+      if (video.duration && !isNaN(video.duration)) {
+        duration = video.duration
+      }
       setReady(true)
-      try {
+      video.play().then(() => {
+        video.pause()
         video.currentTime = 0.001
-      } catch (e) {}
+      }).catch(() => {
+        try {
+          video.currentTime = 0.001
+        } catch (e) {}
+      })
     }
 
-    video.addEventListener("loadeddata", onLoadedData)
-    video.addEventListener("loadedmetadata", onLoadedData)
-    video.addEventListener("canplaythrough", onLoadedData)
+    if (video.readyState >= 2) {
+      initVideoDecoder()
+    } else {
+      video.addEventListener("loadeddata", initVideoDecoder)
+      video.addEventListener("loadedmetadata", initVideoDecoder)
+      video.addEventListener("canplaythrough", initVideoDecoder)
+    }
 
     // Wheel event handler: silky walk-in scroll sensitivity (1300 divisor)
     const handleWheel = (e: WheelEvent) => {
@@ -148,15 +160,16 @@ export default function MetroHero({
       // Silky momentum lerp (0.12 factor)
       currentProgress += (targetProgress - currentProgress) * 0.12
 
-      // 1. Local Video Zero-Latency Scrubbing & 3D Perspective Depth
-      if (video && (duration > 0 || video.duration > 0)) {
-        const dur = duration || video.duration
+      const dur = (video && video.duration && !isNaN(video.duration)) ? video.duration : duration
+
+      // 1. Guaranteed Video Door Opening & 3D Perspective Depth
+      if (video && dur > 0) {
         const videoProgress = clamp(currentProgress / 0.65, 0, 1)
         const targetTime = videoProgress * dur
         
-        if (Math.abs(video.currentTime - targetTime) > 0.01) {
+        try {
           video.currentTime = targetTime
-        }
+        } catch (e) {}
 
         // Camera Push-in Scale: 1.0 -> 1.18 creating realistic optical forward movement
         const cameraPushScale = 1.0 + videoProgress * 0.18
@@ -179,13 +192,14 @@ export default function MetroHero({
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Emergence from depth after doors complete opening + Dissolve on exit
+      // 4. Tagline ("ELAS ATRAEM."): Emergence STRICTLY BINDED to Physical Door Openness
       if (taglineRef.current) {
-        const dur = duration || (video ? video.duration : 0)
-        const doorOpenness = video && dur > 0 ? clamp((video.currentTime / dur - 0.60) / 0.35, 0, 1) : 0
+        // Physical door openness ratio (from 0 to 1)
+        const physicalDoorRatio = video && dur > 0 ? clamp(video.currentTime / dur, 0, 1) : 0
+        const doorIsOpen = physicalDoorRatio >= 0.70 ? clamp((physicalDoorRatio - 0.70) / 0.30, 0, 1) : 0
         
-        // Emergence phase: 0.65 to 0.88 progress
-        const fadeIn = Math.min(clamp((currentProgress - 0.65) / 0.23, 0, 1), doorOpenness)
+        // Emergence phase: 0.65 to 0.88 progress (MUST HAVE DOORS OPEN FIRST!)
+        const fadeIn = Math.min(clamp((currentProgress - 0.65) / 0.23, 0, 1), doorIsOpen)
         
         // Dissolve phase into Section 2: 0.92 to 1.00 progress
         const fadeOut = 1 - clamp((currentProgress - 0.92) / 0.08, 0, 1)
@@ -212,9 +226,6 @@ export default function MetroHero({
     rafId = requestAnimationFrame(frame)
 
     return () => {
-      video.removeEventListener("loadeddata", onLoadedData)
-      video.removeEventListener("loadedmetadata", onLoadedData)
-      video.removeEventListener("canplaythrough", onLoadedData)
       window.removeEventListener("wheel", handleWheel)
       window.removeEventListener("touchstart", handleTouchStart)
       window.removeEventListener("touchmove", handleTouchMove)
