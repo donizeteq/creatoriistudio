@@ -69,18 +69,18 @@ export default function MetroHero({
       // Smooth lerp for liquid-like scrubbing
       currentProgress += (targetProgress - currentProgress) * 0.18
 
-      // 1. Video Scrubbing: Completes 100% of door opening transition by 50% scroll progress!
+      // 1. Video Scrubbing: Reaches 100% OPEN by progress = 0.35 (first 35% of container scroll)!
       if (video && duration > 0) {
-        const videoProgress = clamp(currentProgress / 0.50, 0, 1)
+        const videoProgress = clamp(currentProgress / 0.35, 0, 1)
         const targetTime = videoProgress * duration
         if (Math.abs(video.currentTime - targetTime) > 0.015) {
           video.currentTime = targetTime
         }
       }
 
-      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.28 progress
+      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.20 progress
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.28, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.20, 0, 1)
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translateY(${(1 - t) * -30}px)`
         titleRef.current.style.filter = `blur(${(1 - t) * 8}px)`
@@ -91,17 +91,17 @@ export default function MetroHero({
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Fades in between 0.32 and 0.50 progress (right as doors finish opening)
+      // 4. Tagline ("ELAS ATRAEM."): Fades in between 0.22 and 0.38 progress
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.32) / 0.18, 0, 1)
+        const t = clamp((currentProgress - 0.22) / 0.16, 0, 1)
         taglineRef.current.style.opacity = String(t)
         taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px)`
         taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // 5. Progress bar at bottom: Fills up completely by 0.50 progress
+      // 5. Progress bar at bottom: Fills up completely by 0.35 progress
       if (progressBarRef.current) {
-        const barProgress = clamp(currentProgress / 0.50, 0, 1)
+        const barProgress = clamp(currentProgress / 0.35, 0, 1)
         progressBarRef.current.style.transform = `scaleX(${barProgress})`
       }
 
@@ -118,7 +118,7 @@ export default function MetroHero({
   }, [])
 
   return (
-    <div ref={containerRef} className="relative w-full h-[280vh] bg-[#05070d]">
+    <div ref={containerRef} className="relative w-full h-[400vh] bg-[#05070d]">
       <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         {/* Video Canvas Container */}
         <div className="absolute inset-0 w-full h-full bg-[#05070d]">
