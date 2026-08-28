@@ -20,9 +20,9 @@ function clamp(v: number, min: number, max: number) {
 
 export default function MetroHero({
   videoSrc = DEFAULT_VIDEO,
-  title = "CREATORII STUDIO",
+  title = "MARCAS FORTES NÃO DISPUTAM ATENÇÃO.",
   scrollHint = "ROLE PARA EXPLORAR",
-  tagline = "Design & Social Media que transformam sua marca.",
+  tagline = "ELAS ATRAEM.",
   className,
   style,
 }: MetroHeroProps) {
@@ -36,13 +36,13 @@ export default function MetroHero({
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    const container = containerRef.current
+    if (!video || !container) return
 
     let duration = 0
     let rafId = 0
     let currentProgress = 0
     let targetProgress = 0
-    let isLocked = true // Initial state: scroll locked at top until opening animation completes
 
     const onLoadedData = () => {
       duration = video.duration || 0
@@ -50,109 +50,54 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    // Wheel event handler: locks page scroll and scrubs video until opening animation is 100% complete
-    const handleWheel = (e: WheelEvent) => {
-      const atTop = window.scrollY <= 5
+    // Native scroll calculation: 100% fluid, 60fps, zero JS event locks or wheel traps!
+    const onScroll = () => {
+      if (!container) return
+      const rect = container.getBoundingClientRect()
+      const totalScrollable = container.offsetHeight - window.innerHeight
+      if (totalScrollable <= 0) return
 
-      if (atTop && isLocked) {
-        if (e.deltaY > 0) {
-          // Scrolling down: advance opening animation
-          if (targetProgress < 0.99) {
-            e.preventDefault()
-            const deltaProgress = (e.deltaY / 650) // smooth scrub speed
-            targetProgress = clamp(targetProgress + deltaProgress, 0, 1)
-
-            if (targetProgress >= 0.99) {
-              targetProgress = 1
-              isLocked = false // Unlock scroll once 100% complete!
-            }
-          } else {
-            isLocked = false
-          }
-        } else if (e.deltaY < 0 && targetProgress > 0) {
-          // Scrolling up at top: scrub animation backward
-          e.preventDefault()
-          const deltaProgress = (e.deltaY / 650)
-          targetProgress = clamp(targetProgress + deltaProgress, 0, 1)
-          isLocked = true
-        }
-      }
+      const scrolled = -rect.top
+      const progress = clamp(scrolled / totalScrollable, 0, 1)
+      targetProgress = progress
     }
 
-    // Touch event handlers for mobile
-    let touchStartY = 0
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY
-    }
-
-    const handleTouchMove = (e: TouchEvent) => {
-      const atTop = window.scrollY <= 5
-      const currentY = e.touches[0].clientY
-      const deltaY = touchStartY - currentY
-
-      if (atTop && isLocked) {
-        if (deltaY > 0) {
-          if (targetProgress < 0.99) {
-            if (e.cancelable) e.preventDefault()
-            targetProgress = clamp(targetProgress + (deltaY / 450), 0, 1)
-            touchStartY = currentY
-            if (targetProgress >= 0.99) {
-              targetProgress = 1
-              isLocked = false
-            }
-          } else {
-            isLocked = false
-          }
-        } else if (deltaY < 0 && targetProgress > 0) {
-          if (e.cancelable) e.preventDefault()
-          targetProgress = clamp(targetProgress + (deltaY / 450), 0, 1)
-          touchStartY = currentY
-          isLocked = true
-        }
-      }
-    }
-
-    // Re-lock when returning to top of page
-    const handleScroll = () => {
-      if (window.scrollY <= 2) {
-        if (targetProgress < 0.99) {
-          isLocked = true
-        }
-      }
-    }
-
-    window.addEventListener("wheel", handleWheel, { passive: false })
-    window.addEventListener("touchstart", handleTouchStart, { passive: true })
-    window.addEventListener("touchmove", handleTouchMove, { passive: false })
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
 
     function frame() {
-      currentProgress += (targetProgress - currentProgress) * 0.18
+      // Smooth lerp for liquid-like scrubbing
+      currentProgress += (targetProgress - currentProgress) * 0.15
 
       if (video && duration > 0) {
         const targetTime = currentProgress * duration
-        if (Math.abs(video.currentTime - targetTime) > 0.02) {
+        if (Math.abs(video.currentTime - targetTime) > 0.015) {
           video.currentTime = targetTime
         }
       }
 
-      if (videoRef.current) {
-        const scale = 1 + currentProgress * 0.05
-        videoRef.current.style.transform = `scale(${scale})`
-      }
+      // 1. Initial Title: Fades out from 0.0 to 0.35 progress
       if (titleRef.current) {
         const t = 1 - clamp(currentProgress / 0.35, 0, 1)
         titleRef.current.style.opacity = String(t)
-        titleRef.current.style.transform = `translateY(${(1 - t) * -28}px)`
+        titleRef.current.style.transform = `translateY(${(1 - t) * -30}px)`
+        titleRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
+
+      // 2. Scroll Hint: Fades out immediately upon scrolling
       if (hintRef.current) {
-        hintRef.current.style.opacity = currentProgress > 0.08 ? "0" : "1"
+        hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
+
+      // 3. Tagline ("ELAS ATRAEM."): Appears after door opening transition completes (0.45 to 0.85 progress)
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.65) / 0.35, 0, 1)
+        const t = clamp((currentProgress - 0.45) / 0.35, 0, 1)
         taglineRef.current.style.opacity = String(t)
-        taglineRef.current.style.transform = `translateY(${(1 - t) * 20}px)`
+        taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px)`
+        taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
+
+      // 4. Progress bar at bottom
       if (progressBarRef.current) {
         progressBarRef.current.style.transform = `scaleX(${currentProgress})`
       }
@@ -164,17 +109,14 @@ export default function MetroHero({
 
     return () => {
       video.removeEventListener("loadeddata", onLoadedData)
-      window.removeEventListener("wheel", handleWheel)
-      window.removeEventListener("touchstart", handleTouchStart)
-      window.removeEventListener("touchmove", handleTouchMove)
-      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("scroll", onScroll)
       cancelAnimationFrame(rafId)
     }
   }, [])
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen bg-[#05070d] overflow-hidden">
-      <div className="relative w-full h-full flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-[320vh] bg-[#05070d]">
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         {/* Video Canvas Container */}
         <div className="absolute inset-0 w-full h-full bg-[#05070d]">
           <video
@@ -189,16 +131,18 @@ export default function MetroHero({
         </div>
 
         {/* Content Overlays */}
-        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans">
+        {/* TEXTO INICIAL: MARCAS FORTES NÃO DISPUTAM ATENÇÃO. */}
+        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {title}
           </h1>
         </div>
 
-        <div ref={taglineRef} className="absolute z-10 text-center px-6 max-w-2xl mx-auto opacity-0 pointer-events-none">
-          <p className="text-xl md:text-3xl font-bold text-white drop-shadow-lg leading-snug font-sans">
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (IGUAL AO TAMANHO DO TEXTO INICIAL, DESTACADO EM CORAL) */}
+        <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-[#FF6B35] drop-shadow-2xl font-sans leading-tight">
             {tagline}
-          </p>
+          </h2>
         </div>
 
         <div ref={hintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-center transition-opacity duration-300 pointer-events-none">
