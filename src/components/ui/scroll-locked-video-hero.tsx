@@ -51,7 +51,7 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    // Wheel event handler: smooth & gentle scroll sensitivity (1400 divisor for fluid pace)
+    // Wheel event handler: butter-smooth glide sensitivity (1400 divisor)
     const handleWheel = (e: WheelEvent) => {
       const atTop = window.scrollY <= 10
 
@@ -87,7 +87,7 @@ export default function MetroHero({
       }
     }
 
-    // Touch event handlers for mobile devices (1000 divisor)
+    // Touch event handlers for mobile devices
     let touchStartY = 0
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY
@@ -139,20 +139,30 @@ export default function MetroHero({
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      // Silky-smooth liquid lerp (0.12 factor)
-      currentProgress += (targetProgress - currentProgress) * 0.12
+      // Ultra-soft liquid lerp (0.08 factor) to eliminate micro-stuttering ("segurada")
+      currentProgress += (targetProgress - currentProgress) * 0.08
 
-      // 1. Video Scrubbing & Subtle 3D Perspective Depth (walking into the subway car)
+      // 1. Hardware-Accelerated Video Scrubbing & 3D Perspective Depth
       if (video && duration > 0) {
         const videoProgress = clamp(currentProgress / 0.58, 0, 1)
         const targetTime = videoProgress * duration
-        if (Math.abs(video.currentTime - targetTime) > 0.015) {
-          video.currentTime = targetTime
+        
+        // Fast seek / threshold check (0.035s ~ 1 frame at 30fps) to avoid decoder stalls
+        if (Math.abs(video.currentTime - targetTime) > 0.035) {
+          if ("fastSeek" in video && typeof (video as any).fastSeek === "function") {
+            try {
+              ;(video as any).fastSeek(targetTime)
+            } catch (err) {
+              video.currentTime = targetTime
+            }
+          } else {
+            video.currentTime = targetTime
+          }
         }
 
         // Perspective scale from 1.0 to 1.08 for immersive depth feel
         const scale3d = 1.0 + videoProgress * 0.08
-        video.style.transform = `scale(${scale3d})`
+        video.style.transform = `scale3d(${scale3d}, ${scale3d}, 1)`
       }
 
       // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Smooth fade out & blur
@@ -162,7 +172,7 @@ export default function MetroHero({
         const scale = 0.96 + t * 0.04
         const blur = (1 - t) * 12
         titleRef.current.style.opacity = String(t)
-        titleRef.current.style.transform = `translateY(${translateY}px) scale(${scale})`
+        titleRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
         titleRef.current.style.filter = `blur(${blur}px)`
       }
 
@@ -178,7 +188,7 @@ export default function MetroHero({
         const scale = 0.92 + t * 0.08
         const blur = (1 - t) * 14
         taglineRef.current.style.opacity = String(t)
-        taglineRef.current.style.transform = `translateY(${translateY}px) scale(${scale})`
+        taglineRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
         taglineRef.current.style.filter = `blur(${blur}px)`
       }
 
@@ -214,21 +224,21 @@ export default function MetroHero({
             playsInline
             muted
             preload="auto"
-            className="w-full h-full object-cover opacity-90 transition-transform duration-100 ease-out"
+            className="w-full h-full object-cover opacity-90 transition-transform duration-75 ease-out will-change-transform"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#05070d]/60 via-transparent to-[#0a0a0f]" />
         </div>
 
         {/* Content Overlays */}
         {/* TEXTO INICIAL: MARCAS FORTES NÃO DISPUTAM ATENÇÃO. */}
-        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none transition-transform duration-75">
+        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none transition-transform duration-75 will-change-transform">
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {title}
           </h1>
         </div>
 
         {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (EMERGÊNCIA CINEMATOGRÁFICA DEPOIS DAS PORTAS ABRIR) */}
-        <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none transition-transform duration-75">
+        <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none transition-transform duration-75 will-change-transform">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {tagline}
           </h2>
