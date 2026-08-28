@@ -51,7 +51,7 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    // Wheel event handler: butter-smooth glide sensitivity (1400 divisor)
+    // Wheel event handler: immersive walk-in scroll sensitivity (1300 divisor)
     const handleWheel = (e: WheelEvent) => {
       const atTop = window.scrollY <= 10
 
@@ -59,7 +59,7 @@ export default function MetroHero({
         if (e.deltaY > 0) {
           if (targetProgress < 0.99) {
             e.preventDefault()
-            const delta = e.deltaY / 1400
+            const delta = e.deltaY / 1300
             targetProgress = clamp(targetProgress + delta, 0, 1)
 
             if (targetProgress >= 0.99) {
@@ -73,21 +73,21 @@ export default function MetroHero({
           }
         } else if (e.deltaY < 0 && targetProgress > 0) {
           e.preventDefault()
-          const delta = e.deltaY / 1400
+          const delta = e.deltaY / 1300
           targetProgress = clamp(targetProgress + delta, 0, 1)
           isFinished = false
           setCompleted(false)
         }
       } else if (atTop && isFinished && e.deltaY < 0) {
         e.preventDefault()
-        const delta = e.deltaY / 1400
+        const delta = e.deltaY / 1300
         targetProgress = clamp(targetProgress + delta, 0, 1)
         isFinished = false
         setCompleted(false)
       }
     }
 
-    // Touch event handlers for mobile devices
+    // Touch event handlers for mobile devices (950 divisor)
     let touchStartY = 0
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY
@@ -102,7 +102,7 @@ export default function MetroHero({
         if (deltaY > 0) {
           if (targetProgress < 0.99) {
             if (e.cancelable) e.preventDefault()
-            targetProgress = clamp(targetProgress + (deltaY / 1000), 0, 1)
+            targetProgress = clamp(targetProgress + (deltaY / 950), 0, 1)
             touchStartY = currentY
             if (targetProgress >= 0.99) {
               targetProgress = 1
@@ -115,7 +115,7 @@ export default function MetroHero({
           }
         } else if (deltaY < 0 && targetProgress > 0) {
           if (e.cancelable) e.preventDefault()
-          targetProgress = clamp(targetProgress + (deltaY / 1000), 0, 1)
+          targetProgress = clamp(targetProgress + (deltaY / 950), 0, 1)
           touchStartY = currentY
           isFinished = false
           setCompleted(false)
@@ -139,29 +139,29 @@ export default function MetroHero({
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      // Ultra-soft liquid lerp (0.08 factor) to eliminate micro-stuttering ("segurada")
-      currentProgress += (targetProgress - currentProgress) * 0.08
+      // Silky momentum lerp (0.10 factor) for natural weight
+      currentProgress += (targetProgress - currentProgress) * 0.10
 
-      // 1. Hardware-Accelerated Video Scrubbing & 3D Perspective Depth
+      // 1. Video Scrubbing & REAL 3D CAMERA PUSH-IN (stepping inside the doorway)
       if (video && duration > 0) {
-        const videoProgress = clamp(currentProgress / 0.58, 0, 1)
+        const videoProgress = clamp(currentProgress / 0.65, 0, 1)
         const targetTime = videoProgress * duration
         
         if (Math.abs(video.currentTime - targetTime) > 0.01) {
           video.currentTime = targetTime
         }
 
-        // Perspective scale from 1.0 to 1.08 for immersive depth feel
-        const scale3d = 1.0 + videoProgress * 0.08
-        video.style.transform = `scale3d(${scale3d}, ${scale3d}, 1)`
+        // Camera Push-in Scale: 1.0 -> 1.18 creating realistic optical forward movement into the car
+        const cameraPushScale = 1.0 + videoProgress * 0.18
+        video.style.transform = `scale3d(${cameraPushScale}, ${cameraPushScale}, 1)`
       }
 
-      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Smooth fade out & blur
+      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Pushing past camera threshold
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.25, 0, 1)
-        const translateY = (1 - t) * -40
-        const scale = 0.96 + t * 0.04
-        const blur = (1 - t) * 12
+        const t = 1 - clamp(currentProgress / 0.28, 0, 1)
+        const translateY = (1 - t) * -50
+        const scale = 1.0 + (1 - t) * 0.12 // Title grows slightly as you pass through it
+        const blur = (1 - t) * 16
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
         titleRef.current.style.filter = `blur(${blur}px)`
@@ -172,12 +172,16 @@ export default function MetroHero({
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Cinematic emergence AFTER doors complete opening (0.60 to 0.88 progress)
+      // 4. Tagline ("ELAS ATRAEM."): Emerging from deep inside the horizon ONLY AFTER doors are open
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.60) / 0.28, 0, 1)
-        const translateY = (1 - t) * 35
-        const scale = 0.92 + t * 0.08
-        const blur = (1 - t) * 14
+        // Calculate physical door openness from video currentTime
+        const doorOpenness = video && duration > 0 ? clamp((video.currentTime / duration - 0.70) / 0.30, 0, 1) : 0
+        const progressState = clamp((currentProgress - 0.62) / 0.28, 0, 1)
+        const t = Math.min(progressState, doorOpenness)
+
+        const translateY = (1 - t) * 45
+        const scale = 0.86 + t * 0.14 // Emerges from depth forward into crisp focus
+        const blur = (1 - t) * 16
         taglineRef.current.style.opacity = String(t)
         taglineRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
         taglineRef.current.style.filter = `blur(${blur}px)`
@@ -185,7 +189,7 @@ export default function MetroHero({
 
       // 5. Progress bar at bottom
       if (progressBarRef.current) {
-        const barProgress = clamp(currentProgress / 0.60, 0, 1)
+        const barProgress = clamp(currentProgress / 0.65, 0, 1)
         progressBarRef.current.style.transform = `scaleX(${barProgress})`
       }
 
@@ -228,7 +232,7 @@ export default function MetroHero({
           </h1>
         </div>
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (EMERGÊNCIA CINEMATOGRÁFICA DEPOIS DAS PORTAS ABRIR) */}
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (EMERGÊNCIA REAL DO HORIZONTE APÓS ENTRAR NO VAGÃO) */}
         <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none transition-transform duration-75 will-change-transform">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {tagline}
