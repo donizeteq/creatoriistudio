@@ -300,7 +300,7 @@ export default function MetroHero({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "0 8%",
+            padding: "0 6%",
             textAlign: "center",
             opacity: 0,
             pointerEvents: "none",
@@ -309,12 +309,14 @@ export default function MetroHero({
           <span
             style={{
               fontFamily: SANS,
-              fontWeight: 700,
-              fontSize: "clamp(22px, 3.8vw, 42px)",
-              lineHeight: 1.2,
-              letterSpacing: "-0.01em",
-              color: "#FF6B35",
-              textShadow: "0 4px 24px rgba(0,0,0,0.8)",
+              fontWeight: 800,
+              fontSize: "clamp(32px, 7.5vw, 96px)",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              color: COL_TEXT,
+              textShadow: "0 4px 30px rgba(0,0,0,0.7)",
+              display: "inline-block",
+              willChange: "transform, filter, opacity",
             }}
           >
             {tagline}

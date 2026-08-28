@@ -111,8 +111,8 @@ const Index = () => {
       {/* SCROLL LOCKED VIDEO HERO INTEGRATION */}
       <section className="relative w-full">
         <MetroHero 
-          title="MARCAS FORTES"
-          tagline="NÃO DISPUTAM ATENÇÃO. ELAS ATRAEM."
+          title="MARCAS FORTES NÃO DISPUTAM ATENÇÃO."
+          tagline="ELAS ATRAEM."
           scrollHint="ROLE PARA EXPLORAR"
           signature={{ name: "Natasha Rinoa • Creatorii Studio", url: "https://wa.me/5511958566518" }}
         />
