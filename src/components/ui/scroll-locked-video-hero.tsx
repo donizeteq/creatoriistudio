@@ -33,16 +33,17 @@ export default function MetroHero({
   const taglineRef = useRef<HTMLDivElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
-    const container = containerRef.current
-    if (!video || !container) return
+    if (!video) return
 
     let duration = 0
     let rafId = 0
     let currentProgress = 0
     let targetProgress = 0
+    let isFinished = false
 
     const onLoadedData = () => {
       duration = video.duration || 0
@@ -50,58 +51,132 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    // Native scroll calculation: 100% fluid, 60fps, zero JS event locks or wheel traps!
-    const onScroll = () => {
-      if (!container) return
-      const rect = container.getBoundingClientRect()
-      const totalScrollable = container.offsetHeight - window.innerHeight
-      if (totalScrollable <= 0) return
+    // Wheel event handler: locks page scroll while scrubbing video opening transition
+    const handleWheel = (e: WheelEvent) => {
+      const atTop = window.scrollY <= 10
 
-      const scrolled = -rect.top
-      const progress = clamp(scrolled / totalScrollable, 0, 1)
-      targetProgress = progress
+      if (atTop && !isFinished) {
+        if (e.deltaY > 0) {
+          // Scrolling down: scrub animation forward
+          if (targetProgress < 0.99) {
+            e.preventDefault()
+            const delta = e.deltaY / 700
+            targetProgress = clamp(targetProgress + delta, 0, 1)
+
+            if (targetProgress >= 0.99) {
+              targetProgress = 1
+              isFinished = true
+              setCompleted(true)
+            }
+          } else {
+            isFinished = true
+            setCompleted(true)
+          }
+        } else if (e.deltaY < 0 && targetProgress > 0) {
+          // Scrolling up at top: scrub animation backward
+          e.preventDefault()
+          const delta = e.deltaY / 700
+          targetProgress = clamp(targetProgress + delta, 0, 1)
+          isFinished = false
+          setCompleted(false)
+        }
+      } else if (atTop && isFinished && e.deltaY < 0) {
+        // At top and scrolling up after finish: re-engage scrub backward
+        e.preventDefault()
+        const delta = e.deltaY / 700
+        targetProgress = clamp(targetProgress + delta, 0, 1)
+        isFinished = false
+        setCompleted(false)
+      }
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
+    // Touch event handlers for mobile devices
+    let touchStartY = 0
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const atTop = window.scrollY <= 10
+      const currentY = e.touches[0].clientY
+      const deltaY = touchStartY - currentY
+
+      if (atTop && !isFinished) {
+        if (deltaY > 0) {
+          if (targetProgress < 0.99) {
+            if (e.cancelable) e.preventDefault()
+            targetProgress = clamp(targetProgress + (deltaY / 500), 0, 1)
+            touchStartY = currentY
+            if (targetProgress >= 0.99) {
+              targetProgress = 1
+              isFinished = true
+              setCompleted(true)
+            }
+          } else {
+            isFinished = true
+            setCompleted(true)
+          }
+        } else if (deltaY < 0 && targetProgress > 0) {
+          if (e.cancelable) e.preventDefault()
+          targetProgress = clamp(targetProgress + (deltaY / 500), 0, 1)
+          touchStartY = currentY
+          isFinished = false
+          setCompleted(false)
+        }
+      }
+    }
+
+    // Re-lock if scrolled back to top
+    const handleScroll = () => {
+      if (window.scrollY <= 2) {
+        if (targetProgress < 0.99) {
+          isFinished = false
+          setCompleted(false)
+        }
+      }
+    }
+
+    window.addEventListener("wheel", handleWheel, { passive: false })
+    window.addEventListener("touchstart", handleTouchStart, { passive: true })
+    window.addEventListener("touchmove", handleTouchMove, { passive: false })
+    window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      // Smooth lerp for liquid-like scrubbing
       currentProgress += (targetProgress - currentProgress) * 0.18
 
-      // 1. Video Scrubbing: Reaches 100% OPEN by progress = 0.35 (first 35% of container scroll)!
+      // Video Scrubbing: Reaches 100% OPEN by progress = 0.50
       if (video && duration > 0) {
-        const videoProgress = clamp(currentProgress / 0.35, 0, 1)
+        const videoProgress = clamp(currentProgress / 0.50, 0, 1)
         const targetTime = videoProgress * duration
         if (Math.abs(video.currentTime - targetTime) > 0.015) {
           video.currentTime = targetTime
         }
       }
 
-      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.20 progress
+      // Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.28 progress
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.20, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.28, 0, 1)
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translateY(${(1 - t) * -30}px)`
         titleRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // 3. Scroll Hint: Fades out immediately upon scrolling
+      // Scroll Hint
       if (hintRef.current) {
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Fades in between 0.22 and 0.38 progress
+      // Tagline ("ELAS ATRAEM."): Fades in between 0.32 and 0.50 progress
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.22) / 0.16, 0, 1)
+        const t = clamp((currentProgress - 0.32) / 0.18, 0, 1)
         taglineRef.current.style.opacity = String(t)
         taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px)`
         taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // 5. Progress bar at bottom: Fills up completely by 0.35 progress
+      // Progress bar at bottom
       if (progressBarRef.current) {
-        const barProgress = clamp(currentProgress / 0.35, 0, 1)
+        const barProgress = clamp(currentProgress / 0.50, 0, 1)
         progressBarRef.current.style.transform = `scaleX(${barProgress})`
       }
 
@@ -112,14 +187,17 @@ export default function MetroHero({
 
     return () => {
       video.removeEventListener("loadeddata", onLoadedData)
-      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("wheel", handleWheel)
+      window.removeEventListener("touchstart", handleTouchStart)
+      window.removeEventListener("touchmove", handleTouchMove)
+      window.removeEventListener("scroll", handleScroll)
       cancelAnimationFrame(rafId)
     }
   }, [])
 
   return (
-    <div ref={containerRef} className="relative w-full h-[400vh] bg-[#05070d]">
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-screen bg-[#05070d] overflow-hidden">
+      <div className="relative w-full h-full flex items-center justify-center">
         {/* Video Canvas Container */}
         <div className="absolute inset-0 w-full h-full bg-[#05070d]">
           <video
