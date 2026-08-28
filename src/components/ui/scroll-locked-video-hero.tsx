@@ -144,39 +144,39 @@ export default function MetroHero({
     function frame() {
       currentProgress += (targetProgress - currentProgress) * 0.18
 
-      // Video Scrubbing: Reaches 100% OPEN by progress = 0.50
+      // 1. Video Scrubbing: Reaches 100% OPEN by progress = 0.58 (doors open FIRST)
       if (video && duration > 0) {
-        const videoProgress = clamp(currentProgress / 0.50, 0, 1)
+        const videoProgress = clamp(currentProgress / 0.58, 0, 1)
         const targetTime = videoProgress * duration
         if (Math.abs(video.currentTime - targetTime) > 0.015) {
           video.currentTime = targetTime
         }
       }
 
-      // Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.28 progress
+      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.22 progress
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.28, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.22, 0, 1)
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translateY(${(1 - t) * -30}px)`
         titleRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // Scroll Hint
+      // 3. Scroll Hint
       if (hintRef.current) {
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // Tagline ("ELAS ATRAEM."): Fades in between 0.32 and 0.50 progress
+      // 4. Tagline ("ELAS ATRAEM."): Fades in ONLY AFTER doors finish opening (0.60 to 0.85 progress)
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.32) / 0.18, 0, 1)
+        const t = clamp((currentProgress - 0.60) / 0.25, 0, 1)
         taglineRef.current.style.opacity = String(t)
         taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px)`
         taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // Progress bar at bottom
+      // 5. Progress bar at bottom
       if (progressBarRef.current) {
-        const barProgress = clamp(currentProgress / 0.50, 0, 1)
+        const barProgress = clamp(currentProgress / 0.60, 0, 1)
         progressBarRef.current.style.transform = `scaleX(${barProgress})`
       }
 
@@ -219,7 +219,7 @@ export default function MetroHero({
           </h1>
         </div>
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (IGUAL AO TAMANHO DO TEXTO INICIAL) */}
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (SURGE SOMENTE APÓS A PORTA ABRIR 100%) */}
         <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-[#FF6B35] drop-shadow-2xl font-sans leading-tight">
             {tagline}
