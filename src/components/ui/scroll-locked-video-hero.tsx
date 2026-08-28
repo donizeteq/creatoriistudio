@@ -147,17 +147,8 @@ export default function MetroHero({
         const videoProgress = clamp(currentProgress / 0.58, 0, 1)
         const targetTime = videoProgress * duration
         
-        // Fast seek / threshold check (0.035s ~ 1 frame at 30fps) to avoid decoder stalls
-        if (Math.abs(video.currentTime - targetTime) > 0.035) {
-          if ("fastSeek" in video && typeof (video as any).fastSeek === "function") {
-            try {
-              ;(video as any).fastSeek(targetTime)
-            } catch (err) {
-              video.currentTime = targetTime
-            }
-          } else {
-            video.currentTime = targetTime
-          }
+        if (Math.abs(video.currentTime - targetTime) > 0.01) {
+          video.currentTime = targetTime
         }
 
         // Perspective scale from 1.0 to 1.08 for immersive depth feel
