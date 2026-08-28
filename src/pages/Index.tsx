@@ -180,6 +180,100 @@ const Index = () => {
 
       <ProjectEstimator />
 
+      {/* PORTFÓLIO */}
+      <section id="portfolio" className="py-24 px-6 container mx-auto">
+        <div className="text-center mb-16 reveal">
+          <span className="text-[#FF6B35] text-xs font-bold tracking-widest uppercase">Trabalhos</span>
+          <h2 className="text-4xl md:text-5xl font-bold mt-4">Portfólio Selecionado</h2>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {[
+            { 
+              name: 'Revitalize - Clínica Capilar & Head SPA', 
+              cat: 'BRANDING', 
+              img: 'https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg', 
+              link: 'https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA' 
+            },
+            { 
+              name: 'Wagner Gonçalves — Attorneys at Law', 
+              cat: 'IDENTIDADE VISUAL', 
+              img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ed4e7c212435201.Y3JvcCwxMTk0LDkzNCwzNzUsMA.png', 
+              link: 'https://www.behance.net/gallery/212435201/Wagner-Goncalves-Atoorneys-at-Law-(Visual-identity)' 
+            },
+            { 
+              name: 'MGB Beauty Studio — Salão de Beleza', 
+              cat: 'BRANDING', 
+              img: 'https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png', 
+              link: 'https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza' 
+            },
+          ].map((p) => (
+            <a 
+              key={p.name} 
+              href={p.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group overflow-hidden rounded-2xl bg-[#111118] border border-white/5 reveal transition-all hover:border-[#FF6B35]/50"
+            >
+              <div className="h-[200px] w-full relative overflow-hidden">
+                <img 
+                  src={p.img} 
+                  alt={p.name} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="flex items-center gap-2 text-white font-bold">
+                    Ver no Behance <ExternalLink className="w-5 h-5" />
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <span className="text-[10px] font-bold text-[#FF6B35] uppercase tracking-widest">{p.cat}</span>
+                <h4 className="text-xl font-bold mt-1 group-hover:text-[#FF6B35] transition-colors line-clamp-2">{p.name}</h4>
+                <div className="mt-4 text-xs text-gray-500 font-semibold group-hover:text-white transition-colors flex items-center gap-1">
+                  Ver no Behance <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div className="flex justify-center reveal">
+          <a 
+            href="https://www.behance.net/natashaqueiroz" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-8 py-4 bg-transparent border border-[#FF6B35]/50 hover:bg-[#FF6B35]/5 text-white rounded-lg font-bold transition-all flex items-center gap-2"
+          >
+            Ver portfólio completo <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+      </section>
+
+      {/* DEPOIMENTOS */}
+      <section className="py-24 bg-[#111118]/50">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { name: 'André Santos', role: 'CEO · E-commerce de Moda', text: 'A Creatorii transformou nossa presença digital completamente. Em 3 meses nosso tráfego orgânico triplicou e a nova identidade visual atraiu um público muito mais qualificado.' },
+              { name: 'Juliana Lima', role: 'Fundadora · Clínica de Estética', text: 'Trabalhar com a Natasha e equipe foi a melhor decisão para minha clínica. Entregaram um branding sofisticado que transmite exatamente a confiança que eu precisava.' },
+              { name: 'Wagner Gonçalves', role: 'Sócio-Diretor · Escritório Jurídico', text: 'O novo site e a identidade visual sólida elevaram o patamar do nosso escritório. Design moderno e funcional que converte clientes de alto padrão — recomendo sem hesitar.' },
+            ].map((d) => (
+              <div key={d.name} className="p-8 bg-[#111118] border border-white/5 rounded-2xl reveal">
+                <div className="flex gap-1 mb-4">
+                  {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-4 h-4 fill-amber-500 text-amber-500" />)}
+                </div>
+                <p className="text-gray-400 italic mb-6">"{d.text}"</p>
+                <div>
+                  <p className="font-bold">{d.name}</p>
+                  <p className="text-xs text-gray-500">{d.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SOBRE */}
       <section id="sobre" className="py-24 px-6 container mx-auto">
         <div className="max-w-4xl mx-auto rounded-3xl bg-[#111118]/80 border border-white/10 backdrop-blur-md overflow-hidden reveal">
