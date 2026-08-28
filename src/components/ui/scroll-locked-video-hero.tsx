@@ -8,7 +8,6 @@ export interface MetroHeroProps {
   scrollHint?: string
   tagline?: string
   signature?: { name: string; url: string } | false
-  scrubDistance?: number
   className?: string
   style?: React.CSSProperties
 }
@@ -32,7 +31,6 @@ export default function MetroHero({
   const titleRef = useRef<HTMLDivElement>(null)
   const hintRef = useRef<HTMLDivElement>(null)
   const taglineRef = useRef<HTMLDivElement>(null)
-  const progressBarRef = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
@@ -54,12 +52,8 @@ export default function MetroHero({
     const onScroll = () => {
       if (!container) return
       const rect = container.getBoundingClientRect()
-      const totalScrollable = container.offsetHeight - window.innerHeight
-      if (totalScrollable <= 0) return
-
-      // Calculates 0 to 1 progress exact with sticky section scroll depth
-      const scrolled = -rect.top
-      const progress = clamp(scrolled / totalScrollable, 0, 1)
+      // Use window.scrollY / window.innerHeight to calculate hero scroll progress smoothly
+      const progress = clamp(-rect.top / (window.innerHeight * 0.8), 0, 1)
       targetProgress = progress
     }
 
@@ -67,8 +61,7 @@ export default function MetroHero({
     onScroll()
 
     function frame() {
-      // Lerp for smooth video seeking & UI transitions
-      currentProgress += (targetProgress - currentProgress) * 0.22
+      currentProgress += (targetProgress - currentProgress) * 0.2
 
       if (video && duration > 0) {
         const targetTime = currentProgress * duration
@@ -78,26 +71,21 @@ export default function MetroHero({
       }
 
       if (videoRef.current) {
-        const scale = 1 + currentProgress * 0.06
+        const scale = 1 + currentProgress * 0.05
         videoRef.current.style.transform = `scale(${scale})`
       }
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.35, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.4, 0, 1)
         titleRef.current.style.opacity = String(t)
-        titleRef.current.style.transform = `translateY(${(1 - t) * -30}px) scale(${0.95 + t * 0.05})`
-        titleRef.current.style.filter = `blur(${(1 - t) * 10}px)`
+        titleRef.current.style.transform = `translateY(${(1 - t) * -24}px)`
       }
       if (hintRef.current) {
-        hintRef.current.style.opacity = currentProgress > 0.04 ? "0" : "1"
+        hintRef.current.style.opacity = currentProgress > 0.1 ? "0" : "1"
       }
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.7) / 0.3, 0, 1)
+        const t = clamp((currentProgress - 0.4) / 0.6, 0, 1)
         taglineRef.current.style.opacity = String(t)
-        taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px) scale(${0.96 + t * 0.04})`
-        taglineRef.current.style.filter = `blur(${(1 - t) * 10}px)`
-      }
-      if (progressBarRef.current) {
-        progressBarRef.current.style.transform = `scaleX(${currentProgress})`
+        taglineRef.current.style.transform = `translateY(${(1 - t) * 20}px)`
       }
 
       rafId = requestAnimationFrame(frame)
@@ -113,8 +101,8 @@ export default function MetroHero({
   }, [])
 
   return (
-    <div ref={containerRef} className="relative w-full h-[380vh] bg-[#05070d]">
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-screen bg-[#05070d] overflow-hidden">
+      <div className="relative w-full h-full flex items-center justify-center">
         {/* Video Canvas Container */}
         <div className="absolute inset-0 w-full h-full bg-[#05070d]">
           <video
@@ -125,12 +113,12 @@ export default function MetroHero({
             preload="auto"
             className="w-full h-full object-cover opacity-90 transition-transform duration-100 ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#05070d]/60 via-transparent to-[#05070d]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#05070d]/60 via-transparent to-[#0a0a0f]" />
         </div>
 
         {/* Content Overlays */}
         <div ref={titleRef} className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans">
             {title}
           </h1>
         </div>
@@ -145,15 +133,6 @@ export default function MetroHero({
           <span className="text-xs font-extrabold tracking-widest text-white/70 uppercase">
             {scrollHint}
           </span>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-20">
-          <div
-            ref={progressBarRef}
-            className="h-full bg-[#FF6B35] origin-left transition-transform duration-75"
-            style={{ transform: "scaleX(0)" }}
-          />
         </div>
       </div>
     </div>
