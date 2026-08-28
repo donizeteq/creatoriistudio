@@ -51,16 +51,15 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    // Wheel event handler: locks page scroll while scrubbing video opening transition
+    // Wheel event handler: smooth & gentle scroll sensitivity (1600 divisor for cinematic pace)
     const handleWheel = (e: WheelEvent) => {
       const atTop = window.scrollY <= 10
 
       if (atTop && !isFinished) {
         if (e.deltaY > 0) {
-          // Scrolling down: scrub animation forward
           if (targetProgress < 0.99) {
             e.preventDefault()
-            const delta = e.deltaY / 700
+            const delta = e.deltaY / 1600
             targetProgress = clamp(targetProgress + delta, 0, 1)
 
             if (targetProgress >= 0.99) {
@@ -73,24 +72,22 @@ export default function MetroHero({
             setCompleted(true)
           }
         } else if (e.deltaY < 0 && targetProgress > 0) {
-          // Scrolling up at top: scrub animation backward
           e.preventDefault()
-          const delta = e.deltaY / 700
+          const delta = e.deltaY / 1600
           targetProgress = clamp(targetProgress + delta, 0, 1)
           isFinished = false
           setCompleted(false)
         }
       } else if (atTop && isFinished && e.deltaY < 0) {
-        // At top and scrolling up after finish: re-engage scrub backward
         e.preventDefault()
-        const delta = e.deltaY / 700
+        const delta = e.deltaY / 1600
         targetProgress = clamp(targetProgress + delta, 0, 1)
         isFinished = false
         setCompleted(false)
       }
     }
 
-    // Touch event handlers for mobile devices
+    // Touch event handlers for mobile devices (1100 divisor)
     let touchStartY = 0
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY
@@ -105,7 +102,7 @@ export default function MetroHero({
         if (deltaY > 0) {
           if (targetProgress < 0.99) {
             if (e.cancelable) e.preventDefault()
-            targetProgress = clamp(targetProgress + (deltaY / 500), 0, 1)
+            targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
             touchStartY = currentY
             if (targetProgress >= 0.99) {
               targetProgress = 1
@@ -118,7 +115,7 @@ export default function MetroHero({
           }
         } else if (deltaY < 0 && targetProgress > 0) {
           if (e.cancelable) e.preventDefault()
-          targetProgress = clamp(targetProgress + (deltaY / 500), 0, 1)
+          targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
           touchStartY = currentY
           isFinished = false
           setCompleted(false)
@@ -142,9 +139,10 @@ export default function MetroHero({
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      currentProgress += (targetProgress - currentProgress) * 0.18
+      // Silky-smooth liquid lerp (0.10 factor)
+      currentProgress += (targetProgress - currentProgress) * 0.10
 
-      // 1. Video Scrubbing: Reaches 100% OPEN by progress = 0.58 (doors open FIRST)
+      // 1. Video Scrubbing: Reaches 100% OPEN by progress = 0.58
       if (video && duration > 0) {
         const videoProgress = clamp(currentProgress / 0.58, 0, 1)
         const targetTime = videoProgress * duration
@@ -153,12 +151,15 @@ export default function MetroHero({
         }
       }
 
-      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.22 progress
+      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Smooth fade out & blur
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.22, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.25, 0, 1)
+        const translateY = (1 - t) * -40
+        const scale = 0.96 + t * 0.04
+        const blur = (1 - t) * 12
         titleRef.current.style.opacity = String(t)
-        titleRef.current.style.transform = `translateY(${(1 - t) * -30}px)`
-        titleRef.current.style.filter = `blur(${(1 - t) * 8}px)`
+        titleRef.current.style.transform = `translateY(${translateY}px) scale(${scale})`
+        titleRef.current.style.filter = `blur(${blur}px)`
       }
 
       // 3. Scroll Hint
@@ -166,12 +167,15 @@ export default function MetroHero({
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Fades in ONLY AFTER doors finish opening (0.60 to 0.85 progress)
+      // 4. Tagline ("ELAS ATRAEM."): Cinematic emergence AFTER doors complete opening (0.60 to 0.88 progress)
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.60) / 0.25, 0, 1)
+        const t = clamp((currentProgress - 0.60) / 0.28, 0, 1)
+        const translateY = (1 - t) * 35
+        const scale = 0.92 + t * 0.08
+        const blur = (1 - t) * 14
         taglineRef.current.style.opacity = String(t)
-        taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px)`
-        taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
+        taglineRef.current.style.transform = `translateY(${translateY}px) scale(${scale})`
+        taglineRef.current.style.filter = `blur(${blur}px)`
       }
 
       // 5. Progress bar at bottom
@@ -213,14 +217,14 @@ export default function MetroHero({
 
         {/* Content Overlays */}
         {/* TEXTO INICIAL: MARCAS FORTES NÃO DISPUTAM ATENÇÃO. */}
-        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none">
+        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none transition-transform duration-75">
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {title}
           </h1>
         </div>
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (MESMA COR BRANCA DO TÍTULO INICIAL) */}
-        <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none">
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (EMERGÊNCIA CINEMATOGRÁFICA DEPOIS DAS PORTAS ABRIR) */}
+        <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none transition-transform duration-75">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {tagline}
           </h2>
