@@ -8,6 +8,7 @@ import EmailSubscription from '@/components/EmailSubscription';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ProjectEstimator from '@/components/ProjectEstimator';
 import logoCreatorii from '@/assets/logo-creatorii.png';
+import behanceData from '@/data/behance-portfolio.json';
 import { ChevronDown, Star, ExternalLink, ArrowRight, Plus, Minus } from 'lucide-react';
 import CustomCursor from '@/components/CustomCursor';
 import CreatoriiVectorRobot from '@/components/CreatoriiVectorRobot';
@@ -238,44 +239,7 @@ const Index = () => {
 
           {/* GRADE DE 6 CARDS SECUNDÁRIOS DO BEHANCE (LADO DIREITO - 7 COLUNAS LG EM 2 COLUNAS x 3 LINHAS) */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 h-full">
-            {[
-              {
-                name: 'Revitalize — Clínica Capilar & Head SPA',
-                cat: 'BRANDING & ESTRATÉGIA',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg',
-                link: 'https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA',
-              },
-              {
-                name: 'Wagner Gonçalves — Attorneys at Law',
-                cat: 'IDENTIDADE VISUAL',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ed4e7c212435201.Y3JvcCwxMTk0LDkzNCwzNzUsMA.png',
-                link: 'https://www.behance.net/gallery/212435201/Wagner-Goncalves-Atoorneys-at-Law-(Visual-identity)',
-              },
-              {
-                name: 'MGB Beauty Studio — Salão de Beleza',
-                cat: 'BRANDING',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png',
-                link: 'https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza',
-              },
-              {
-                name: 'Ekballo — Studio de Beleza',
-                cat: 'ESTRUTURA DE MARCA',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ec4407195529925.Y3JvcCwxMDQwLDgxNCwyMjQsMA.jpg',
-                link: 'https://www.behance.net/gallery/195529925/Ekballo-Studio-de-beleza',
-              },
-              {
-                name: 'Siesteker — Joias & Acessórios',
-                cat: 'DESIGN DE CONTEÚDO',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/80aa22161697511.Y3JvcCwxMzcxLDEwNzMsMjc1LDA.png',
-                link: 'https://www.behance.net/natashaqueiroz',
-              },
-              {
-                name: 'PetzGree — Banho & Tosa',
-                cat: 'PACKAGING & BRANDING',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/eb792b234976285.Y3JvcCwxMDM1LDgxMCwyMDIsMA.jpg',
-                link: 'https://www.behance.net/natashaqueiroz',
-              },
-            ].map((item, idx) => (
+            {behanceData.items.map((item, idx) => (
               <a
                 key={idx}
                 href={item.link}
