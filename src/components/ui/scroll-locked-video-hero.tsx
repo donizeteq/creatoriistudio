@@ -51,7 +51,7 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    // Wheel event handler: smooth & gentle scroll sensitivity (1600 divisor for cinematic pace)
+    // Wheel event handler: smooth & gentle scroll sensitivity (1400 divisor for fluid pace)
     const handleWheel = (e: WheelEvent) => {
       const atTop = window.scrollY <= 10
 
@@ -59,7 +59,7 @@ export default function MetroHero({
         if (e.deltaY > 0) {
           if (targetProgress < 0.99) {
             e.preventDefault()
-            const delta = e.deltaY / 1600
+            const delta = e.deltaY / 1400
             targetProgress = clamp(targetProgress + delta, 0, 1)
 
             if (targetProgress >= 0.99) {
@@ -73,21 +73,21 @@ export default function MetroHero({
           }
         } else if (e.deltaY < 0 && targetProgress > 0) {
           e.preventDefault()
-          const delta = e.deltaY / 1600
+          const delta = e.deltaY / 1400
           targetProgress = clamp(targetProgress + delta, 0, 1)
           isFinished = false
           setCompleted(false)
         }
       } else if (atTop && isFinished && e.deltaY < 0) {
         e.preventDefault()
-        const delta = e.deltaY / 1600
+        const delta = e.deltaY / 1400
         targetProgress = clamp(targetProgress + delta, 0, 1)
         isFinished = false
         setCompleted(false)
       }
     }
 
-    // Touch event handlers for mobile devices (1100 divisor)
+    // Touch event handlers for mobile devices (1000 divisor)
     let touchStartY = 0
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY
@@ -102,7 +102,7 @@ export default function MetroHero({
         if (deltaY > 0) {
           if (targetProgress < 0.99) {
             if (e.cancelable) e.preventDefault()
-            targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
+            targetProgress = clamp(targetProgress + (deltaY / 1000), 0, 1)
             touchStartY = currentY
             if (targetProgress >= 0.99) {
               targetProgress = 1
@@ -115,7 +115,7 @@ export default function MetroHero({
           }
         } else if (deltaY < 0 && targetProgress > 0) {
           if (e.cancelable) e.preventDefault()
-          targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
+          targetProgress = clamp(targetProgress + (deltaY / 1000), 0, 1)
           touchStartY = currentY
           isFinished = false
           setCompleted(false)
@@ -139,16 +139,20 @@ export default function MetroHero({
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      // Silky-smooth liquid lerp (0.10 factor)
-      currentProgress += (targetProgress - currentProgress) * 0.10
+      // Silky-smooth liquid lerp (0.12 factor)
+      currentProgress += (targetProgress - currentProgress) * 0.12
 
-      // 1. Video Scrubbing: Reaches 100% OPEN by progress = 0.58
+      // 1. Video Scrubbing & Subtle 3D Perspective Depth (walking into the subway car)
       if (video && duration > 0) {
         const videoProgress = clamp(currentProgress / 0.58, 0, 1)
         const targetTime = videoProgress * duration
         if (Math.abs(video.currentTime - targetTime) > 0.015) {
           video.currentTime = targetTime
         }
+
+        // Perspective scale from 1.0 to 1.08 for immersive depth feel
+        const scale3d = 1.0 + videoProgress * 0.08
+        video.style.transform = `scale(${scale3d})`
       }
 
       // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Smooth fade out & blur
