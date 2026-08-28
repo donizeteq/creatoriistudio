@@ -67,39 +67,42 @@ export default function MetroHero({
 
     function frame() {
       // Smooth lerp for liquid-like scrubbing
-      currentProgress += (targetProgress - currentProgress) * 0.15
+      currentProgress += (targetProgress - currentProgress) * 0.18
 
+      // 1. Video Scrubbing: Completes 100% of door opening transition by 50% scroll progress!
       if (video && duration > 0) {
-        const targetTime = currentProgress * duration
+        const videoProgress = clamp(currentProgress / 0.50, 0, 1)
+        const targetTime = videoProgress * duration
         if (Math.abs(video.currentTime - targetTime) > 0.015) {
           video.currentTime = targetTime
         }
       }
 
-      // 1. Initial Title: Fades out from 0.0 to 0.35 progress
+      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Fades out from 0.0 to 0.28 progress
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.35, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.28, 0, 1)
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translateY(${(1 - t) * -30}px)`
         titleRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // 2. Scroll Hint: Fades out immediately upon scrolling
+      // 3. Scroll Hint: Fades out immediately upon scrolling
       if (hintRef.current) {
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 3. Tagline ("ELAS ATRAEM."): Appears after door opening transition completes (0.45 to 0.85 progress)
+      // 4. Tagline ("ELAS ATRAEM."): Fades in between 0.32 and 0.50 progress (right as doors finish opening)
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.45) / 0.35, 0, 1)
+        const t = clamp((currentProgress - 0.32) / 0.18, 0, 1)
         taglineRef.current.style.opacity = String(t)
         taglineRef.current.style.transform = `translateY(${(1 - t) * 24}px)`
         taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
       }
 
-      // 4. Progress bar at bottom
+      // 5. Progress bar at bottom: Fills up completely by 0.50 progress
       if (progressBarRef.current) {
-        progressBarRef.current.style.transform = `scaleX(${currentProgress})`
+        const barProgress = clamp(currentProgress / 0.50, 0, 1)
+        progressBarRef.current.style.transform = `scaleX(${barProgress})`
       }
 
       rafId = requestAnimationFrame(frame)
@@ -115,7 +118,7 @@ export default function MetroHero({
   }, [])
 
   return (
-    <div ref={containerRef} className="relative w-full h-[320vh] bg-[#05070d]">
+    <div ref={containerRef} className="relative w-full h-[280vh] bg-[#05070d]">
       <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         {/* Video Canvas Container */}
         <div className="absolute inset-0 w-full h-full bg-[#05070d]">
@@ -138,7 +141,7 @@ export default function MetroHero({
           </h1>
         </div>
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (IGUAL AO TAMANHO DO TEXTO INICIAL, DESTACADO EM CORAL) */}
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (IGUAL AO TAMANHO DO TEXTO INICIAL) */}
         <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none">
           <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-[#FF6B35] drop-shadow-2xl font-sans leading-tight">
             {tagline}
