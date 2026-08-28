@@ -195,16 +195,16 @@ const Index = () => {
           {/* CARD PRINCIPAL EM DESTAQUE (LADO ESQUERDO - 5 COLUNAS LG) */}
           <div className="lg:col-span-5 flex flex-col h-full reveal">
             <a 
-              href="https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA"
+              href="https://www.behance.net/gallery/250409905/Maria-Antonieta-Arte-Botanica"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex-1 flex flex-col justify-between overflow-hidden rounded-3xl bg-[#111118] border border-[#FF6B35]/40 hover:border-[#FF6B35] transition-all duration-500 shadow-2xl p-6 md:p-8 hover:shadow-[#FF6B35]/10"
             >
               {/* Imagem de Capa Hero */}
-              <div className="w-full h-[280px] md:h-[340px] relative overflow-hidden rounded-2xl mb-6">
+              <div className="w-full h-[280px] md:h-[340px] relative overflow-hidden rounded-2xl mb-6 bg-black/40">
                 <img 
-                  src="https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg" 
-                  alt="Revitalize - Clínica Capilar & Head SPA" 
+                  src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/4f1303250409905.6a1ec7d2a0287.jpg" 
+                  alt="Maria Antonieta - Arte Botânica" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                 />
                 <div className="absolute top-4 left-4 bg-[#FF6B35] text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
@@ -215,12 +215,12 @@ const Index = () => {
 
               {/* Detalhes do Projeto Principal */}
               <div className="space-y-3">
-                <span className="text-xs font-bold text-[#FF6B35] uppercase tracking-widest">BRANDING & ESTRATÉGIA</span>
+                <span className="text-xs font-bold text-[#FF6B35] uppercase tracking-widest">BRANDING & ARTE BOTÂNICA</span>
                 <h3 className="text-2xl md:text-3xl font-extrabold text-white group-hover:text-[#FF6B35] transition-colors leading-tight">
-                  Revitalize — Clínica Capilar & Head SPA
+                  Maria Antonieta — Arte Botânica
                 </h3>
                 <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
-                  Posicionamento completo, identidade visual sofisticada e sistema de comunicação visual para clínica premium de estética e saúde capilar.
+                  Identidade visual autoral, estética botânica sofisticada e design de marca exclusivo para ateliê e experiência de arte botânica.
                 </p>
               </div>
 
@@ -240,39 +240,39 @@ const Index = () => {
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 h-full">
             {[
               {
-                name: 'Wagner Gonçalves — Attorneys',
+                name: 'Revitalize — Clínica Capilar & Head SPA',
+                cat: 'BRANDING & ESTRATÉGIA',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg',
+                link: 'https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA',
+              },
+              {
+                name: 'Wagner Gonçalves — Attorneys at Law',
                 cat: 'IDENTIDADE VISUAL',
                 img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ed4e7c212435201.Y3JvcCwxMTk0LDkzNCwzNzUsMA.png',
                 link: 'https://www.behance.net/gallery/212435201/Wagner-Goncalves-Atoorneys-at-Law-(Visual-identity)',
               },
               {
-                name: 'MGB Beauty Studio',
+                name: 'MGB Beauty Studio — Salão de Beleza',
                 cat: 'BRANDING',
                 img: 'https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png',
                 link: 'https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza',
               },
               {
-                name: 'Studio & Beauty Experience',
+                name: 'Ekballo — Studio de Beleza',
                 cat: 'ESTRUTURA DE MARCA',
                 img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ec4407195529925.Y3JvcCwxMDQwLDgxNCwyMjQsMA.jpg',
-                link: 'https://www.behance.net/natashaqueiroz',
+                link: 'https://www.behance.net/gallery/195529925/Ekballo-Studio-de-beleza',
               },
               {
-                name: 'Editorial & Social Content',
+                name: 'Siesteker — Joias & Acessórios',
                 cat: 'DESIGN DE CONTEÚDO',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/eb792b234976285.Y3JvcCwxMDM1LDgxMCwyMDIsMA.jpg',
-                link: 'https://www.behance.net/natashaqueiroz',
-              },
-              {
-                name: 'Estratégia & Visual Identity',
-                cat: 'POSICIONAMENTO PREMIUM',
-                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/52c7bf250409905.Y3JvcCwxMDM1LDgxMCwyMDIsMA.jpg',
-                link: 'https://www.behance.net/natashaqueiroz',
-              },
-              {
-                name: 'Embalagens & Design System',
-                cat: 'PACKAGING DESIGN',
                 img: 'https://mir-s3-cdn-cf.behance.net/projects/404/80aa22161697511.Y3JvcCwxMzcxLDEwNzMsMjc1LDA.png',
+                link: 'https://www.behance.net/natashaqueiroz',
+              },
+              {
+                name: 'PetzGree — Banho & Tosa',
+                cat: 'PACKAGING & BRANDING',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/eb792b234976285.Y3JvcCwxMDM1LDgxMCwyMDIsMA.jpg',
                 link: 'https://www.behance.net/natashaqueiroz',
               },
             ].map((item, idx) => (
