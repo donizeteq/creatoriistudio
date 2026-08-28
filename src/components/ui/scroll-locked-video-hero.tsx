@@ -31,17 +31,18 @@ export default function MetroHero({
   const titleRef = useRef<HTMLDivElement>(null)
   const hintRef = useRef<HTMLDivElement>(null)
   const taglineRef = useRef<HTMLDivElement>(null)
+  const progressBarRef = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
-    const container = containerRef.current
-    if (!video || !container) return
+    if (!video) return
 
     let duration = 0
     let rafId = 0
     let currentProgress = 0
     let targetProgress = 0
+    let isLocked = true // Initial state: scroll locked at top until opening animation completes
 
     const onLoadedData = () => {
       duration = video.duration || 0
@@ -49,19 +50,84 @@ export default function MetroHero({
     }
     video.addEventListener("loadeddata", onLoadedData)
 
-    const onScroll = () => {
-      if (!container) return
-      const rect = container.getBoundingClientRect()
-      // Use window.scrollY / window.innerHeight to calculate hero scroll progress smoothly
-      const progress = clamp(-rect.top / (window.innerHeight * 0.8), 0, 1)
-      targetProgress = progress
+    // Wheel event handler: locks page scroll and scrubs video until opening animation is 100% complete
+    const handleWheel = (e: WheelEvent) => {
+      const atTop = window.scrollY <= 5
+
+      if (atTop && isLocked) {
+        if (e.deltaY > 0) {
+          // Scrolling down: advance opening animation
+          if (targetProgress < 0.99) {
+            e.preventDefault()
+            const deltaProgress = (e.deltaY / 650) // smooth scrub speed
+            targetProgress = clamp(targetProgress + deltaProgress, 0, 1)
+
+            if (targetProgress >= 0.99) {
+              targetProgress = 1
+              isLocked = false // Unlock scroll once 100% complete!
+            }
+          } else {
+            isLocked = false
+          }
+        } else if (e.deltaY < 0 && targetProgress > 0) {
+          // Scrolling up at top: scrub animation backward
+          e.preventDefault()
+          const deltaProgress = (e.deltaY / 650)
+          targetProgress = clamp(targetProgress + deltaProgress, 0, 1)
+          isLocked = true
+        }
+      }
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
+    // Touch event handlers for mobile
+    let touchStartY = 0
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const atTop = window.scrollY <= 5
+      const currentY = e.touches[0].clientY
+      const deltaY = touchStartY - currentY
+
+      if (atTop && isLocked) {
+        if (deltaY > 0) {
+          if (targetProgress < 0.99) {
+            if (e.cancelable) e.preventDefault()
+            targetProgress = clamp(targetProgress + (deltaY / 450), 0, 1)
+            touchStartY = currentY
+            if (targetProgress >= 0.99) {
+              targetProgress = 1
+              isLocked = false
+            }
+          } else {
+            isLocked = false
+          }
+        } else if (deltaY < 0 && targetProgress > 0) {
+          if (e.cancelable) e.preventDefault()
+          targetProgress = clamp(targetProgress + (deltaY / 450), 0, 1)
+          touchStartY = currentY
+          isLocked = true
+        }
+      }
+    }
+
+    // Re-lock when returning to top of page
+    const handleScroll = () => {
+      if (window.scrollY <= 2) {
+        if (targetProgress < 0.99) {
+          isLocked = true
+        }
+      }
+    }
+
+    window.addEventListener("wheel", handleWheel, { passive: false })
+    window.addEventListener("touchstart", handleTouchStart, { passive: true })
+    window.addEventListener("touchmove", handleTouchMove, { passive: false })
+    window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      currentProgress += (targetProgress - currentProgress) * 0.2
+      currentProgress += (targetProgress - currentProgress) * 0.18
 
       if (video && duration > 0) {
         const targetTime = currentProgress * duration
@@ -75,17 +141,20 @@ export default function MetroHero({
         videoRef.current.style.transform = `scale(${scale})`
       }
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.4, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.35, 0, 1)
         titleRef.current.style.opacity = String(t)
-        titleRef.current.style.transform = `translateY(${(1 - t) * -24}px)`
+        titleRef.current.style.transform = `translateY(${(1 - t) * -28}px)`
       }
       if (hintRef.current) {
-        hintRef.current.style.opacity = currentProgress > 0.1 ? "0" : "1"
+        hintRef.current.style.opacity = currentProgress > 0.08 ? "0" : "1"
       }
       if (taglineRef.current) {
-        const t = clamp((currentProgress - 0.4) / 0.6, 0, 1)
+        const t = clamp((currentProgress - 0.65) / 0.35, 0, 1)
         taglineRef.current.style.opacity = String(t)
         taglineRef.current.style.transform = `translateY(${(1 - t) * 20}px)`
+      }
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${currentProgress})`
       }
 
       rafId = requestAnimationFrame(frame)
@@ -95,7 +164,10 @@ export default function MetroHero({
 
     return () => {
       video.removeEventListener("loadeddata", onLoadedData)
-      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("wheel", handleWheel)
+      window.removeEventListener("touchstart", handleTouchStart)
+      window.removeEventListener("touchmove", handleTouchMove)
+      window.removeEventListener("scroll", handleScroll)
       cancelAnimationFrame(rafId)
     }
   }, [])
@@ -133,6 +205,15 @@ export default function MetroHero({
           <span className="text-xs font-extrabold tracking-widest text-white/70 uppercase">
             {scrollHint}
           </span>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-20">
+          <div
+            ref={progressBarRef}
+            className="h-full bg-[#FF6B35] origin-left transition-transform duration-75"
+            style={{ transform: "scaleX(0)" }}
+          />
         </div>
       </div>
     </div>
