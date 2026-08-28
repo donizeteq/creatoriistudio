@@ -172,17 +172,22 @@ export default function MetroHero({
         hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Emerging from deep inside the horizon ONLY AFTER doors are open
+      // 4. Tagline ("ELAS ATRAEM."): Emerges smoothly from depth, holds, then blurs/dissolves out as Section 2 arrives
       if (taglineRef.current) {
-        // Calculate physical door openness from video currentTime
-        const doorOpenness = video && duration > 0 ? clamp((video.currentTime / duration - 0.70) / 0.30, 0, 1) : 0
-        const progressState = clamp((currentProgress - 0.62) / 0.28, 0, 1)
-        const t = Math.min(progressState, doorOpenness)
+        const doorOpenness = video && duration > 0 ? clamp((video.currentTime / duration - 0.65) / 0.35, 0, 1) : 0
+        
+        // Emergence phase: 0.60 to 0.85 progress
+        const fadeIn = Math.min(clamp((currentProgress - 0.60) / 0.25, 0, 1), doorOpenness)
+        
+        // Dissolve/Blur out phase as user transitions into Section 2: 0.90 to 1.00 progress
+        const fadeOut = 1 - clamp((currentProgress - 0.90) / 0.10, 0, 1)
+        
+        const opacity = fadeIn * fadeOut
+        const translateY = (1 - fadeIn) * 45 + (1 - fadeOut) * -40
+        const scale = 0.86 + fadeIn * 0.14 + (1 - fadeOut) * 0.12
+        const blur = (1 - fadeIn) * 16 + (1 - fadeOut) * 16
 
-        const translateY = (1 - t) * 45
-        const scale = 0.86 + t * 0.14 // Emerges from depth forward into crisp focus
-        const blur = (1 - t) * 16
-        taglineRef.current.style.opacity = String(t)
+        taglineRef.current.style.opacity = String(opacity)
         taglineRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
         taglineRef.current.style.filter = `blur(${blur}px)`
       }
