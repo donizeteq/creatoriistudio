@@ -180,72 +180,144 @@ const Index = () => {
 
       <ProjectEstimator />
 
-      {/* PORTFÓLIO */}
+      {/* PORTFÓLIO DESTAQUE EM GRID ASSIMÉTRICO (1 HERO ESQUERDA + 6 SECUNDÁRIOS DIREITA 2x3) */}
       <section id="portfolio" className="py-24 px-6 container mx-auto">
         <div className="text-center mb-16 reveal">
           <span className="text-[#FF6B35] text-xs font-bold tracking-widest uppercase">Trabalhos</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4">Portfólio Selecionado</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mt-4">Portfólio em Destaque</h2>
+          <p className="text-gray-400 text-sm md:text-base mt-2 max-w-xl mx-auto">
+            Projetos estratégicos de posicionamento e identidade visual que transformaram marcas.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {[
-            { 
-              name: 'Revitalize - Clínica Capilar & Head SPA', 
-              cat: 'BRANDING', 
-              img: 'https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg', 
-              link: 'https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA' 
-            },
-            { 
-              name: 'Wagner Gonçalves — Attorneys at Law', 
-              cat: 'IDENTIDADE VISUAL', 
-              img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ed4e7c212435201.Y3JvcCwxMTk0LDkzNCwzNzUsMA.png', 
-              link: 'https://www.behance.net/gallery/212435201/Wagner-Goncalves-Atoorneys-at-Law-(Visual-identity)' 
-            },
-            { 
-              name: 'MGB Beauty Studio — Salão de Beleza', 
-              cat: 'BRANDING', 
-              img: 'https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png', 
-              link: 'https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza' 
-            },
-          ].map((p) => (
+        {/* ESTRUTURA DO WIREFRAME (1 CARD HERO ESQUERDA + 6 SECUNDÁRIOS DIREITA EM 2x3) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
+          {/* CARD PRINCIPAL EM DESTAQUE (LADO ESQUERDO - 5 COLUNAS LG) */}
+          <div className="lg:col-span-5 flex flex-col h-full reveal">
             <a 
-              key={p.name} 
-              href={p.link} 
-              target="_blank" 
+              href="https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA"
+              target="_blank"
               rel="noopener noreferrer"
-              className="group overflow-hidden rounded-2xl bg-[#111118] border border-white/5 reveal transition-all hover:border-[#FF6B35]/50"
+              className="group relative flex-1 flex flex-col justify-between overflow-hidden rounded-3xl bg-[#111118] border border-[#FF6B35]/40 hover:border-[#FF6B35] transition-all duration-500 shadow-2xl p-6 md:p-8 hover:shadow-[#FF6B35]/10"
             >
-              <div className="h-[200px] w-full relative overflow-hidden">
+              {/* Imagem de Capa Hero */}
+              <div className="w-full h-[280px] md:h-[340px] relative overflow-hidden rounded-2xl mb-6">
                 <img 
-                  src={p.img} 
-                  alt={p.name} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                  src="https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg" 
+                  alt="Revitalize - Clínica Capilar & Head SPA" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <div className="flex items-center gap-2 text-white font-bold">
-                    Ver no Behance <ExternalLink className="w-5 h-5" />
-                  </div>
+                <div className="absolute top-4 left-4 bg-[#FF6B35] text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
+                  CASE EM DESTAQUE
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-80" />
               </div>
-              <div className="p-6">
-                <span className="text-[10px] font-bold text-[#FF6B35] uppercase tracking-widest">{p.cat}</span>
-                <h4 className="text-xl font-bold mt-1 group-hover:text-[#FF6B35] transition-colors line-clamp-2">{p.name}</h4>
-                <div className="mt-4 text-xs text-gray-500 font-semibold group-hover:text-white transition-colors flex items-center gap-1">
-                  Ver no Behance <ArrowRight className="w-3 h-3" />
+
+              {/* Detalhes do Projeto Principal */}
+              <div className="space-y-3">
+                <span className="text-xs font-bold text-[#FF6B35] uppercase tracking-widest">BRANDING & ESTRATÉGIA</span>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white group-hover:text-[#FF6B35] transition-colors leading-tight">
+                  Revitalize — Clínica Capilar & Head SPA
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                  Posicionamento completo, identidade visual sofisticada e sistema de comunicação visual para clínica premium de estética e saúde capilar.
+                </p>
+              </div>
+
+              {/* Rodapé do Card Principal */}
+              <div className="mt-8 pt-4 border-t border-white/10 flex justify-between items-center text-xs font-bold text-gray-300">
+                <span className="flex items-center gap-1 group-hover:text-white">
+                  Ver case completo no Behance
+                </span>
+                <div className="w-9 h-9 rounded-full bg-[#FF6B35]/10 group-hover:bg-[#FF6B35] flex items-center justify-center text-[#FF6B35] group-hover:text-white transition-all">
+                  <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
             </a>
-          ))}
+          </div>
+
+          {/* GRADE DE 6 CARDS SECUNDÁRIOS (LADO DIREITO - 7 COLUNAS LG EM 2 COLUNAS x 3 LINHAS) */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+            {[
+              {
+                name: 'Wagner Gonçalves — Attorneys',
+                cat: 'IDENTIDADE VISUAL',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/ed4e7c212435201.Y3JvcCwxMTk0LDkzNCwzNzUsMA.png',
+                link: 'https://www.behance.net/gallery/212435201/Wagner-Goncalves-Atoorneys-at-Law-(Visual-identity)',
+              },
+              {
+                name: 'MGB Beauty Studio',
+                cat: 'BRANDING',
+                img: 'https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png',
+                link: 'https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza',
+              },
+              {
+                name: 'Majoris Joias & Acessórios',
+                cat: 'BRANDING & E-COMMERCE',
+                img: '/majoris-logo.png',
+                link: 'https://www.majorisjoias.com.br/',
+              },
+              {
+                name: 'DS Partners Construction',
+                cat: 'IDENTIDADE VISUAL',
+                img: '/ds-partners-logo.png',
+                link: 'https://dspartnersconstruction.com/',
+              },
+              {
+                name: 'Tech Flow Solutions',
+                cat: 'DESIGN SYSTEM',
+                img: logoCreatorii,
+                link: '#contato',
+              },
+              {
+                name: 'Lux Living Imóveis',
+                cat: 'PRESENÇA DIGITAL',
+                img: logoCreatorii,
+                link: '#contato',
+              },
+            ].map((item, idx) => (
+              <a
+                key={idx}
+                href={item.link}
+                target={item.link.startsWith('http') ? '_blank' : '_self'}
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-4 rounded-2xl bg-[#111118] border border-white/5 hover:border-[#FF6B35]/40 transition-all duration-300 hover:bg-white/5 reveal"
+              >
+                {/* Miniatura / Container de Logo à Esquerda */}
+                <div className="w-20 h-20 shrink-0 rounded-xl bg-black/60 border border-white/10 overflow-hidden flex items-center justify-center p-2 group-hover:scale-105 transition-transform">
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
+
+                {/* Texto do Projeto à Direita */}
+                <div className="flex-1 min-w-0">
+                  <span className="text-[9px] font-extrabold text-[#FF6B35] uppercase tracking-wider block mb-1">
+                    {item.cat}
+                  </span>
+                  <h4 className="text-sm font-bold text-white group-hover:text-[#FF6B35] transition-colors truncate">
+                    {item.name}
+                  </h4>
+                  <span className="text-[11px] text-gray-500 font-semibold group-hover:text-gray-300 transition-colors flex items-center gap-1 mt-1">
+                    Ver mais <ArrowRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
 
+        {/* BOTÃO VER PORTFÓLIO COMPLETO */}
         <div className="flex justify-center reveal">
-          <a 
-            href="https://www.behance.net/natashaqueiroz" 
-            target="_blank" 
+          <a
+            href="https://www.behance.net/natashaqueiroz"
+            target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-transparent border border-[#FF6B35]/50 hover:bg-[#FF6B35]/5 text-white rounded-lg font-bold transition-all flex items-center gap-2"
+            className="px-8 py-4 bg-transparent border border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 text-white rounded-xl font-bold transition-all flex items-center gap-2 group hover:border-[#FF6B35]"
           >
-            Ver portfólio completo <ExternalLink className="w-4 h-4" />
+            Ver portfólio completo no Behance <ExternalLink className="w-4 h-4 text-[#FF6B35] group-hover:translate-x-0.5 transition-transform" />
           </a>
         </div>
       </section>
