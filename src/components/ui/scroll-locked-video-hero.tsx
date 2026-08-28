@@ -219,9 +219,9 @@ export default function MetroHero({
           </h1>
         </div>
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (SURGE SOMENTE APÓS A PORTA ABRIR 100%) */}
+        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. (MESMA COR BRANCA DO TÍTULO INICIAL) */}
         <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none">
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-[#FF6B35] drop-shadow-2xl font-sans leading-tight">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
             {tagline}
           </h2>
         </div>
