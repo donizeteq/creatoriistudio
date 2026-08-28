@@ -39,13 +39,13 @@ export default function MetroHero({
     const video = videoRef.current
     if (!video) return
 
-    let duration = 2.4 // Default fallback video duration (2.4 seconds)
+    let duration = 2.4 // Fallback video duration
     let rafId = 0
     let currentProgress = 0
     let targetProgress = 0
     let isFinished = false
 
-    // Initialize browser video decoder engine
+    // Initialize decoder engine for 100% reliable 60fps scrubbing
     const initVideoDecoder = () => {
       if (video.duration && !isNaN(video.duration)) {
         duration = video.duration
@@ -69,7 +69,7 @@ export default function MetroHero({
       video.addEventListener("canplaythrough", initVideoDecoder)
     }
 
-    // Wheel event handler: silky walk-in scroll sensitivity (1300 divisor)
+    // Wheel event handler: unhurried cinematic walk-in (1600 divisor)
     const handleWheel = (e: WheelEvent) => {
       const atTop = window.scrollY <= 10
 
@@ -77,7 +77,7 @@ export default function MetroHero({
         if (e.deltaY > 0) {
           if (targetProgress < 0.99) {
             e.preventDefault()
-            const delta = e.deltaY / 1300
+            const delta = e.deltaY / 1600
             targetProgress = clamp(targetProgress + delta, 0, 1)
 
             if (targetProgress >= 0.99) {
@@ -91,21 +91,21 @@ export default function MetroHero({
           }
         } else if (e.deltaY < 0 && targetProgress > 0) {
           e.preventDefault()
-          const delta = e.deltaY / 1300
+          const delta = e.deltaY / 1600
           targetProgress = clamp(targetProgress + delta, 0, 1)
           isFinished = false
           setCompleted(false)
         }
       } else if (atTop && isFinished && e.deltaY < 0) {
         e.preventDefault()
-        const delta = e.deltaY / 1300
+        const delta = e.deltaY / 1600
         targetProgress = clamp(targetProgress + delta, 0, 1)
         isFinished = false
         setCompleted(false)
       }
     }
 
-    // Touch event handlers for mobile devices (950 divisor)
+    // Touch event handlers for mobile devices (1100 divisor)
     let touchStartY = 0
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY
@@ -120,7 +120,7 @@ export default function MetroHero({
         if (deltaY > 0) {
           if (targetProgress < 0.99) {
             if (e.cancelable) e.preventDefault()
-            targetProgress = clamp(targetProgress + (deltaY / 950), 0, 1)
+            targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
             touchStartY = currentY
             if (targetProgress >= 0.99) {
               targetProgress = 1
@@ -133,7 +133,7 @@ export default function MetroHero({
           }
         } else if (deltaY < 0 && targetProgress > 0) {
           if (e.cancelable) e.preventDefault()
-          targetProgress = clamp(targetProgress + (deltaY / 950), 0, 1)
+          targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
           touchStartY = currentY
           isFinished = false
           setCompleted(false)
@@ -157,52 +157,45 @@ export default function MetroHero({
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     function frame() {
-      // Silky momentum lerp (0.12 factor)
-      currentProgress += (targetProgress - currentProgress) * 0.12
+      // Cadenced momentum lerp (0.09 factor) for 100% continuous fluid progression
+      currentProgress += (targetProgress - currentProgress) * 0.09
 
       const dur = (video && video.duration && !isNaN(video.duration)) ? video.duration : duration
 
-      // 1. Guaranteed Video Door Opening & 3D Perspective Depth
-      if (video && dur > 0) {
-        const videoProgress = clamp(currentProgress / 0.65, 0, 1)
-        const targetTime = videoProgress * dur
-        
-        try {
-          video.currentTime = targetTime
-        } catch (e) {}
-
-        // Camera Push-in Scale: 1.0 -> 1.18 creating realistic optical forward movement
-        const cameraPushScale = 1.0 + videoProgress * 0.18
-        video.style.transform = `scale3d(${cameraPushScale}, ${cameraPushScale}, 1)`
-      }
-
-      // 2. Initial Title ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO."): Pushing past camera threshold
+      // ETAPA 1: Título Inicial ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO.") [0.00 -> 0.25]
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.28, 0, 1)
+        const t = 1 - clamp(currentProgress / 0.25, 0, 1)
         const translateY = (1 - t) * -50
-        const scale = 1.0 + (1 - t) * 0.12
+        const scale = 1.0 + (1 - t) * 0.14
         const blur = (1 - t) * 16
         titleRef.current.style.opacity = String(t)
         titleRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
         titleRef.current.style.filter = `blur(${blur}px)`
       }
 
-      // 3. Scroll Hint
-      if (hintRef.current) {
-        hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
+      // ETAPA 2: Abertura das Portas & Avanço 3D de Câmera [0.10 -> 0.70]
+      if (video && dur > 0) {
+        const videoProgress = clamp((currentProgress - 0.10) / 0.60, 0, 1)
+        const targetTime = videoProgress * dur
+        
+        try {
+          video.currentTime = targetTime
+        } catch (e) {}
+
+        const cameraPushScale = 1.0 + videoProgress * 0.18
+        video.style.transform = `scale3d(${cameraPushScale}, ${cameraPushScale}, 1)`
       }
 
-      // 4. Tagline ("ELAS ATRAEM."): Emergence STRICTLY BINDED to Physical Door Openness
+      // ETAPA 3 & 4: Subtítulo ("ELAS ATRAEM.") [Emergência: 0.70 -> 0.90 | Saída: 0.90 -> 1.00]
       if (taglineRef.current) {
-        // Physical door openness ratio (from 0 to 1)
         const physicalDoorRatio = video && dur > 0 ? clamp(video.currentTime / dur, 0, 1) : 0
-        const doorIsOpen = physicalDoorRatio >= 0.70 ? clamp((physicalDoorRatio - 0.70) / 0.30, 0, 1) : 0
+        const doorIsOpen = physicalDoorRatio >= 0.60 ? clamp((physicalDoorRatio - 0.60) / 0.40, 0, 1) : 0
         
-        // Emergence phase: 0.65 to 0.88 progress (MUST HAVE DOORS OPEN FIRST!)
-        const fadeIn = Math.min(clamp((currentProgress - 0.65) / 0.23, 0, 1), doorIsOpen)
+        // Emergência do fundo das portas abertas (0.70 -> 0.90)
+        const fadeIn = Math.min(clamp((currentProgress - 0.70) / 0.20, 0, 1), doorIsOpen)
         
-        // Dissolve phase into Section 2: 0.92 to 1.00 progress
-        const fadeOut = 1 - clamp((currentProgress - 0.92) / 0.08, 0, 1)
+        // Dissolve cinematográfico para Seção 2 (0.90 -> 1.00)
+        const fadeOut = 1 - clamp((currentProgress - 0.90) / 0.10, 0, 1)
         
         const opacity = fadeIn * fadeOut
         const translateY = (1 - fadeIn) * 45 + (1 - fadeOut) * -40
@@ -214,9 +207,14 @@ export default function MetroHero({
         taglineRef.current.style.filter = `blur(${blur}px)`
       }
 
-      // 5. Progress bar at bottom
+      // Scroll Hint
+      if (hintRef.current) {
+        hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
+      }
+
+      // Progress bar at bottom
       if (progressBarRef.current) {
-        const barProgress = clamp(currentProgress / 0.65, 0, 1)
+        const barProgress = clamp(currentProgress / 0.70, 0, 1)
         progressBarRef.current.style.transform = `scaleX(${barProgress})`
       }
 
