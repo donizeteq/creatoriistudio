@@ -515,38 +515,40 @@ const Index = () => {
         <ProjectEstimator />
       </section>
 
-      {/* SEÇÃO CONTATO & CTA FINAL (DESIGN DESIGNER PROFISSIONAL - LINEAR/VERCEL STYLE) */}
-      <section id="contato" className="py-24 px-6 relative z-10 bg-[#0a0a0f] border-t border-white/5">
-        <div className="container mx-auto max-w-5xl bg-[#0f1015] border border-white/10 p-10 md:p-20 rounded-[32px] text-center shadow-2xl relative overflow-hidden reveal">
-          {/* Luz Ambiente Muted */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[#FF6B35]/15 blur-[120px] pointer-events-none rounded-full" />
+      {/* SEÇÃO CONTATO & CTA FINAL (ULTRA HIGH-END BESPOKE - FRAMER/APPLE STYLE) */}
+      <section id="contato" className="py-28 px-6 relative z-10 bg-[#08090b] border-t border-white/5">
+        <div className="container mx-auto max-w-5xl bg-[#0d0e12] border border-white/10 p-10 md:p-20 rounded-[36px] text-center shadow-2xl relative overflow-hidden reveal">
+          {/* Ambient Radial Spotlight */}
+          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_top,rgba(255,107,53,0.18),transparent_70%)] pointer-events-none" />
 
-          {/* Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 mb-8">
+          {/* Mono Eyebrow */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]" />
-            <span className="text-gray-300 text-xs font-mono tracking-wider uppercase">CONTATO & PROPOSTA</span>
+            <span className="text-gray-300 text-xs font-mono tracking-widest uppercase">[ ATENDIMENTO DIRECT ]</span>
           </div>
 
-          {/* Headline Editorial */}
-          <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-white tracking-tight leading-[1.1]">
-            Vamos construir a presença digital <br className="hidden md:block" />
-            <span className="text-[#FF6B35]">da sua marca.</span>
+          {/* Display Headline Editorial */}
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white tracking-tight leading-[1.05]">
+            Pronto para elevar o posicionamento <br className="hidden md:block" />
+            <span className="bg-gradient-to-r from-[#FF6B35] via-white to-[#7F77DD] bg-clip-text text-transparent">
+              da sua marca?
+            </span>
           </h2>
           
-          <p className="text-gray-400 text-base md:text-lg mb-12 max-w-2xl mx-auto font-sans leading-relaxed">
-            Diagnóstico estratégico e proposta personalizada entregues em até 24 horas. Fale diretamente com nossa diretoria criativa.
+          <p className="text-gray-400 text-base md:text-xl mb-12 max-w-2xl mx-auto font-sans leading-relaxed">
+            Estratégia, design e presença digital desenvolvidos com rigor autoral e atendimento direto pela nossa diretoria.
           </p>
 
-          {/* Metadata Row (Estilo Linear/Vercel) */}
+          {/* Minimalist Pill Highlights */}
           <div className="flex flex-wrap justify-center items-center gap-3 mb-12">
-            <span className="px-4 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 uppercase tracking-wider">
-              Resumo em até 24h
+            <span className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 tracking-wider">
+              Diagnóstico comercial em 24h
             </span>
-            <span className="px-4 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 uppercase tracking-wider">
-              Análise sem compromisso
-            </span>
-            <span className="px-4 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 uppercase tracking-wider">
+            <span className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 tracking-wider">
               Atendimento autoral
+            </span>
+            <span className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 tracking-wider">
+              Proposta personalizada
             </span>
           </div>
           
@@ -558,9 +560,9 @@ const Index = () => {
                 href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20solicitar%20uma%20proposta." 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-semibold text-sm rounded-full flex items-center gap-3 transition-all duration-300 shadow-lg shadow-[#FF6B35]/20 hover:-translate-y-0.5 group"
+                className="px-9 py-4.5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-bold text-sm rounded-full flex items-center gap-3 transition-all duration-300 shadow-xl shadow-[#FF6B35]/25 hover:-translate-y-0.5 group"
               >
-                Iniciar Conversa no WhatsApp <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Falar Diretamente no WhatsApp <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a 
                 href="mailto:contato@creatorristudio.com.br" 
