@@ -143,7 +143,7 @@ const AppleStyleCarousel = () => {
               duration: 1.2, 
               ease: [0.16, 1, 0.3, 1] // Apple-style easing (cubic-bezier)
             }}
-            className="min-w-[85vw] md:min-w-[920px] h-[540px] md:h-[620px] relative rounded-[40px] overflow-hidden bg-[#161617] snap-center group flex-shrink-0 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
+            className="min-w-[88vw] sm:min-w-[80vw] md:min-w-[860px] lg:min-w-[920px] h-[440px] sm:h-[520px] md:h-[620px] relative rounded-3xl sm:rounded-[40px] overflow-hidden bg-[#161617] snap-center group flex-shrink-0 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
           >
             <img 
               src={service.image} 
@@ -151,12 +151,12 @@ const AppleStyleCarousel = () => {
               loading="eager"
               className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-[1.03] transition-transform duration-[2.4s] ease-[cubic-bezier(0.16,1,0.3,1)]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-12 md:p-16 flex flex-col justify-start">
-              <span className="text-[#7F77DD] font-bold text-sm tracking-[0.2em] mb-4">{service.tag}</span>
-              <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-[1.1] max-w-lg">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-6 sm:p-10 md:p-16 flex flex-col justify-start">
+              <span className="text-[#7F77DD] font-bold text-xs sm:text-sm tracking-[0.2em] mb-2 sm:mb-4">{service.tag}</span>
+              <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6 leading-[1.1] max-w-lg">
                 {service.title}
               </h3>
-              <p className="text-white/70 text-lg md:text-xl max-w-md font-medium">
+              <p className="text-white/70 text-sm sm:text-lg md:text-xl max-w-md font-medium leading-relaxed">
                 {service.description}
               </p>
             </div>

@@ -335,7 +335,7 @@ const Index = () => {
           </div>
 
           {/* GRADE DE CARDS SECUNDÁRIOS FILTRÁVEIS DO BEHANCE (LADO DIREITO - 7 COLUNAS LG) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 h-full">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
             {behanceData.items
               .filter(item => portfolioFilter === 'all' || item.type === portfolioFilter)
               .map((item, idx) => (
@@ -344,31 +344,31 @@ const Index = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group overflow-hidden rounded-2xl bg-[#111118] border border-white/10 hover:border-[#FF6B35]/60 transition-all duration-300 flex flex-col justify-between reveal hover:shadow-lg hover:shadow-[#FF6B35]/5"
+                className="group overflow-hidden rounded-3xl bg-[#111118] border border-white/10 hover:border-[#FF6B35]/60 transition-all duration-300 flex flex-col justify-between reveal hover:shadow-xl hover:shadow-[#FF6B35]/10"
               >
                 {/* Imagem do Projeto Ampliada */}
-                <div className="w-full h-[140px] md:h-[150px] relative overflow-hidden bg-black/40">
+                <div className="w-full h-[200px] sm:h-[220px] relative overflow-hidden bg-black/40">
                   <img
                     src={item.img}
                     alt={item.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-70" />
                 </div>
 
                 {/* Detalhes do Projeto */}
-                <div className="p-4 flex flex-col justify-between flex-1">
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 space-y-4">
                   <div>
-                    <span className="text-[9px] font-extrabold text-[#FF6B35] uppercase tracking-wider block mb-1">
+                    <span className="text-[10px] font-extrabold text-[#FF6B35] uppercase tracking-widest block mb-1.5">
                       {item.cat}
                     </span>
-                    <h4 className="text-sm font-bold text-white group-hover:text-[#FF6B35] transition-colors line-clamp-1">
+                    <h4 className="text-base font-bold text-white group-hover:text-[#FF6B35] transition-colors leading-snug">
                       {item.name}
                     </h4>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400 font-semibold group-hover:text-white transition-colors">
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400 font-semibold group-hover:text-white transition-colors">
                     <span>Ver no Behance</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#FF6B35] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-[#FF6B35] group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </a>
