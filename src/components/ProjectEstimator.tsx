@@ -24,8 +24,8 @@ const ProjectEstimator = () => {
   );
 
   return (
-    <section id="estimador" className="py-16 md:py-24 bg-[#0a0a0f] border-t border-white/5 px-4 sm:px-6">
-      <div className="container mx-auto max-w-5xl">
+    <section id="estimador" className="py-12 sm:py-20 md:py-24 bg-[#0a0a0f] border-t border-white/5 px-3.5 sm:px-6">
+      <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12 md:mb-16 reveal">
           <span className="text-[#7F77DD] text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2">
             <Calculator className="w-4 h-4" /> Simulador de Investimento
@@ -36,7 +36,7 @@ const ProjectEstimator = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-12 gap-6 md:gap-8 bg-[#111118] border border-white/10 rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl">
+        <div className="grid md:grid-cols-12 gap-6 md:gap-8 bg-[#111118] border border-white/10 rounded-3xl p-4 sm:p-8 md:p-12 shadow-2xl">
           {/* Controles */}
           <div className="md:col-span-7 space-y-6 md:space-y-8">
             <div>

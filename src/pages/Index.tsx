@@ -187,7 +187,7 @@ const Index = () => {
       </section>
 
       {/* SEÇÃO 2 — TRANSFORME SUA PRESENÇA DIGITAL */}
-      <section id="transforme" className="relative min-h-screen flex flex-col justify-center py-16 sm:py-24 px-4 sm:px-6 w-full text-white overflow-hidden bg-[#0a0a0f] z-20">
+      <section id="transforme" className="relative min-h-screen flex flex-col justify-center py-12 sm:py-24 px-3.5 sm:px-6 w-full text-white overflow-hidden bg-[#0a0a0f] z-20">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" style={{ backgroundImage: 'url(/bg-sessao2.jpg)' }} />
         <div className="relative z-10">
           <div className="flex flex-col items-center text-center reveal">
@@ -556,8 +556,8 @@ const Index = () => {
       </section>
 
       {/* SEÇÃO CONTATO & CTA FINAL (ULTRA HIGH-END BESPOKE - FRAMER/APPLE STYLE) */}
-      <section id="contato" className="py-28 px-6 relative z-10 bg-[#08090b] border-t border-white/5">
-        <div className="container mx-auto max-w-5xl bg-[#0d0e12] border border-white/10 p-10 md:p-20 rounded-[36px] text-center shadow-2xl relative overflow-hidden reveal">
+      <section id="contato" className="py-16 sm:py-24 md:py-28 px-3.5 sm:px-6 relative z-10 bg-[#08090b] border-t border-white/5">
+        <div className="container mx-auto max-w-6xl bg-[#0d0e12] border border-white/10 p-5 sm:p-10 md:p-20 rounded-3xl sm:rounded-[36px] text-center shadow-2xl relative overflow-hidden reveal">
           {/* Ambient Radial Spotlight */}
           <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_top,rgba(255,107,53,0.18),transparent_70%)] pointer-events-none" />
 
@@ -616,7 +616,7 @@ const Index = () => {
       </section>
     </main>
 
-    <footer className="bg-[#050508] border-t border-white/10 py-12 px-6">
+    <footer className="bg-[#050508] border-t border-white/10 py-10 px-3.5 sm:px-6">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex items-center gap-4">
           <img 

@@ -68,7 +68,7 @@ const ServiceShowcase = () => {
   const currentService = services[activeService];
 
   return (
-    <section id="servicos" className="py-16 md:py-24 px-4 sm:px-6 bg-[#0a0a0f] border-t border-white/5">
+    <section id="servicos" className="py-12 sm:py-20 md:py-24 px-3.5 sm:px-6 bg-[#0a0a0f] border-t border-white/5">
       <div className="container mx-auto max-w-7xl">
         {/* CABEÇALHO DA SEÇÃO */}
         <div className="mb-8 md:mb-14 reveal text-left">

@@ -42,8 +42,8 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="processo" className="py-20 md:py-24 px-4 sm:px-6 bg-[#0a0a0f] relative z-20 border-t border-white/5">
-      <div className="container mx-auto max-w-6xl">
+    <section id="processo" className="py-12 sm:py-20 md:py-24 px-3.5 sm:px-6 bg-[#0a0a0f] relative z-20 border-t border-white/5">
+      <div className="container mx-auto max-w-7xl">
         {/* CABEÇALHO DA SEÇÃO */}
         <div className="text-center mb-12 md:mb-16 reveal">
           <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/30 mb-4">
@@ -66,7 +66,7 @@ const ProcessSection = () => {
             return (
               <div
                 key={idx}
-                className="group relative rounded-3xl bg-[#111118] border border-white/10 p-6 sm:p-8 md:p-10 hover:border-[#FF6B35]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6B35]/10 flex flex-col justify-between"
+                className="group relative rounded-3xl bg-[#111118] border border-white/10 p-5 sm:p-8 md:p-10 hover:border-[#FF6B35]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6B35]/10 flex flex-col justify-between"
               >
                 <div>
                   {/* TOPO DO CARD: NÚMERO + ÍCONE */}
