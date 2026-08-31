@@ -414,26 +414,26 @@ const Index = () => {
       </section>
 
       {/* SOBRE */}
-      <section id="sobre" className="py-16 sm:py-24 px-4 sm:px-6 container mx-auto">
-        <div className="max-w-4xl mx-auto rounded-3xl bg-[#111118]/80 border border-white/10 backdrop-blur-md overflow-hidden reveal">
+      <section id="sobre" className="py-12 sm:py-20 md:py-24 px-3.5 sm:px-6">
+        <div className="container mx-auto max-w-7xl rounded-3xl bg-[#111118] border border-white/10 overflow-hidden reveal shadow-2xl">
           {/* Nav Tabs */}
-          <div className="flex border-b border-white/10 text-xs sm:text-sm">
+          <div className="flex border-b border-white/10 text-xs sm:text-base">
             <button
               onClick={() => setActiveTab('studio')}
-              className={`flex-1 py-4 sm:py-6 text-center font-bold tracking-wider uppercase transition-all duration-300 ${activeTab === 'studio' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
+              className={`flex-1 py-4 sm:py-5 text-center font-extrabold tracking-wider uppercase transition-all duration-300 ${activeTab === 'studio' ? 'bg-white/5 text-[#FF6B35] border-b-2 border-[#FF6B35]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
             >
               A Creatorii Studio
             </button>
             <button
               onClick={() => setActiveTab('equipe')}
-              className={`flex-1 py-4 sm:py-6 text-center font-bold tracking-wider uppercase transition-all duration-300 ${activeTab === 'equipe' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
+              className={`flex-1 py-4 sm:py-5 text-center font-extrabold tracking-wider uppercase transition-all duration-300 ${activeTab === 'equipe' ? 'bg-white/5 text-[#FF6B35] border-b-2 border-[#FF6B35]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
             >
               Quem Somos Nós
             </button>
           </div>
 
           {/* Conteúdo Dinâmico */}
-          <div className="p-5 sm:p-8 md:p-12">
+          <div className="p-6 sm:p-10 md:p-14">
             {/* TAB: STUDIO */}
             {activeTab === 'studio' && (
               <div className="animate-in fade-in zoom-in-95 duration-500 space-y-10">
