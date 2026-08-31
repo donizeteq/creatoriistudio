@@ -8,6 +8,8 @@ import EmailSubscription from '@/components/EmailSubscription';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ProjectEstimator from '@/components/ProjectEstimator';
 import logoCreatorii from '@/assets/logo-creatorii.png';
+import natashaImg from '@/assets/natasha.jpg';
+import emmylyImg from '@/assets/emmyly.jpg';
 import behanceData from '@/data/behance-portfolio.json';
 import { ChevronDown, Star, ExternalLink, ArrowRight, Plus, Minus } from 'lucide-react';
 import CustomCursor from '@/components/CustomCursor';
@@ -393,23 +395,21 @@ const Index = () => {
                   <div className="group rounded-2xl bg-white/5 border border-white/10 p-6 backdrop-blur-md transition-all duration-300 hover:border-[#FF6B35]/50 hover:bg-white/10 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center space-x-4 mb-4">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#FF6B35] to-[#9B87B2] flex items-center justify-center text-xl font-bold text-white shadow-lg shadow-[#FF6B35]/20">
-                          NR
+                        <div className="w-16 h-16 rounded-full overflow-hidden shadow-lg shadow-[#FF6B35]/25 border border-[#FF6B35]/40">
+                          <img src={natashaImg} alt="Natasha Queiroz" className="w-full h-full object-cover" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-white group-hover:text-[#FF6B35] transition-colors">Natasha Rinoa</h3>
-                          <p className="text-sm font-semibold text-[#FF6B35]">Fundadora & Diretora Criativa</p>
+                          <h3 className="text-xl font-bold text-white group-hover:text-[#FF6B35] transition-colors">Natasha Queiroz</h3>
+                          <p className="text-sm font-semibold text-[#FF6B35]">CEO & Diretora Criativa</p>
                         </div>
                       </div>
                       <p className="text-gray-300 text-sm leading-relaxed font-poppins">
-                        Especialista em branding, design estratégico e direção de arte com anos de experiência criando identidades visuais memoráveis e estratégias de posicionamento para marcas de destaque.
+                        Com mais de 7 anos de experiência em design, Natasha iniciou sua trajetória criativa aos 15 anos e, desde então, transformou sua paixão por comunicação visual em profissão. Formada em Design, fundou a Creatorii com o propósito de criar marcas que não apenas seguem tendências, mas constroem uma identidade própria. À frente de mais de 200 projetos realizados em todo o Brasil, une estratégia, estética e criatividade para transformar ideias em experiências visuais que geram reconhecimento.
                       </p>
                     </div>
                     <div className="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs text-gray-400">
-                      <span>Design & Social Media</span>
-                      <a href="https://wa.me/5511958566518" target="_blank" rel="noopener noreferrer" className="text-[#FF6B35] hover:underline font-semibold flex items-center gap-1">
-                        Contato <ExternalLink className="w-3 h-3" />
-                      </a>
+                      <span>CEO & Diretora Criativa</span>
+                      <span className="text-[#FF6B35]/80 font-medium">200+ Projetos no Brasil</span>
                     </div>
                   </div>
 
@@ -417,23 +417,21 @@ const Index = () => {
                   <div className="group rounded-2xl bg-white/5 border border-white/10 p-6 backdrop-blur-md transition-all duration-300 hover:border-[#9B87B2]/50 hover:bg-white/10 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center space-x-4 mb-4">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#9B87B2] to-[#7F77DD] flex items-center justify-center text-xl font-bold text-white shadow-lg shadow-[#9B87B2]/20">
-                          EQ
+                        <div className="w-16 h-16 rounded-full overflow-hidden shadow-lg shadow-[#9B87B2]/25 border border-[#9B87B2]/40">
+                          <img src={emmylyImg} alt="Emmyly Queiroz" className="w-full h-full object-cover" />
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-white group-hover:text-[#9B87B2] transition-colors">Emmyly Queiroz</h3>
-                          <p className="text-sm font-semibold text-[#9B87B2]">Líder de Tecnologia & Automação</p>
+                          <p className="text-sm font-semibold text-[#9B87B2]">Social Media & Estrategista de Conteúdo</p>
                         </div>
                       </div>
                       <p className="text-gray-300 text-sm leading-relaxed font-poppins">
-                        Engenheira de software e especialista em inteligência artificial responsável por integrar arquitetura digital, automação e experiências web interativas de alta performance.
+                        Com 6 anos de experiência em comunicação e mídias sociais, Emmyly atua na construção de estratégias que transformam presença digital em conexão. Seu trabalho une planejamento, criatividade e olhar estratégico para desenvolver conteúdos que representam a essência de cada marca e conversam com o público certo. Na Creatorii, transforma objetivos de negócio em comunicação relevante, consistente e capaz de gerar relacionamento e posicionamento.
                       </p>
                     </div>
                     <div className="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs text-gray-400">
-                      <span>Sistemas & AI</span>
-                      <a href="https://wa.me/5511958566518" target="_blank" rel="noopener noreferrer" className="text-[#9B87B2] hover:underline font-semibold flex items-center gap-1">
-                        Contato <ExternalLink className="w-3 h-3" />
-                      </a>
+                      <span>Social Media & Estratégia</span>
+                      <span className="text-[#9B87B2]/80 font-medium">6+ Anos de Experiência</span>
                     </div>
                   </div>
                 </div>

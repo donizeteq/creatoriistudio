@@ -8,11 +8,16 @@ export interface MetroHeroProps {
   scrollHint?: string
   tagline?: string
   signature?: { name: string; url: string } | false
+  scrubDistance?: number
   className?: string
   style?: React.CSSProperties
 }
 
 const DEFAULT_VIDEO = "/metro-hero-video.mp4"
+const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+
+const COL_BG = "#05070d"
+const COL_TEXT = "#f2f4f8"
 
 function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v))
@@ -23,260 +28,396 @@ export default function MetroHero({
   title = "MARCAS FORTES NÃO DISPUTAM ATENÇÃO.",
   scrollHint = "ROLE PARA EXPLORAR",
   tagline = "ELAS ATRAEM.",
+  signature = false,
+  scrubDistance = 3200,
   className,
   style,
 }: MetroHeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const hintRef = useRef<HTMLDivElement>(null)
   const taglineRef = useRef<HTMLDivElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
+
   const [ready, setReady] = useState(false)
-  const [completed, setCompleted] = useState(false)
+  const audioCtxRef = useRef<AudioContext | null>(null)
+  const gainNodeRef = useRef<GainNode | null>(null)
+
+  // Web Audio API para som de ar comprimido / portas 3D se abrindo
+  const initAudio = () => {
+    if (audioCtxRef.current) return
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
+      if (!AudioCtx) return
+      const ctx = new AudioCtx()
+      audioCtxRef.current = ctx
+
+      const gain = ctx.createGain()
+      gain.gain.value = 0
+      gain.connect(ctx.destination)
+      gainNodeRef.current = gain
+    } catch (e) {}
+  }
+
+  const playDoorSound = (intensity: number) => {
+    if (!audioCtxRef.current || !gainNodeRef.current) return
+    try {
+      if (audioCtxRef.current.state === "suspended") {
+        audioCtxRef.current.resume()
+      }
+      gainNodeRef.current.gain.setTargetAtTime(clamp(intensity * 0.12, 0, 0.15), audioCtxRef.current.currentTime, 0.05)
+    } catch (e) {}
+  }
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    const section = sectionRef.current
+    if (!video || !section) return
 
-    let duration = 2.4 // Fallback video duration
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+
+    let duration = 8.0
     let rafId = 0
-    let currentProgress = 0
     let targetProgress = 0
-    let isFinished = false
-
-    // Initialize decoder engine for 100% reliable 60fps scrubbing
-    const initVideoDecoder = () => {
-      if (video.duration && !isNaN(video.duration)) {
-        duration = video.duration
-      }
-      setReady(true)
-      video.play().then(() => {
-        video.pause()
-        video.currentTime = 0.001
-      }).catch(() => {
-        try {
-          video.currentTime = 0.001
-        } catch (e) {}
-      })
-    }
-
-    if (video.readyState >= 2) {
-      initVideoDecoder()
-    } else {
-      video.addEventListener("loadeddata", initVideoDecoder)
-      video.addEventListener("loadedmetadata", initVideoDecoder)
-      video.addEventListener("canplaythrough", initVideoDecoder)
-    }
-
-    // Wheel event handler: unhurried cinematic walk-in (1600 divisor)
-    const handleWheel = (e: WheelEvent) => {
-      const atTop = window.scrollY <= 10
-
-      if (atTop && !isFinished) {
-        if (e.deltaY > 0) {
-          if (targetProgress < 0.99) {
-            e.preventDefault()
-            const delta = e.deltaY / 1600
-            targetProgress = clamp(targetProgress + delta, 0, 1)
-
-            if (targetProgress >= 0.99) {
-              targetProgress = 1
-              isFinished = true
-              setCompleted(true)
-            }
-          } else {
-            isFinished = true
-            setCompleted(true)
-          }
-        } else if (e.deltaY < 0 && targetProgress > 0) {
-          e.preventDefault()
-          const delta = e.deltaY / 1600
-          targetProgress = clamp(targetProgress + delta, 0, 1)
-          isFinished = false
-          setCompleted(false)
-        }
-      } else if (atTop && isFinished && e.deltaY < 0) {
-        e.preventDefault()
-        const delta = e.deltaY / 1600
-        targetProgress = clamp(targetProgress + delta, 0, 1)
-        isFinished = false
-        setCompleted(false)
-      }
-    }
-
-    // Touch event handlers for mobile devices (1100 divisor)
+    let currentProgress = 0
+    let lastProgress = 0
+    let hasStartedScrolling = false
+    let locked = false
+    let lockedScrollY = 0
     let touchStartY = 0
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY
+
+    const onLoadedData = () => {
+      duration = video.duration || 8.0
+      setReady(true)
+      if (reduceMotion) {
+        video.currentTime = duration * 0.92
+      }
+    }
+    
+    video.addEventListener("loadeddata", onLoadedData)
+    video.addEventListener("canplaythrough", onLoadedData)
+    if (video.readyState >= 2) {
+      onLoadedData()
     }
 
-    const handleTouchMove = (e: TouchEvent) => {
-      const atTop = window.scrollY <= 10
-      const currentY = e.touches[0].clientY
-      const deltaY = touchStartY - currentY
+    function seekTo(t: number) {
+      if (!video) return
+      try {
+        if (Math.abs(video.currentTime - t) > 0.012) {
+          video.currentTime = t
+        }
+      } catch (e) {}
+    }
 
-      if (atTop && !isFinished) {
-        if (deltaY > 0) {
-          if (targetProgress < 0.99) {
-            if (e.cancelable) e.preventDefault()
-            targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
-            touchStartY = currentY
-            if (targetProgress >= 0.99) {
-              targetProgress = 1
-              isFinished = true
-              setCompleted(true)
-            }
+    function engageLock() {
+      if (locked || typeof document === "undefined") return
+      locked = true
+      lockedScrollY = window.scrollY
+      const b = document.body.style
+      b.position = "fixed"
+      b.top = `-${lockedScrollY}px`
+      b.left = "0"
+      b.right = "0"
+      b.width = "100%"
+    }
+
+    function releaseLock() {
+      if (!locked || typeof document === "undefined") return
+      locked = false
+      const y = lockedScrollY
+      const b = document.body.style
+      b.position = ""
+      b.top = ""
+      b.left = ""
+      b.right = ""
+      b.width = ""
+      window.scrollTo(0, y)
+    }
+
+    if (window.scrollY <= 20) {
+      engageLock()
+    }
+
+    function addDelta(deltaY: number) {
+      initAudio()
+      const next = clamp(targetProgress + deltaY / scrubDistance, 0, 1)
+      targetProgress = next
+      if (targetProgress > 0.001) hasStartedScrolling = true
+
+      if (next >= 0.999 && deltaY > 0 && locked) {
+        releaseLock()
+        setTimeout(() => {
+          const sec2 = document.getElementById("transforme")
+          if (sec2) {
+            sec2.scrollIntoView({ behavior: "smooth" })
           } else {
-            isFinished = true
-            setCompleted(true)
+            window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
           }
-        } else if (deltaY < 0 && targetProgress > 0) {
-          if (e.cancelable) e.preventDefault()
-          targetProgress = clamp(targetProgress + (deltaY / 1100), 0, 1)
-          touchStartY = currentY
-          isFinished = false
-          setCompleted(false)
-        }
+        }, 30)
+      }
+
+      if (window.scrollY <= 15 && next < 0.999 && !locked) {
+        engageLock()
+      }
+
+      return true
+    }
+
+    const onWheel = (e: WheelEvent) => {
+      if (locked) {
+        addDelta(e.deltaY)
+        e.preventDefault()
+      } else if (window.scrollY <= 15 && e.deltaY < 0) {
+        engageLock()
+        addDelta(e.deltaY)
+        e.preventDefault()
       }
     }
 
-    // Re-lock if scrolled back to top
-    const handleScroll = () => {
-      if (window.scrollY <= 2) {
-        if (targetProgress < 0.99) {
-          isFinished = false
-          setCompleted(false)
-        }
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0]?.clientY ?? 0
+    }
+    const onTouchMove = (e: TouchEvent) => {
+      if (locked) {
+        const y = e.touches[0]?.clientY ?? touchStartY
+        const deltaY = touchStartY - y
+        touchStartY = y
+        addDelta(deltaY)
+        if (e.cancelable) e.preventDefault()
       }
     }
 
-    window.addEventListener("wheel", handleWheel, { passive: false })
-    window.addEventListener("touchstart", handleTouchStart, { passive: true })
-    window.addEventListener("touchmove", handleTouchMove, { passive: false })
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    const onScroll = () => {
+      if (window.scrollY <= 10 && !locked && targetProgress < 0.95) {
+        engageLock()
+      }
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false })
+    window.addEventListener("touchstart", onTouchStart, { passive: true })
+    window.addEventListener("touchmove", onTouchMove, { passive: false })
+    window.addEventListener("scroll", onScroll, { passive: true })
 
     function frame() {
-      // Cadenced momentum lerp (0.09 factor) for 100% continuous fluid progression
-      currentProgress += (targetProgress - currentProgress) * 0.09
+      // Lerp ultra-fluido (0.16) igual ao 21st.dev
+      currentProgress += (targetProgress - currentProgress) * 0.16
 
-      const dur = (video && video.duration && !isNaN(video.duration)) ? video.duration : duration
+      const deltaSpeed = Math.abs(currentProgress - lastProgress)
+      lastProgress = currentProgress
+      playDoorSound(deltaSpeed * 10)
 
-      // ETAPA 1: Título Inicial ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO.") [0.00 -> 0.25]
+      const dur = (video.duration && !isNaN(video.duration) && video.duration > 0) ? video.duration : duration
+      if (dur > 0) {
+        seekTo(currentProgress * dur)
+      }
+
+      if (videoRef.current) {
+        const scale = 1 + currentProgress * 0.06
+        videoRef.current.style.transform = `translateZ(0) scale(${scale})`
+      }
       if (titleRef.current) {
-        const t = 1 - clamp(currentProgress / 0.25, 0, 1)
-        const translateY = (1 - t) * -50
-        const scale = 1.0 + (1 - t) * 0.14
-        const blur = (1 - t) * 16
+        const t = 1 - clamp(currentProgress / 0.30, 0, 1)
         titleRef.current.style.opacity = String(t)
-        titleRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
-        titleRef.current.style.filter = `blur(${blur}px)`
+        titleRef.current.style.transform = `translate3d(0, ${(1 - t) * -25}px, 0) scale(${0.96 + t * 0.04})`
+        titleRef.current.style.filter = `blur(${(1 - t) * 10}px)`
       }
-
-      // ETAPA 2: Abertura das Portas & Avanço 3D de Câmera [0.10 -> 0.70]
-      if (video && dur > 0) {
-        const videoProgress = clamp((currentProgress - 0.10) / 0.60, 0, 1)
-        const targetTime = videoProgress * dur
-        
-        try {
-          video.currentTime = targetTime
-        } catch (e) {}
-
-        const cameraPushScale = 1.0 + videoProgress * 0.18
-        video.style.transform = `scale3d(${cameraPushScale}, ${cameraPushScale}, 1)`
-      }
-
-      // ETAPA 3 & 4: Subtítulo ("ELAS ATRAEM.") [Emergência: 0.70 -> 0.90 | Saída: 0.90 -> 1.00]
-      if (taglineRef.current) {
-        const physicalDoorRatio = video && dur > 0 ? clamp(video.currentTime / dur, 0, 1) : 0
-        const doorIsOpen = physicalDoorRatio >= 0.60 ? clamp((physicalDoorRatio - 0.60) / 0.40, 0, 1) : 0
-        
-        // Emergência do fundo das portas abertas (0.70 -> 0.90)
-        const fadeIn = Math.min(clamp((currentProgress - 0.70) / 0.20, 0, 1), doorIsOpen)
-        
-        // Dissolve cinematográfico para Seção 2 (0.90 -> 1.00)
-        const fadeOut = 1 - clamp((currentProgress - 0.90) / 0.10, 0, 1)
-        
-        const opacity = fadeIn * fadeOut
-        const translateY = (1 - fadeIn) * 45 + (1 - fadeOut) * -40
-        const scale = 0.86 + fadeIn * 0.14 + (1 - fadeOut) * 0.12
-        const blur = (1 - fadeIn) * 16 + (1 - fadeOut) * 16
-
-        taglineRef.current.style.opacity = String(opacity)
-        taglineRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`
-        taglineRef.current.style.filter = `blur(${blur}px)`
-      }
-
-      // Scroll Hint
       if (hintRef.current) {
-        hintRef.current.style.opacity = currentProgress > 0.05 ? "0" : "1"
+        hintRef.current.style.opacity = hasStartedScrolling ? "0" : "1"
       }
-
-      // Progress bar at bottom
+      if (taglineRef.current) {
+        // Subtítulo ("ELAS ATRAEM.") surge nos 22% finais (0.78 -> 1.00) em BRANCO puro
+        const t = clamp((currentProgress - 0.78) / 0.22, 0, 1)
+        taglineRef.current.style.opacity = String(t)
+        taglineRef.current.style.transform = `translate3d(0, ${(1 - t) * 20}px, 0) scale(${0.96 + t * 0.04})`
+        taglineRef.current.style.filter = `blur(${(1 - t) * 8}px)`
+      }
       if (progressBarRef.current) {
-        const barProgress = clamp(currentProgress / 0.70, 0, 1)
-        progressBarRef.current.style.transform = `scaleX(${barProgress})`
+        progressBarRef.current.style.transform = `scaleX(${currentProgress})`
       }
 
       rafId = requestAnimationFrame(frame)
     }
 
-    rafId = requestAnimationFrame(frame)
+    if (!reduceMotion) {
+      rafId = requestAnimationFrame(frame)
+    }
 
     return () => {
-      window.removeEventListener("wheel", handleWheel)
-      window.removeEventListener("touchstart", handleTouchStart)
-      window.removeEventListener("touchmove", handleTouchMove)
-      window.removeEventListener("scroll", handleScroll)
+      video.removeEventListener("loadeddata", onLoadedData)
+      video.removeEventListener("canplaythrough", onLoadedData)
+      window.removeEventListener("wheel", onWheel)
+      window.removeEventListener("touchstart", onTouchStart)
+      window.removeEventListener("touchmove", onTouchMove)
+      window.removeEventListener("scroll", onScroll)
       cancelAnimationFrame(rafId)
+      releaseLock()
     }
-  }, [])
+  }, [scrubDistance])
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen bg-[#05070d] overflow-hidden">
-      <div className="relative w-full h-full flex items-center justify-center">
-        {/* Video Canvas Container */}
-        <div className="absolute inset-0 w-full h-full bg-[#05070d]">
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            playsInline
-            muted
-            preload="auto"
-            className="w-full h-full object-cover opacity-90 transition-transform duration-75 ease-out will-change-transform"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#05070d]/60 via-transparent to-[#0a0a0f]" />
-        </div>
+    <div
+      ref={sectionRef}
+      className={className}
+      style={{
+        position: "relative",
+        height: "100dvh",
+        width: "100%",
+        overflow: "hidden",
+        background: COL_BG,
+        ...style,
+      }}
+    >
+      <video
+        ref={videoRef}
+        src={videoSrc}
+        muted
+        playsInline
+        preload="auto"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          opacity: ready ? 1 : 0,
+          transformOrigin: "center center",
+          willChange: "transform",
+          transform: "translateZ(0)",
+          transition: "opacity 0.6s ease",
+        }}
+      />
 
-        {/* Content Overlays */}
-        {/* TEXTO INICIAL: MARCAS FORTES NÃO DISPUTAM ATENÇÃO. */}
-        <div ref={titleRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto pointer-events-none transition-transform duration-75 will-change-transform">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
-            {title}
-          </h1>
-        </div>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(180deg, rgba(5,7,13,0.4), rgba(5,7,13,0) 30%, rgba(5,7,13,0.15) 70%, rgba(5,7,13,0.6))",
+          pointerEvents: "none",
+        }}
+      />
 
-        {/* SEGUNDO TEXTO GIGANTE: ELAS ATRAEM. */}
-        <div ref={taglineRef} className="absolute z-10 text-center px-4 max-w-5xl mx-auto opacity-0 pointer-events-none transition-transform duration-75 will-change-transform">
-          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-2xl font-sans leading-tight">
+      {/* Título Inicial ("MARCAS FORTES NÃO DISPUTAM ATENÇÃO.") */}
+      <div
+        ref={titleRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0 6%",
+          textAlign: "center",
+          pointerEvents: "none",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: SANS,
+            fontWeight: 800,
+            fontSize: "clamp(28px, 6.5vw, 84px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            color: COL_TEXT,
+            textShadow: "0 4px 30px rgba(0,0,0,0.6)",
+            display: "inline-block",
+            willChange: "transform, filter, opacity",
+          }}
+        >
+          {title}
+        </span>
+      </div>
+
+      {/* Subtítulo ("ELAS ATRAEM.") — Em BRANCO (#f2f4f8) igual ao título principal */}
+      {tagline && (
+        <div
+          ref={taglineRef}
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "0 8%",
+            textAlign: "center",
+            opacity: 0,
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: SANS,
+              fontWeight: 800,
+              fontSize: "clamp(36px, 8.5vw, 110px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: COL_TEXT,
+              textShadow: "0 4px 35px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.25)",
+              display: "inline-block",
+              willChange: "transform, filter, opacity",
+            }}
+          >
             {tagline}
-          </h2>
-        </div>
-
-        <div ref={hintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-center transition-opacity duration-300 pointer-events-none">
-          <span className="text-xs font-extrabold tracking-widest text-white/70 uppercase">
-            {scrollHint}
           </span>
         </div>
+      )}
 
-        {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-20">
-          <div
-            ref={progressBarRef}
-            className="h-full bg-[#FF6B35] origin-left transition-transform duration-75"
-            style={{ transform: "scaleX(0)" }}
-          />
-        </div>
+      {/* Indicador de Scroll */}
+      <div
+        ref={hintRef}
+        style={{
+          position: "absolute",
+          left: "50%",
+          bottom: "clamp(20px, 6vh, 48px)",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 8,
+          color: "rgba(240,244,248,0.75)",
+          fontFamily: SANS,
+          fontSize: "clamp(10px, 1.4vw, 12px)",
+          fontWeight: 600,
+          letterSpacing: "0.3em",
+          transition: "opacity 0.4s ease",
+          pointerEvents: "none",
+        }}
+      >
+        <span>{scrollHint}</span>
+        <svg width="14" height="18" viewBox="0 0 14 18" style={{ animation: "metro-hero-bounce 1.6s ease-in-out infinite" }}>
+          <style>{`
+            @keyframes metro-hero-bounce {
+              0%, 100% { transform: translateY(0); opacity: 0.5; }
+              50% { transform: translateY(5px); opacity: 1; }
+            }
+          `}</style>
+          <path d="M7 1 L7 17 M2 12 L7 17 L12 12" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+
+      {/* Barra de Progresso */}
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 3,
+          background: "rgba(255,255,255,0.12)",
+        }}
+      >
+        <div
+          ref={progressBarRef}
+          style={{
+            height: "100%",
+            width: "100%",
+            background: "linear-gradient(90deg, rgba(242,244,248,0.6), rgba(242,244,248,0.95))",
+            transform: "scaleX(0)",
+            transformOrigin: "left center",
+          }}
+        />
       </div>
     </div>
   )
