@@ -16,6 +16,7 @@ import CustomCursor from '@/components/CustomCursor';
 import CreatoriiVectorRobot from '@/components/CreatoriiVectorRobot';
 import MetroHero from '@/components/ui/scroll-locked-video-hero';
 import SocialLinks from '@/components/SocialLinks';
+import ProcessSection from '@/components/ProcessSection';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -506,8 +507,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* SEÇÃO PROCESSO / SIMULADOR DE PROJETOS */}
-      <section id="processo">
+      {/* SEÇÃO PROCESSO (METODOLOGIA E ETAPAS) */}
+      <ProcessSection />
+
+      {/* SIMULADOR DE PROJETOS E INVESTIMENTO */}
+      <section className="py-12 px-6 bg-[#0a0a0f]">
         <ProjectEstimator />
       </section>
 
