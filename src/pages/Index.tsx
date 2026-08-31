@@ -448,7 +448,39 @@ const Index = () => {
         </div>
       </section>
 
-      <EmailSubscription />
+      {/* SEÇÃO PROCESSO / SIMULADOR DE PROJETOS */}
+      <section id="processo">
+        <ProjectEstimator />
+      </section>
+
+      {/* SEÇÃO CONTATO & CTA FINAL */}
+      <section id="contato" className="py-24 px-6 relative z-10 bg-[#0a0a0f] border-t border-white/5">
+        <div className="container mx-auto max-w-5xl bg-[#111118] border border-white/10 p-12 md:p-20 rounded-[40px] text-center shadow-2xl reveal">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">Pronto para transformar sua presença digital?</h2>
+          <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto font-poppins">Entre em contato com nossa equipe e receba um diagnóstico e proposta comercial em até 24h.</p>
+          
+          <div className="flex flex-col items-center">
+            <EmailSubscription />
+            
+            <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
+              <a 
+                href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20mais%20informações." 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-bold rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-lg shadow-[#FF6B35]/25"
+              >
+                WhatsApp Direto <ArrowRight className="w-5 h-5" />
+              </a>
+              <a 
+                href="mailto:contato@creatorristudio.com.br" 
+                className="text-gray-400 hover:text-white font-medium transition-colors border-b border-white/20 pb-1"
+              >
+                contato@creatorristudio.com.br
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer className="bg-[#050508] border-t border-white/10 py-12 px-6">
