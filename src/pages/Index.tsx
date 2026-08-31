@@ -23,6 +23,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState<'studio' | 'equipe'>('studio');
   const [openCard, setOpenCard] = useState<'natasha' | 'emmyly' | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [portfolioFilter, setPortfolioFilter] = useState<'all' | 'social' | 'branding'>('all');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -179,19 +180,51 @@ const Index = () => {
       {/* CARROSSEL ESTILO APPLE */}
       <AppleStyleCarousel />
 
-      <ProjectEstimator />
-
-      {/* PORTFÓLIO DESTAQUE EM GRID ASSIMÉTRICO (1 HERO ESQUERDA + 6 SECUNDÁRIOS DIREITA 2x3) */}
+      {/* PORTFÓLIO DESTAQUE EM GRID ASSIMÉTRICO (1 HERO ESQUERDA + CARDS FILTRÁVEIS DIREITA) */}
       <section id="portfolio" className="py-24 px-6 container mx-auto">
-        <div className="text-center mb-16 reveal">
+        <div className="text-center mb-12 reveal">
           <span className="text-[#FF6B35] text-xs font-bold tracking-widest uppercase">Trabalhos</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4">Portfólio em Destaque</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mt-4">Portfólio & Mídias Sociais</h2>
           <p className="text-gray-400 text-sm md:text-base mt-2 max-w-xl mx-auto">
-            Projetos estratégicos de posicionamento e identidade visual que transformaram marcas.
+            Projetos estratégicos de mídias sociais, posicionamento e identidade visual que transformaram marcas.
           </p>
         </div>
 
-        {/* ESTRUTURA DO WIREFRAME (1 CARD HERO ESQUERDA + 6 SECUNDÁRIOS DIREITA EM 2x3) */}
+        {/* FILTROS DE CATEGORIA DO PORTFÓLIO */}
+        <div className="flex justify-center gap-3 mb-12 flex-wrap reveal">
+          <button
+            onClick={() => setPortfolioFilter('all')}
+            className={`px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+              portfolioFilter === 'all'
+                ? 'bg-[#FF6B35] text-white shadow-lg shadow-[#FF6B35]/25 scale-105'
+                : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            Todos os Projetos
+          </button>
+          <button
+            onClick={() => setPortfolioFilter('social')}
+            className={`px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+              portfolioFilter === 'social'
+                ? 'bg-[#FF6B35] text-white shadow-lg shadow-[#FF6B35]/25 scale-105'
+                : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            Mídias Sociais & Conteúdo
+          </button>
+          <button
+            onClick={() => setPortfolioFilter('branding')}
+            className={`px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+              portfolioFilter === 'branding'
+                ? 'bg-[#FF6B35] text-white shadow-lg shadow-[#FF6B35]/25 scale-105'
+                : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            Branding & Identidade
+          </button>
+        </div>
+
+        {/* ESTRUTURA DO WIREFRAME (1 CARD HERO ESQUERDA + CARDS SECUNDÁRIOS FILTRÁVEIS DIREITA) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           {/* CARD PRINCIPAL EM DESTAQUE (LADO ESQUERDO - 5 COLUNAS LG) */}
           <div className="lg:col-span-5 flex flex-col h-full reveal">
@@ -237,9 +270,11 @@ const Index = () => {
             </a>
           </div>
 
-          {/* GRADE DE 6 CARDS SECUNDÁRIOS DO BEHANCE (LADO DIREITO - 7 COLUNAS LG EM 2 COLUNAS x 3 LINHAS) */}
+          {/* GRADE DE CARDS SECUNDÁRIOS FILTRÁVEIS DO BEHANCE (LADO DIREITO - 7 COLUNAS LG) */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 h-full">
-            {behanceData.items.map((item, idx) => (
+            {behanceData.items
+              .filter(item => portfolioFilter === 'all' || item.type === portfolioFilter)
+              .map((item, idx) => (
               <a
                 key={idx}
                 href={item.link}

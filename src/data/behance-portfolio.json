@@ -9,39 +9,45 @@
   "items": [
     {
       "name": "Ellen Santos — Influenciadora Digital",
-      "cat": "BRANDING & SOCIAL MEDIA",
+      "cat": "BRANDING & MÍDIAS SOCIAIS",
+      "type": "social",
       "img": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/605883254947271.6a91dceaa8d7f.png",
       "link": "https://www.behance.net/gallery/254947271/Ellen-Santos-Influenciadora-digital"
     },
     {
+      "name": "Siesteker — Joias & Acessórios",
+      "cat": "MÍDIAS SOCIAIS & CONTEÚDO",
+      "type": "social",
+      "img": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/2ef965188231245.659871e2c3a44.png",
+      "link": "https://www.behance.net/gallery/188231245/Siesteker-Joias"
+    },
+    {
+      "name": "MGB Beauty Studio — Salão de Beleza",
+      "cat": "BRANDING & REDES SOCIAIS",
+      "type": "social",
+      "img": "https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png",
+      "link": "https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza"
+    },
+    {
       "name": "Revitalize — Clínica Capilar & Head SPA",
       "cat": "BRANDING & ESTRATÉGIA",
+      "type": "branding",
       "img": "https://mir-s3-cdn-cf.behance.net/projects/404/050d1f234976527.Y3JvcCwxMDM1LDgxMCwzNTgsMA.jpg",
       "link": "https://www.behance.net/gallery/234976527/Revitalize-Clinica-Capilar-Head-SPA"
     },
     {
       "name": "Wagner Gonçalves — Attorneys at Law",
       "cat": "IDENTIDADE VISUAL",
+      "type": "branding",
       "img": "https://mir-s3-cdn-cf.behance.net/projects/404/ed4e7c212435201.Y3JvcCwxMTk0LDkzNCwzNzUsMA.png",
       "link": "https://www.behance.net/gallery/212435201/Wagner-Goncalves-Atoorneys-at-Law-(Visual-identity)"
     },
     {
-      "name": "MGB Beauty Studio — Salão de Beleza",
-      "cat": "BRANDING",
-      "img": "https://mir-s3-cdn-cf.behance.net/projects/404/b57817205549963.Y3JvcCwxMzgyLDEwODEsMjcwLDA.png",
-      "link": "https://www.behance.net/gallery/205549963/MGB-Beuaty-Studio-Salao-de-beleza"
-    },
-    {
       "name": "Ekballo — Studio de Beleza",
-      "cat": "ESTRUTURA DE MARCA",
+      "cat": "ESTRUTURA DE MARCA & MÍDIAS SOCIAIS",
+      "type": "social",
       "img": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/9cffc4234976285.68cd92f12979a.jpg",
       "link": "https://www.behance.net/gallery/234976285/Ekballo-Studio-de-beleza"
-    },
-    {
-      "name": "Siesteker — Joias & Acessórios",
-      "cat": "DESIGN DE CONTEÚDO",
-      "img": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/2ef965188231245.659871e2c3a44.png",
-      "link": "https://www.behance.net/gallery/188231245/Siesteker-Joias"
     }
   ]
 }
