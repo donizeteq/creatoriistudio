@@ -42,31 +42,31 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="processo" className="py-24 px-6 bg-[#0a0a0f] relative z-20 border-t border-white/5">
+    <section id="processo" className="py-20 md:py-24 px-4 sm:px-6 bg-[#0a0a0f] relative z-20 border-t border-white/5">
       <div className="container mx-auto max-w-6xl">
         {/* CABEÇALHO DA SEÇÃO */}
-        <div className="text-center mb-16 reveal">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/30 mb-4">
-            <span className="text-[#FF6B35] text-xs font-extrabold uppercase tracking-widest">PROCESSO</span>
-            <span className="text-gray-500 text-xs">•</span>
-            <span className="text-gray-300 text-xs font-semibold">Estratégia → Criação → Entrega → Evolução</span>
+        <div className="text-center mb-12 md:mb-16 reveal">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/30 mb-4">
+            <span className="text-[#FF6B35] text-[11px] sm:text-xs font-extrabold uppercase tracking-widest">PROCESSO</span>
+            <span className="text-gray-500 text-xs hidden sm:inline">•</span>
+            <span className="text-gray-300 text-[11px] sm:text-xs font-semibold block sm:inline">Estratégia → Criação → Entrega → Evolução</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mt-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mt-2">
             Como funciona o processo
           </h2>
-          <p className="text-gray-400 text-base md:text-lg mt-4 max-w-2xl mx-auto font-poppins leading-relaxed">
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-4 max-w-2xl mx-auto font-poppins leading-relaxed">
             Cada marca tem uma história, um público e um objetivo diferente. Por isso, o processo da Creatorii começa antes da criação: começa entendendo onde a marca está e onde ela quer chegar.
           </p>
         </div>
 
         {/* GRADE DOS 4 PASSO DO PROCESSO */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {steps.map((step, idx) => {
             const IconComponent = step.icon;
             return (
               <div
                 key={idx}
-                className="group relative rounded-3xl bg-[#111118] border border-white/10 p-8 md:p-10 hover:border-[#FF6B35]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6B35]/10 flex flex-col justify-between"
+                className="group relative rounded-3xl bg-[#111118] border border-white/10 p-6 sm:p-8 md:p-10 hover:border-[#FF6B35]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6B35]/10 flex flex-col justify-between"
               >
                 <div>
                   {/* TOPO DO CARD: NÚMERO + ÍCONE */}

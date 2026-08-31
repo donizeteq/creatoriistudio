@@ -11,7 +11,7 @@ import logoCreatorii from '@/assets/logo-creatorii.png';
 import natashaImg from '@/assets/natasha.jpg';
 import emmylyImg from '@/assets/emmyly.jpg';
 import behanceData from '@/data/behance-portfolio.json';
-import { ChevronDown, Star, ExternalLink, ArrowRight, Plus, Minus } from 'lucide-react';
+import { ChevronDown, Star, ExternalLink, ArrowRight, Plus, Minus, Menu, X } from 'lucide-react';
 import CustomCursor from '@/components/CustomCursor';
 import CreatoriiVectorRobot from '@/components/CreatoriiVectorRobot';
 import MetroHero from '@/components/ui/scroll-locked-video-hero';
@@ -22,6 +22,7 @@ const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [navVisible, setNavVisible] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'studio' | 'equipe'>('studio');
   const [openCard, setOpenCard] = useState<'natasha' | 'emmyly' | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -89,20 +90,20 @@ const Index = () => {
       message="Olá! Vim pelo site da Creatorii e gostaria de mais informações."
     />
 
-    {/* NAV */}
-    <nav className={`fixed top-0 w-full z-[1000] transition-all duration-300 border-b border-white/5 ${navVisible ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'bg-[#0a0a0f]/85 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-6 flex justify-between items-center">
+    {/* NAV RESPONSIVO TODAS AS TELAS */}
+    <nav className={`fixed top-0 w-full z-[1000] transition-all duration-300 border-b border-white/5 ${navVisible ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'bg-[#0a0a0f]/90 backdrop-blur-md py-3' : 'bg-transparent py-5'}`}>
+      <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
         <a href="#" className="flex items-center">
           <img 
             src={logoCreatorii} 
             alt="Creatorii Studio - Design & Social Media" 
             title="Creatorii Studio - Design & Social Media"
             aria-label="Logo Creatorii Studio"
-            className="h-14 md:h-20 lg:h-24 object-contain transition-transform duration-300 hover:scale-105" 
+            className="h-10 sm:h-14 md:h-18 lg:h-20 object-contain transition-transform duration-300 hover:scale-105" 
           />
         </a>
         
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-8 lg:gap-10">
           {[
             { label: 'Serviços', href: '#servicos' },
             { label: 'Portfólio', href: '#portfolio' },
@@ -120,19 +121,58 @@ const Index = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 sm:gap-5">
           <div className="hidden sm:block">
             <SocialLinks />
           </div>
           <a 
             href="https://wa.me/5511958566518" 
             onClick={(e) => handleNavClick(e, '#contato')}
-            className="px-6 py-2.5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
+            className="px-4 py-2 sm:px-6 sm:py-2.5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-xs sm:text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
           >
             Falar com a equipe
           </a>
+
+          {/* Botão de Menu Mobile */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white focus:outline-none"
+            aria-label="Alternar Menu Mobile"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#FF6B35]" /> : <Menu className="w-5 h-5 text-white" />}
+          </button>
         </div>
       </div>
+
+      {/* Painel Dropdown Mobile */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#0d0e12]/95 backdrop-blur-xl border-b border-white/10 px-6 py-6 transition-all">
+          <div className="flex flex-col gap-4">
+            {[
+              { label: 'Serviços', href: '#servicos' },
+              { label: 'Portfólio', href: '#portfolio' },
+              { label: 'Processo', href: '#processo' },
+              { label: 'Contato', href: '#contato' },
+            ].map((item) => (
+              <a 
+                key={item.href} 
+                href={item.href}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleNavClick(e, item.href);
+                }}
+                className="text-base font-semibold text-gray-300 hover:text-[#FF6B35] transition-colors py-2 border-b border-white/5"
+              >
+                {item.label}
+              </a>
+            ))}
+            <div className="pt-2 flex items-center justify-between">
+              <span className="text-xs text-gray-400 font-mono uppercase">Redes Sociais</span>
+              <SocialLinks />
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
 
     <main className="relative z-10">
@@ -147,7 +187,7 @@ const Index = () => {
       </section>
 
       {/* SEÇÃO 2 — TRANSFORME SUA PRESENÇA DIGITAL */}
-      <section id="transforme" className="relative min-h-screen flex flex-col justify-center py-24 px-6 w-full text-white overflow-hidden bg-[#0a0a0f] z-20">
+      <section id="transforme" className="relative min-h-screen flex flex-col justify-center py-16 sm:py-24 px-4 sm:px-6 w-full text-white overflow-hidden bg-[#0a0a0f] z-20">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" style={{ backgroundImage: 'url(/bg-sessao2.jpg)' }} />
         <div className="relative z-10">
           <div className="flex flex-col items-center text-center reveal">
@@ -163,16 +203,16 @@ const Index = () => {
               </span>
             </h2>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 mb-12 justify-center w-full sm:w-auto px-4 sm:px-0">
               <a 
                 href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20mais%20informações."
-                className="px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
+                className="w-full sm:w-auto text-center px-6 sm:px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
               >
                 Quero transformar meu negócio
               </a>
               <a 
                 href="#portfolio"
-                className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-full text-base font-semibold transition-all hover:-translate-y-0.5"
+                className="w-full sm:w-auto text-center px-6 sm:px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-full text-sm sm:text-base font-semibold transition-all hover:-translate-y-0.5"
               >
                 Ver serviços
               </a>
