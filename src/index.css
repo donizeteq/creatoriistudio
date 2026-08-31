@@ -29,18 +29,38 @@
   transform: translate(-50%, -50%);
 }
 
-/* Ocultar barra de rolagem mantendo a navegação por scroll e prevenir scroll lateral no mobile */
+/* Barra de Rolagem Acessível e Imperdível no Canto Direito (WCAG Compliant) */
 html, body {
   overflow-x: hidden !important;
   max-width: 100vw;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: auto;
+  scrollbar-color: #FF6B35 #0a0a0f;
 }
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  display: none;
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  display: block !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF6B35;
+  border-radius: 9999px;
+  border: 2px solid #0a0a0f;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e05a2b;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #7F77DD;
 }
 
 /* Creatorii Studio Digital - Design System

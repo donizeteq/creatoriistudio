@@ -80,7 +80,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] text-white selection:bg-[#7F77DD]/30 selection:text-white cursor-none">
+    <div className="relative min-h-screen bg-[#0a0a0f] text-white selection:bg-[#7F77DD]/30 selection:text-white">
       <CustomCursor />
     
     
