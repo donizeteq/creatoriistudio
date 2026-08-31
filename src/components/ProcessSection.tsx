@@ -42,20 +42,18 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="processo" className="py-12 sm:py-20 md:py-24 px-3.5 sm:px-6 bg-[#0a0a0f] relative z-20 border-t border-white/5">
+    <section id="processo" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#0a0a0f] relative z-20 border-t border-white/5">
       <div className="container mx-auto max-w-7xl">
         {/* CABEÇALHO DA SEÇÃO */}
-        <div className="text-center mb-12 md:mb-16 reveal">
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/30 mb-4">
-            <span className="text-[#FF6B35] text-[11px] sm:text-xs font-extrabold uppercase tracking-widest">PROCESSO</span>
-            <span className="text-gray-500 text-xs hidden sm:inline">•</span>
-            <span className="text-gray-300 text-[11px] sm:text-xs font-semibold block sm:inline">Estratégia → Criação → Entrega → Evolução</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mt-2">
-            Como funciona o processo
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal">
+          <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
+            Metodologia Autoral
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Como Funciona Nosso Processo
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-4 max-w-2xl mx-auto font-poppins leading-relaxed">
-            Cada marca tem uma história, um público e um objetivo diferente. Por isso, o processo da Creatorii começa antes da criação: começa entendendo onde a marca está e onde ela quer chegar.
+          <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+            Cada marca tem uma história e um objetivo único. Nosso processo une imersão estratégica, criação autoral e evolução contínua.
           </p>
         </div>
 

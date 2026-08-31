@@ -24,15 +24,17 @@ const ProjectEstimator = () => {
   );
 
   return (
-    <section id="estimador" className="py-12 sm:py-20 md:py-24 bg-[#0a0a0f] border-t border-white/5 px-3.5 sm:px-6">
+    <section id="estimador" className="py-16 sm:py-24 lg:py-28 bg-[#0a0a0f] border-t border-white/5 px-3.5 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-12 md:mb-16 reveal">
-          <span className="text-[#7F77DD] text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2">
-            <Calculator className="w-4 h-4" /> Simulador de Investimento
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal">
+          <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-flex items-center gap-2 mb-3">
+            <Calculator className="w-3.5 h-3.5" /> Estimador Interativo
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Planeje seu projeto com transparência</h2>
-          <p className="text-gray-400 text-sm sm:text-base mt-4 max-w-xl mx-auto">
-            Simule o escopo ideal para o seu momento e inicie a conversa direto com nossa equipe via WhatsApp.
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Planeje Seu Projeto
+          </h2>
+          <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+            Simule o escopo ideal para a necessidade da sua marca e inicie o atendimento com nossa equipe.
           </p>
         </div>
 

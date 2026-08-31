@@ -116,15 +116,23 @@ const AppleStyleCarousel = () => {
   }, [activeIndex]);
 
   return (
-    <section className="py-40 bg-[#000000] overflow-hidden">
-      <div className="container mx-auto px-6 mb-20">
-        <motion.h2 
+    <section className="py-16 sm:py-24 lg:py-28 bg-[#08080c] border-t border-white/5 overflow-hidden">
+      <div className="container mx-auto max-w-7xl px-3.5 sm:px-6 lg:px-8 mb-12 sm:mb-16">
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4"
+          className="text-center max-w-3xl mx-auto"
         >
-          Comece pelos destaques.
-        </motion.h2>
+          <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
+            Destaques Visuais
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Comece Pelos Destaques
+          </h2>
+          <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+            Experiências visuais marcantes desenvolvidas com estética autoral e tecnologia de ponta.
+          </p>
+        </motion.div>
       </div>
 
       <div 

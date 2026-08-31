@@ -245,14 +245,19 @@ const Index = () => {
       <AppleStyleCarousel />
 
       {/* PORTFÓLIO DESTAQUE EM GRID ASSIMÉTRICO (1 HERO ESQUERDA + CARDS FILTRÁVEIS DIREITA) */}
-      <section id="portfolio" className="py-16 md:py-24 px-4 sm:px-6 container mx-auto">
-        <div className="text-center mb-10 md:mb-12 reveal">
-          <span className="text-[#FF6B35] text-xs font-bold tracking-widest uppercase">Trabalhos</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-3">Portfólio & Mídias Sociais</h2>
-          <p className="text-gray-400 text-xs sm:text-base mt-2 max-w-xl mx-auto font-poppins">
-            Projetos estratégicos de mídias sociais, posicionamento e identidade visual que transformaram marcas.
-          </p>
-        </div>
+      <section id="portfolio" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#0a0a0f] border-t border-white/5">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14 reveal">
+            <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
+              Trabalhos Selecionados
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              Portfólio & Mídias Sociais
+            </h2>
+            <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+              Projetos estratégicos de mídias sociais, posicionamento e identidade visual que transformaram marcas.
+            </p>
+          </div>
 
         {/* FILTROS DE CATEGORIA DO PORTFÓLIO */}
         <div className="flex justify-center gap-2 sm:gap-3 mb-10 md:mb-12 flex-wrap reveal px-2">
@@ -387,11 +392,24 @@ const Index = () => {
             Ver portfólio completo no Behance <ExternalLink className="w-4 h-4 text-[#FF6B35] group-hover:translate-x-0.5 transition-transform" />
           </a>
         </div>
+        </div>
       </section>
 
       {/* DEPOIMENTOS */}
-      <section className="py-16 sm:py-24 bg-[#111118]/50 px-4 sm:px-6">
-        <div className="container mx-auto">
+      <section id="depoimentos" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#08080c] border-t border-white/5">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal">
+            <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
+              Prova Social
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              O Que Dizem Nossos Clientes
+            </h2>
+            <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+              Depoimentos reais de quem confiou o posicionamento da sua empresa ao Creatorii Studio.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               { name: 'André Santos', role: 'CEO · E-commerce de Moda', text: 'A Creatorii transformou nossa presença digital completamente. Em 3 meses nosso tráfego orgânico triplicou e a nova identidade visual atraiu um público muito mais qualificado.' },
@@ -414,8 +432,21 @@ const Index = () => {
       </section>
 
       {/* SOBRE */}
-      <section id="sobre" className="py-12 sm:py-20 md:py-24 px-3.5 sm:px-6">
-        <div className="container mx-auto max-w-7xl rounded-3xl bg-[#111118] border border-white/10 overflow-hidden reveal shadow-2xl">
+      <section id="sobre" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#0a0a0f] border-t border-white/5">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal">
+            <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
+              Nosso Estúdio
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              Quem Somos Nós
+            </h2>
+            <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+              Conheça nossa trajetória, visão de mercado e a liderança criativa por trás de cada projeto.
+            </p>
+          </div>
+
+          <div className="rounded-3xl bg-[#111118] border border-white/10 overflow-hidden reveal shadow-2xl">
           {/* Nav Tabs */}
           <div className="flex border-b border-white/10 text-xs sm:text-base">
             <button
@@ -538,11 +569,12 @@ const Index = () => {
             )}
           </div>
         </div>
+        </div>
       </section>
 
       {/* SUB-SEÇÃO MASCOTE VETORIAL ROBÔ */}
-      <section className="py-16 px-6 bg-[#0a0a0f]">
-        <div className="container mx-auto flex justify-center">
+      <section className="py-12 sm:py-16 px-3.5 sm:px-6 bg-[#0a0a0f] border-t border-white/5">
+        <div className="container mx-auto max-w-7xl flex justify-center">
           <CreatoriiVectorRobot />
         </div>
       </section>
@@ -551,13 +583,11 @@ const Index = () => {
       <ProcessSection />
 
       {/* SIMULADOR DE PROJETOS E INVESTIMENTO */}
-      <section className="py-12 px-6 bg-[#0a0a0f]">
-        <ProjectEstimator />
-      </section>
+      <ProjectEstimator />
 
       {/* SEÇÃO CONTATO & CTA FINAL (ULTRA HIGH-END BESPOKE - FRAMER/APPLE STYLE) */}
-      <section id="contato" className="py-16 sm:py-24 md:py-28 px-3.5 sm:px-6 relative z-10 bg-[#08090b] border-t border-white/5">
-        <div className="container mx-auto max-w-6xl bg-[#0d0e12] border border-white/10 p-5 sm:p-10 md:p-20 rounded-3xl sm:rounded-[36px] text-center shadow-2xl relative overflow-hidden reveal">
+      <section id="contato" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 relative z-10 bg-[#08080c] border-t border-white/5">
+        <div className="container mx-auto max-w-7xl bg-[#0d0e12] border border-white/10 p-6 sm:p-12 md:p-20 rounded-3xl sm:rounded-[36px] text-center shadow-2xl relative overflow-hidden reveal">
           {/* Ambient Radial Spotlight */}
           <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_top,rgba(255,107,53,0.18),transparent_70%)] pointer-events-none" />
 

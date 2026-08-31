@@ -68,16 +68,19 @@ const ServiceShowcase = () => {
   const currentService = services[activeService];
 
   return (
-    <section id="servicos" className="py-12 sm:py-20 md:py-24 px-3.5 sm:px-6 bg-[#0a0a0f] border-t border-white/5">
+    <section id="servicos" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#0a0a0f] border-t border-white/5">
       <div className="container mx-auto max-w-7xl">
         {/* CABEÇALHO DA SEÇÃO */}
-        <div className="mb-8 md:mb-14 reveal text-left">
-          <span className="text-[#7F77DD] text-xs font-extrabold tracking-widest uppercase block mb-2">
-            SOLUÇÕES ESTRATÉGICAS
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal">
+          <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
+            Soluções Estratégicas
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            Explore nossos serviços
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Explore Nossos Serviços
           </h2>
+          <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
+            Metodologias autorais e design bespoke para posicionar sua marca no topo do mercado.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-stretch">
