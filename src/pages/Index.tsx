@@ -573,8 +573,8 @@ const Index = () => {
       </section>
 
       {/* SUB-SEÇÃO MASCOTE VETORIAL ROBÔ */}
-      <section className="py-12 sm:py-16 px-3.5 sm:px-6 bg-[#0a0a0f] border-t border-white/5">
-        <div className="container mx-auto max-w-7xl flex justify-center">
+      <section className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#0a0a0f] border-t border-white/5">
+        <div className="container mx-auto max-w-7xl">
           <CreatoriiVectorRobot />
         </div>
       </section>

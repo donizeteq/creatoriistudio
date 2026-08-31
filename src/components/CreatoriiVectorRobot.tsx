@@ -37,31 +37,31 @@ export const CreatoriiVectorRobot = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-12 px-6">
-      <div className="relative overflow-hidden rounded-3xl bg-[#111118] border border-white/10 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+    <div className="w-full">
+      <div className="relative overflow-hidden rounded-3xl bg-[#111118] border border-white/10 p-8 sm:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl">
         
         {/* Fundo decorativo com gradientes da marca */}
-        <div className="absolute -top-24 -left-24 w-60 h-60 bg-[#FF6B35]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-[#9B87B2]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-80 h-80 bg-[#FF6B35]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-[#7F77DD]/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Lado Esquerdo: Conteúdo e Texto */}
-        <div className="z-10 text-center md:text-left max-w-md">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/20 text-[#FF6B35] text-xs font-bold uppercase tracking-wider mb-4">
-            <Bot className="w-4 h-4" /> Mascote Virtual
+        <div className="z-10 text-center md:text-left max-w-xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/20 text-[#FF6B35] text-xs font-extrabold uppercase tracking-[0.2em] mb-4">
+            <Bot className="w-4 h-4 text-[#FF6B35]" /> Mascote Virtual
           </div>
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
             Assistente Inteligente Creatorii
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed mb-6">
-            Construímos interfaces vivas e interativas para conectar sua marca ao público com tecnologia e presença marcante.
+          </h2>
+          <p className="text-gray-400 text-xs sm:text-base md:text-lg leading-relaxed font-poppins mb-8">
+            Construímos interfaces vivas e interativas para conectar sua marca ao público com tecnologia e presença autoral marcante.
           </p>
           <a
             href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-bold text-sm transition-all shadow-[0_4px_20px_rgba(255,107,53,0.3)] hover:scale-105"
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#FF6B35] hover:bg-[#e05a28] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#FF6B35]/25 hover:scale-105 group"
           >
-            Falar com a Equipe <Sparkles className="w-4 h-4" />
+            Falar com a Equipe <Sparkles className="w-4 h-4 group-hover:rotate-12 transition-transform" />
           </a>
         </div>
 
