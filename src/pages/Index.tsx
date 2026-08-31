@@ -515,27 +515,70 @@ const Index = () => {
         <ProjectEstimator />
       </section>
 
-      {/* SEÇÃO CONTATO & CTA FINAL */}
+      {/* SEÇÃO CONTATO & CTA FINAL COM ALTA CONVERSÃO */}
       <section id="contato" className="py-24 px-6 relative z-10 bg-[#0a0a0f] border-t border-white/5">
-        <div className="container mx-auto max-w-5xl bg-[#111118] border border-white/10 p-12 md:p-20 rounded-[40px] text-center shadow-2xl reveal">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">Pronto para transformar sua presença digital?</h2>
-          <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto font-poppins">Entre em contato com nossa equipe e receba um diagnóstico e proposta comercial em até 24h.</p>
+        <div className="container mx-auto max-w-5xl bg-gradient-to-b from-[#14141f] to-[#0d0d14] border border-white/10 p-10 md:p-20 rounded-[40px] text-center shadow-2xl relative overflow-hidden reveal">
+          {/* Efeito Glow de Fundo */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#FF6B35]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#7F77DD]/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Badge Eyebrow */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/30 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#FF6B35] animate-pulse" />
+            <span className="text-[#FF6B35] text-xs font-extrabold uppercase tracking-widest">ATENDIMENTO EXCLUSIVO</span>
+          </div>
+
+          {/* Headline Persuasiva & Subtítulo */}
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tight leading-tight">
+            Sua marca pronta para <br className="hidden md:block" />
+            <span className="bg-gradient-to-r from-[#FF6B35] via-white to-[#7F77DD] bg-clip-text text-transparent">
+              atrair o público certo.
+            </span>
+          </h2>
+          <p className="text-gray-300 text-base md:text-xl mb-12 max-w-2xl mx-auto font-poppins leading-relaxed">
+            Receba um diagnóstico estratégico e uma proposta personalizada em até 24 horas. Fale diretamente com nossa equipe criativa.
+          </p>
+
+          {/* Pilares de Valor */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12 text-left">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
+              <span className="text-xl">⚡</span>
+              <div>
+                <h4 className="text-xs font-bold text-white uppercase">Agilidade</h4>
+                <p className="text-xs text-gray-400">Retorno em até 24h</p>
+              </div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
+              <span className="text-xl">🎯</span>
+              <div>
+                <h4 className="text-xs font-bold text-white uppercase">Diagnóstico</h4>
+                <p className="text-xs text-gray-400">Análise sem custo</p>
+              </div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
+              <span className="text-xl">🤝</span>
+              <div>
+                <h4 className="text-xs font-bold text-white uppercase">Diretoria</h4>
+                <p className="text-xs text-gray-400">Atendimento autoral</p>
+              </div>
+            </div>
+          </div>
           
           <div className="flex flex-col items-center">
             <EmailSubscription />
             
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
               <a 
-                href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20mais%20informações." 
+                href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20solicitar%20um%20diagnóstico." 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-bold rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-lg shadow-[#FF6B35]/25"
+                className="px-10 py-5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-extrabold text-base rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-[#FF6B35]/30 group"
               >
-                WhatsApp Direto <ArrowRight className="w-5 h-5" />
+                Iniciar Atendimento no WhatsApp <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               <a 
                 href="mailto:contato@creatorristudio.com.br" 
-                className="text-gray-400 hover:text-white font-medium transition-colors border-b border-white/20 pb-1"
+                className="text-gray-300 hover:text-white font-semibold transition-colors border-b border-white/20 pb-1 text-sm flex items-center gap-2"
               >
                 contato@creatorristudio.com.br
               </a>
