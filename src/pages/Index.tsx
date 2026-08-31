@@ -245,19 +245,14 @@ const Index = () => {
       <AppleStyleCarousel />
 
       {/* PORTFÓLIO DESTAQUE EM GRID ASSIMÉTRICO (1 HERO ESQUERDA + CARDS FILTRÁVEIS DIREITA) */}
-      <section id="portfolio" className="py-16 sm:py-24 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#0a0a0f] border-t border-white/5">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14 reveal">
-            <span className="text-[#FF6B35] text-xs font-extrabold tracking-[0.2em] uppercase px-3.5 py-1.5 bg-[#FF6B35]/10 rounded-full border border-[#FF6B35]/20 inline-block mb-3">
-              Trabalhos Selecionados
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
-              Portfólio & Mídias Sociais
-            </h2>
-            <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-3 max-w-2xl mx-auto font-poppins leading-relaxed">
-              Projetos estratégicos de mídias sociais, posicionamento e identidade visual que transformaram marcas.
-            </p>
-          </div>
+      <section id="portfolio" className="py-16 md:py-24 px-4 sm:px-6 container mx-auto">
+        <div className="text-center mb-10 md:mb-12 reveal">
+          <span className="text-[#FF6B35] text-xs font-bold tracking-widest uppercase">Trabalhos</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-3">Portfólio & Mídias Sociais</h2>
+          <p className="text-gray-400 text-xs sm:text-base mt-2 max-w-xl mx-auto font-poppins">
+            Projetos estratégicos de mídias sociais, posicionamento e identidade visual que transformaram marcas.
+          </p>
+        </div>
 
         {/* FILTROS DE CATEGORIA DO PORTFÓLIO */}
         <div className="flex justify-center gap-2 sm:gap-3 mb-10 md:mb-12 flex-wrap reveal px-2">
@@ -340,7 +335,7 @@ const Index = () => {
           </div>
 
           {/* GRADE DE CARDS SECUNDÁRIOS FILTRÁVEIS DO BEHANCE (LADO DIREITO - 7 COLUNAS LG) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 h-full">
             {behanceData.items
               .filter(item => portfolioFilter === 'all' || item.type === portfolioFilter)
               .map((item, idx) => (
@@ -349,31 +344,31 @@ const Index = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group overflow-hidden rounded-3xl bg-[#111118] border border-white/10 hover:border-[#FF6B35]/60 transition-all duration-300 flex flex-col justify-between reveal hover:shadow-xl hover:shadow-[#FF6B35]/10"
+                className="group overflow-hidden rounded-2xl bg-[#111118] border border-white/10 hover:border-[#FF6B35]/60 transition-all duration-300 flex flex-col justify-between reveal hover:shadow-lg hover:shadow-[#FF6B35]/5"
               >
                 {/* Imagem do Projeto Ampliada */}
-                <div className="w-full h-[200px] sm:h-[220px] relative overflow-hidden bg-black/40">
+                <div className="w-full h-[140px] md:h-[150px] relative overflow-hidden bg-black/40">
                   <img
                     src={item.img}
                     alt={item.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-70" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-60" />
                 </div>
 
                 {/* Detalhes do Projeto */}
-                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 space-y-4">
+                <div className="p-4 flex flex-col justify-between flex-1">
                   <div>
-                    <span className="text-[10px] font-extrabold text-[#FF6B35] uppercase tracking-widest block mb-1.5">
+                    <span className="text-[9px] font-extrabold text-[#FF6B35] uppercase tracking-wider block mb-1">
                       {item.cat}
                     </span>
-                    <h4 className="text-base font-bold text-white group-hover:text-[#FF6B35] transition-colors leading-snug">
+                    <h4 className="text-sm font-bold text-white group-hover:text-[#FF6B35] transition-colors line-clamp-1">
                       {item.name}
                     </h4>
                   </div>
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400 font-semibold group-hover:text-white transition-colors">
+                  <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400 font-semibold group-hover:text-white transition-colors">
                     <span>Ver no Behance</span>
-                    <ArrowRight className="w-4 h-4 text-[#FF6B35] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#FF6B35] group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </a>
@@ -391,7 +386,6 @@ const Index = () => {
           >
             Ver portfólio completo no Behance <ExternalLink className="w-4 h-4 text-[#FF6B35] group-hover:translate-x-0.5 transition-transform" />
           </a>
-        </div>
         </div>
       </section>
 
