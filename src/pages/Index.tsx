@@ -515,53 +515,39 @@ const Index = () => {
         <ProjectEstimator />
       </section>
 
-      {/* SEÇÃO CONTATO & CTA FINAL COM ALTA CONVERSÃO */}
+      {/* SEÇÃO CONTATO & CTA FINAL (DESIGN DESIGNER PROFISSIONAL - LINEAR/VERCEL STYLE) */}
       <section id="contato" className="py-24 px-6 relative z-10 bg-[#0a0a0f] border-t border-white/5">
-        <div className="container mx-auto max-w-5xl bg-gradient-to-b from-[#14141f] to-[#0d0d14] border border-white/10 p-10 md:p-20 rounded-[40px] text-center shadow-2xl relative overflow-hidden reveal">
-          {/* Efeito Glow de Fundo */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#FF6B35]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#7F77DD]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="container mx-auto max-w-5xl bg-[#0f1015] border border-white/10 p-10 md:p-20 rounded-[32px] text-center shadow-2xl relative overflow-hidden reveal">
+          {/* Luz Ambiente Muted */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[#FF6B35]/15 blur-[120px] pointer-events-none rounded-full" />
 
-          {/* Badge Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/30 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#FF6B35] animate-pulse" />
-            <span className="text-[#FF6B35] text-xs font-extrabold uppercase tracking-widest">ATENDIMENTO EXCLUSIVO</span>
+          {/* Eyebrow Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]" />
+            <span className="text-gray-300 text-xs font-mono tracking-wider uppercase">CONTATO & PROPOSTA</span>
           </div>
 
-          {/* Headline Persuasiva & Subtítulo */}
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tight leading-tight">
-            Sua marca pronta para <br className="hidden md:block" />
-            <span className="bg-gradient-to-r from-[#FF6B35] via-white to-[#7F77DD] bg-clip-text text-transparent">
-              atrair o público certo.
-            </span>
+          {/* Headline Editorial */}
+          <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-white tracking-tight leading-[1.1]">
+            Vamos construir a presença digital <br className="hidden md:block" />
+            <span className="text-[#FF6B35]">da sua marca.</span>
           </h2>
-          <p className="text-gray-300 text-base md:text-xl mb-12 max-w-2xl mx-auto font-poppins leading-relaxed">
-            Receba um diagnóstico estratégico e uma proposta personalizada em até 24 horas. Fale diretamente com nossa equipe criativa.
+          
+          <p className="text-gray-400 text-base md:text-lg mb-12 max-w-2xl mx-auto font-sans leading-relaxed">
+            Diagnóstico estratégico e proposta personalizada entregues em até 24 horas. Fale diretamente com nossa diretoria criativa.
           </p>
 
-          {/* Pilares de Valor */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12 text-left">
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
-              <span className="text-xl">⚡</span>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase">Agilidade</h4>
-                <p className="text-xs text-gray-400">Retorno em até 24h</p>
-              </div>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
-              <span className="text-xl">🎯</span>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase">Diagnóstico</h4>
-                <p className="text-xs text-gray-400">Análise sem custo</p>
-              </div>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
-              <span className="text-xl">🤝</span>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase">Diretoria</h4>
-                <p className="text-xs text-gray-400">Atendimento autoral</p>
-              </div>
-            </div>
+          {/* Metadata Row (Estilo Linear/Vercel) */}
+          <div className="flex flex-wrap justify-center items-center gap-3 mb-12">
+            <span className="px-4 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 uppercase tracking-wider">
+              Resumo em até 24h
+            </span>
+            <span className="px-4 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 uppercase tracking-wider">
+              Análise sem compromisso
+            </span>
+            <span className="px-4 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-gray-300 uppercase tracking-wider">
+              Atendimento autoral
+            </span>
           </div>
           
           <div className="flex flex-col items-center">
@@ -569,16 +555,16 @@ const Index = () => {
             
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
               <a 
-                href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20solicitar%20um%20diagnóstico." 
+                href="https://wa.me/5511958566518?text=Olá!%20Vim%20pelo%20site%20da%20Creatorii%20e%20gostaria%20de%20solicitar%20uma%20proposta." 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="px-10 py-5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-extrabold text-base rounded-full flex items-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-[#FF6B35]/30 group"
+                className="px-8 py-4 bg-[#FF6B35] hover:bg-[#e05a2b] text-white font-semibold text-sm rounded-full flex items-center gap-3 transition-all duration-300 shadow-lg shadow-[#FF6B35]/20 hover:-translate-y-0.5 group"
               >
-                Iniciar Atendimento no WhatsApp <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Iniciar Conversa no WhatsApp <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a 
                 href="mailto:contato@creatorristudio.com.br" 
-                className="text-gray-300 hover:text-white font-semibold transition-colors border-b border-white/20 pb-1 text-sm flex items-center gap-2"
+                className="text-gray-400 hover:text-white text-sm font-mono transition-colors border-b border-white/10 pb-0.5"
               >
                 contato@creatorristudio.com.br
               </a>
