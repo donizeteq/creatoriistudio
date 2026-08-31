@@ -390,22 +390,22 @@ const Index = () => {
       </section>
 
       {/* DEPOIMENTOS */}
-      <section className="py-24 bg-[#111118]/50">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
+      <section className="py-16 sm:py-24 bg-[#111118]/50 px-4 sm:px-6">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               { name: 'André Santos', role: 'CEO · E-commerce de Moda', text: 'A Creatorii transformou nossa presença digital completamente. Em 3 meses nosso tráfego orgânico triplicou e a nova identidade visual atraiu um público muito mais qualificado.' },
               { name: 'Juliana Lima', role: 'Fundadora · Clínica de Estética', text: 'Trabalhar com a Natasha e equipe foi a melhor decisão para minha clínica. Entregaram um branding sofisticado que transmite exatamente a confiança que eu precisava.' },
               { name: 'Wagner Gonçalves', role: 'Sócio-Diretor · Escritório Jurídico', text: 'O novo site e a identidade visual sólida elevaram o patamar do nosso escritório. Design moderno e funcional que converte clientes de alto padrão — recomendo sem hesitar.' },
             ].map((d) => (
-              <div key={d.name} className="p-8 bg-[#111118] border border-white/5 rounded-2xl reveal">
+              <div key={d.name} className="p-6 sm:p-8 bg-[#111118] border border-white/10 rounded-3xl reveal">
                 <div className="flex gap-1 mb-4">
                   {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-4 h-4 fill-amber-500 text-amber-500" />)}
                 </div>
-                <p className="text-gray-400 italic mb-6">"{d.text}"</p>
+                <p className="text-gray-300 text-sm sm:text-base italic mb-6 font-poppins leading-relaxed">"{d.text}"</p>
                 <div>
-                  <p className="font-bold">{d.name}</p>
-                  <p className="text-xs text-gray-500">{d.role}</p>
+                  <p className="font-bold text-white text-base">{d.name}</p>
+                  <p className="text-xs text-gray-400 font-medium">{d.role}</p>
                 </div>
               </div>
             ))}
@@ -414,26 +414,26 @@ const Index = () => {
       </section>
 
       {/* SOBRE */}
-      <section id="sobre" className="py-24 px-6 container mx-auto">
+      <section id="sobre" className="py-16 sm:py-24 px-4 sm:px-6 container mx-auto">
         <div className="max-w-4xl mx-auto rounded-3xl bg-[#111118]/80 border border-white/10 backdrop-blur-md overflow-hidden reveal">
           {/* Nav Tabs */}
-          <div className="flex border-b border-white/10">
+          <div className="flex border-b border-white/10 text-xs sm:text-sm">
             <button
               onClick={() => setActiveTab('studio')}
-              className={`flex-1 py-6 text-center text-sm font-bold tracking-widest uppercase transition-all duration-300 ${activeTab === 'studio' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
+              className={`flex-1 py-4 sm:py-6 text-center font-bold tracking-wider uppercase transition-all duration-300 ${activeTab === 'studio' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
             >
               A Creatorii Studio
             </button>
             <button
               onClick={() => setActiveTab('equipe')}
-              className={`flex-1 py-6 text-center text-sm font-bold tracking-widest uppercase transition-all duration-300 ${activeTab === 'equipe' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
+              className={`flex-1 py-4 sm:py-6 text-center font-bold tracking-wider uppercase transition-all duration-300 ${activeTab === 'equipe' ? 'bg-white/5 text-white border-b-2 border-[#7F77DD]' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
             >
               Quem Somos Nós
             </button>
           </div>
 
           {/* Conteúdo Dinâmico */}
-          <div className="p-8 md:p-12">
+          <div className="p-5 sm:p-8 md:p-12">
             {/* TAB: STUDIO */}
             {activeTab === 'studio' && (
               <div className="animate-in fade-in zoom-in-95 duration-500 space-y-10">
