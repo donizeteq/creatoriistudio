@@ -15,6 +15,7 @@ import { ChevronDown, Star, ExternalLink, ArrowRight, Plus, Minus } from 'lucide
 import CustomCursor from '@/components/CustomCursor';
 import CreatoriiVectorRobot from '@/components/CreatoriiVectorRobot';
 import MetroHero from '@/components/ui/scroll-locked-video-hero';
+import SocialLinks from '@/components/SocialLinks';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -24,6 +25,21 @@ const Index = () => {
   const [openCard, setOpenCard] = useState<'natasha' | 'emmyly' | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [portfolioFilter, setPortfolioFilter] = useState<'all' | 'social' | 'branding'>('all');
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (typeof document !== 'undefined' && document.body.style.position === 'fixed') {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+    }
+    const targetEl = document.querySelector(href);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,7 +110,8 @@ const Index = () => {
           ].map((item) => (
             <a 
               key={item.href} 
-              href={item.href} 
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
               className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
             >
               {item.label}
@@ -102,12 +119,18 @@ const Index = () => {
           ))}
         </div>
 
-        <a 
-          href="https://wa.me/5511958566518" 
-          className="px-6 py-2.5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
-        >
-          Falar com a equipe
-        </a>
+        <div className="flex items-center gap-5">
+          <div className="hidden sm:block">
+            <SocialLinks />
+          </div>
+          <a 
+            href="https://wa.me/5511958566518" 
+            onClick={(e) => handleNavClick(e, '#contato')}
+            className="px-6 py-2.5 bg-[#FF6B35] hover:bg-[#e05a2b] text-white rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-lg shadow-[#FF6B35]/20"
+          >
+            Falar com a equipe
+          </a>
+        </div>
       </div>
     </nav>
 
@@ -173,7 +196,7 @@ const Index = () => {
       </section>
 
       {/* SERVICE SHOWCASE */}
-      <section className="relative z-20 bg-[#0a0a0f]">
+      <section id="servicos" className="relative z-20 bg-[#0a0a0f]">
         <ServiceShowcase />
       </section>
 
@@ -528,10 +551,13 @@ const Index = () => {
           />
           <span className="text-xs text-gray-500">© 2026 Creatorii Studio. Todos os direitos reservados.</span>
         </div>
-        <div className="flex gap-6 text-xs text-gray-400">
-          <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
-          <a href="#" className="hover:text-white transition-colors">Privacidade</a>
-          <a href="#contato" className="hover:text-white transition-colors">Suporte</a>
+        <div className="flex items-center gap-6">
+          <SocialLinks />
+          <div className="flex gap-4 text-xs text-gray-400 border-l border-white/10 pl-6">
+            <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
+            <a href="#" className="hover:text-white transition-colors">Privacidade</a>
+            <a href="#contato" onClick={(e) => handleNavClick(e, '#contato')} className="hover:text-white transition-colors">Suporte</a>
+          </div>
         </div>
       </div>
     </footer>
