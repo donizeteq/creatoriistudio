@@ -245,20 +245,20 @@ const Index = () => {
       <AppleStyleCarousel />
 
       {/* PORTFÓLIO DESTAQUE EM GRID ASSIMÉTRICO (1 HERO ESQUERDA + CARDS FILTRÁVEIS DIREITA) */}
-      <section id="portfolio" className="py-24 px-6 container mx-auto">
-        <div className="text-center mb-12 reveal">
+      <section id="portfolio" className="py-16 md:py-24 px-4 sm:px-6 container mx-auto">
+        <div className="text-center mb-10 md:mb-12 reveal">
           <span className="text-[#FF6B35] text-xs font-bold tracking-widest uppercase">Trabalhos</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4">Portfólio & Mídias Sociais</h2>
-          <p className="text-gray-400 text-sm md:text-base mt-2 max-w-xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-3">Portfólio & Mídias Sociais</h2>
+          <p className="text-gray-400 text-xs sm:text-base mt-2 max-w-xl mx-auto font-poppins">
             Projetos estratégicos de mídias sociais, posicionamento e identidade visual que transformaram marcas.
           </p>
         </div>
 
         {/* FILTROS DE CATEGORIA DO PORTFÓLIO */}
-        <div className="flex justify-center gap-3 mb-12 flex-wrap reveal">
+        <div className="flex justify-center gap-2 sm:gap-3 mb-10 md:mb-12 flex-wrap reveal px-2">
           <button
             onClick={() => setPortfolioFilter('all')}
-            className={`px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
               portfolioFilter === 'all'
                 ? 'bg-[#FF6B35] text-white shadow-lg shadow-[#FF6B35]/25 scale-105'
                 : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
@@ -268,7 +268,7 @@ const Index = () => {
           </button>
           <button
             onClick={() => setPortfolioFilter('social')}
-            className={`px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
               portfolioFilter === 'social'
                 ? 'bg-[#FF6B35] text-white shadow-lg shadow-[#FF6B35]/25 scale-105'
                 : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
@@ -278,7 +278,7 @@ const Index = () => {
           </button>
           <button
             onClick={() => setPortfolioFilter('branding')}
-            className={`px-6 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-300 ${
               portfolioFilter === 'branding'
                 ? 'bg-[#FF6B35] text-white shadow-lg shadow-[#FF6B35]/25 scale-105'
                 : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
