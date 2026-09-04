@@ -13,7 +13,7 @@ export interface MetroHeroProps {
   style?: React.CSSProperties
 }
 
-const DEFAULT_VIDEO = "/metro-hero-video.mp4"
+const DEFAULT_VIDEO = "/creatoriistudiologovideo.mp4"
 const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 
 const COL_BG = "#05070d"

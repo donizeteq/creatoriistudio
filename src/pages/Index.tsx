@@ -183,6 +183,7 @@ const Index = () => {
           tagline="ELAS ATRAEM."
           scrollHint="ROLE PARA EXPLORAR"
           signature={false}
+          videoSrc="/creatoriistudiologovideo.mp4"
         />
       </section>
 
