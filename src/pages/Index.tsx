@@ -185,7 +185,7 @@ const Index = () => {
           tagline="ELAS ATRAEM."
           scrollHint="ROLE PARA EXPLORAR"
           signature={false}
-          videoSrc="/metro-hero-video.mp4"
+          videoSrc="/creatoriistudiologovideo.mp4"
         />
       </section>
 
