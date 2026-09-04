@@ -17,6 +17,7 @@ import CreatoriiVectorRobot from '@/components/CreatoriiVectorRobot';
 import MetroHero from '@/components/ui/scroll-locked-video-hero';
 import SocialLinks from '@/components/SocialLinks';
 import ProcessSection from '@/components/ProcessSection';
+import VideoSplashIntro from '@/components/VideoSplashIntro';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -82,6 +83,7 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0f] text-white selection:bg-[#7F77DD]/30 selection:text-white">
+      <VideoSplashIntro />
       <CustomCursor />
     
     
@@ -183,7 +185,7 @@ const Index = () => {
           tagline="ELAS ATRAEM."
           scrollHint="ROLE PARA EXPLORAR"
           signature={false}
-          videoSrc="/creatoriistudiologovideo.mp4"
+          videoSrc="/metro-hero-video.mp4"
         />
       </section>
 
