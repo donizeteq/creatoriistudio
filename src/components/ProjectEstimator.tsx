@@ -3,15 +3,16 @@ import { motion } from 'framer-motion';
 import { Calculator, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const ProjectEstimator = () => {
-  const [projectType, setProjectType] = useState<'landing' | 'saas' | 'branding' | 'ecommerce'>('landing');
+  const [projectType, setProjectType] = useState<'landing' | 'social' | 'branding' | 'ecommerce' | 'videomaker'>('landing');
   const [urgency, setUrgency] = useState<'standard' | 'fast'>('standard');
   const [includeAI, setIncludeAI] = useState(true);
 
   const pricingMap = {
-    landing: { base: 2500, label: 'Landing Page de Alta Conversão', timeline: '7 a 10 dias' },
-    saas: { base: 6800, label: 'Plataforma SaaS & Dashboard UI/UX', timeline: '20 a 30 dias' },
-    branding: { base: 3500, label: 'Identidade Visual & Branding Completo', timeline: '10 a 15 dias' },
-    ecommerce: { base: 5500, label: 'E-commerce & Loja Virtual Sofisticada', timeline: '15 a 25 dias' }
+    landing: { base: 1800, label: 'Landing Page de Alta Conversão', timeline: '7 a 10 dias' },
+    social: { base: 1300, label: 'Social Media & Gestão de Conteúdo', timeline: 'Planos Mensais' },
+    branding: { base: 1500, label: 'Identidade Visual & Branding Completo', timeline: '7 a 12 dias' },
+    ecommerce: { base: 3000, label: 'E-commerce & Loja Virtual Sofisticada', timeline: '15 a 25 dias' },
+    videomaker: { base: 200, label: 'Videomaker Mobile (Valor por Hora - Reels/TikTok)', timeline: 'Agendamento por Hora' }
   };
 
   const currentProject = pricingMap[projectType];
