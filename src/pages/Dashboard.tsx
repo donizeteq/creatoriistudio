@@ -67,12 +67,12 @@ const Dashboard = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Demo password: "creatorii"
-    if (password === 'creatorii') {
+    // Verificação de acesso seguro
+    if (password === 'creatorii2026sec') {
       setIsAuthenticated(true);
       setError('');
     } else {
-      setError('Senha incorreta. Dica: creatorii');
+      setError('Senha incorreta.');
     }
   };
 

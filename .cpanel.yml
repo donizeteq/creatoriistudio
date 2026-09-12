@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/zapnetweb/public_html
+    - export DEPLOYPATH=/home/fedwpju6/public_html
     - /bin/cp -R dist/* $DEPLOYPATH
