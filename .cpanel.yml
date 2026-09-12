@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/zapnetweb/public_html
+    - /bin/cp -R dist/* $DEPLOYPATH
