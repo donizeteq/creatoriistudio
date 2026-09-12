@@ -17,7 +17,8 @@ const ProjectEstimator = () => {
 
   const currentProject = pricingMap[projectType];
   const urgencyMultiplier = urgency === 'fast' ? 1.3 : 1.0;
-  const aiAddon = includeAI ? 1200 : 0;
+  const showAIOption = projectType === 'landing' || projectType === 'ecommerce';
+  const aiAddon = (showAIOption && includeAI) ? 1200 : 0;
   const estimatedTotal = Math.round((currentProject.base * urgencyMultiplier) + aiAddon);
 
   const whatsappMessage = encodeURIComponent(
@@ -90,25 +91,27 @@ const ProjectEstimator = () => {
               </div>
             </div>
 
-            <div>
-              <label className="text-sm font-bold text-gray-300 uppercase tracking-wider block mb-4">
-                3. Adicionais Tecnológicos
-              </label>
-              <button
-                onClick={() => setIncludeAI(!includeAI)}
-                className={`w-full p-4 rounded-2xl border text-left flex items-center justify-between transition-all ${
-                  includeAI ? 'bg-[#7F77DD]/15 border-[#7F77DD] text-white' : 'bg-[#0a0a0f] border-white/5 text-gray-400'
-                }`}
-              >
-                <div>
-                  <div className="font-bold text-sm">Integração de IA / Automação n8n</div>
-                  <div className="text-xs text-gray-500 mt-1">Chatbots, fluxos automatizados e IA integrada</div>
-                </div>
-                <div className={`w-6 h-6 rounded-full border flex items-center justify-center ${includeAI ? 'bg-[#7F77DD] border-[#7F77DD] text-white' : 'border-white/20'}`}>
-                  {includeAI && <CheckCircle2 className="w-4 h-4" />}
-                </div>
-              </button>
-            </div>
+            {showAIOption && (
+              <div>
+                <label className="text-sm font-bold text-gray-300 uppercase tracking-wider block mb-4">
+                  3. Adicionais Tecnológicos
+                </label>
+                <button
+                  onClick={() => setIncludeAI(!includeAI)}
+                  className={`w-full p-4 rounded-2xl border text-left flex items-center justify-between transition-all ${
+                    includeAI ? 'bg-[#7F77DD]/15 border-[#7F77DD] text-white' : 'bg-[#0a0a0f] border-white/5 text-gray-400'
+                  }`}
+                >
+                  <div>
+                    <div className="font-bold text-sm">Integração de IA / Automação n8n</div>
+                    <div className="text-xs text-gray-500 mt-1">Chatbots, fluxos automatizados e IA integrada</div>
+                  </div>
+                  <div className={`w-6 h-6 rounded-full border flex items-center justify-center ${includeAI ? 'bg-[#7F77DD] border-[#7F77DD] text-white' : 'border-white/20'}`}>
+                    {includeAI && <CheckCircle2 className="w-4 h-4" />}
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Resumo & CTA */}
