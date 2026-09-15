@@ -5,7 +5,6 @@ import { Calculator, ArrowRight, CheckCircle2 } from 'lucide-react';
 const ProjectEstimator = () => {
   const [projectType, setProjectType] = useState<'landing' | 'social' | 'branding' | 'ecommerce' | 'videomaker'>('landing');
   const [urgency, setUrgency] = useState<'standard' | 'fast'>('standard');
-  const [includeAI, setIncludeAI] = useState(true);
 
   const pricingMap = {
     landing: { base: 1800, label: 'Landing Page de Alta Conversão', timeline: '7 a 10 dias' },
@@ -17,12 +16,10 @@ const ProjectEstimator = () => {
 
   const currentProject = pricingMap[projectType];
   const urgencyMultiplier = urgency === 'fast' ? 1.3 : 1.0;
-  const showAIOption = projectType === 'landing' || projectType === 'ecommerce';
-  const aiAddon = (showAIOption && includeAI) ? 1200 : 0;
-  const estimatedTotal = Math.round((currentProject.base * urgencyMultiplier) + aiAddon);
+  const estimatedTotal = Math.round(currentProject.base * urgencyMultiplier);
 
   const whatsappMessage = encodeURIComponent(
-    `Olá! Usei o simulador no site da Creatorii e gostaria de avançar com o projeto:\n• Tipo: ${currentProject.label}\n• Prazo: ${urgency === 'fast' ? 'Prioritário (Fast-track)' : 'Padrão'}\n• IA / Automação Integrada: ${includeAI ? 'Sim' : 'Não'}\n• Estimativa: R$ ${estimatedTotal.toLocaleString('pt-BR')}`
+    `Olá! Usei o simulador no site da Creatorii e gostaria de avançar com o projeto:\n• Tipo: ${currentProject.label}\n• Prazo: ${urgency === 'fast' ? 'Prioritário (Fast-track)' : 'Padrão'}\n• Estimativa: R$ ${estimatedTotal.toLocaleString('pt-BR')}`
   );
 
   return (
@@ -90,28 +87,6 @@ const ProjectEstimator = () => {
                 </button>
               </div>
             </div>
-
-            {showAIOption && (
-              <div>
-                <label className="text-sm font-bold text-gray-300 uppercase tracking-wider block mb-4">
-                  3. Adicionais Tecnológicos
-                </label>
-                <button
-                  onClick={() => setIncludeAI(!includeAI)}
-                  className={`w-full p-4 rounded-2xl border text-left flex items-center justify-between transition-all ${
-                    includeAI ? 'bg-[#7F77DD]/15 border-[#7F77DD] text-white' : 'bg-[#0a0a0f] border-white/5 text-gray-400'
-                  }`}
-                >
-                  <div>
-                    <div className="font-bold text-sm">Integração de IA / Automação n8n</div>
-                    <div className="text-xs text-gray-500 mt-1">Chatbots, fluxos automatizados e IA integrada</div>
-                  </div>
-                  <div className={`w-6 h-6 rounded-full border flex items-center justify-center ${includeAI ? 'bg-[#7F77DD] border-[#7F77DD] text-white' : 'border-white/20'}`}>
-                    {includeAI && <CheckCircle2 className="w-4 h-4" />}
-                  </div>
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Resumo & CTA */}
@@ -126,10 +101,6 @@ const ProjectEstimator = () => {
                 <div className="flex justify-between text-sm text-gray-400">
                   <span>Prazo Estimado:</span>
                   <span className="text-white font-medium">{currentProject.timeline}</span>
-                </div>
-                <div className="flex justify-between text-sm text-gray-400">
-                  <span>Automação IA:</span>
-                  <span className="text-white font-medium">{includeAI ? 'Incluso' : 'Não'}</span>
                 </div>
                 <div className="pt-4 border-t border-white/10 flex justify-between items-baseline">
                   <span className="text-sm font-bold text-gray-300">Estimativa Base:</span>
